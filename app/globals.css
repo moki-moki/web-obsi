@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 :root {
+  --black: hsl(0, 0%, 3%);
+  --dark-gray: #151515;
+  --dark-gray-accent: #212121;
+  --gray: #666666;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -18,12 +22,19 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
+  background-color: var(--dark-gray);
+  /* background-image: radial-gradient(
+    circle at 1px 1px,
+    var(--dark-gray-accent) 1px,
+    var(--black) 0
+  );
+  background-size: 40px 40px; */
 }
 
 @layer utilities {
