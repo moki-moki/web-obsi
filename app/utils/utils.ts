@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { FOLDER_STATE } from "../_components/sidebar/sidebar";
+import { FOLDER_STATE } from "../data/initial-state";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

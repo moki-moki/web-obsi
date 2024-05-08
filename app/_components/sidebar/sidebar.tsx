@@ -5,6 +5,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { InputChangeEventHandler } from "@/app/types/types";
 import { FOLDER_STATE, INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
+import Input from "../ui/input";
 
 export default function Sidebar() {
   const [showInput, setShowInput] = useState<null | number>(null);
@@ -59,7 +60,7 @@ export default function Sidebar() {
   return (
     <>
       <div
-        className="w-1/5 border-r border-r-border h-screen"
+        className="w-1/4 border-r border-r-border h-screen"
         onContextMenu={handleContextMenu}
       >
         <div className="p-2 border-b border-border">
@@ -90,12 +91,13 @@ export default function Sidebar() {
                   />
                 </span>
                 {showInput === idx ? (
-                  <input
+                  <Input
                     type="text"
                     value={renameValue}
                     onChange={onChangeHandler}
                     onKeyDown={onKeyDownHandler}
-                    className="bg-gray/20 px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-purple"
+                    rounded="md"
+                    className="px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple"
                   />
                 ) : (
                   <span>{el.name}</span>

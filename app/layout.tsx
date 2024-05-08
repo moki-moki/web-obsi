@@ -18,8 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <Sidebar />
-        {children}
+        <main className="flex">
+          <Sidebar />
+          {children}
+        </main>
       </body>
     </html>
   );

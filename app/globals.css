@@ -4,12 +4,14 @@
 
 :root {
   --black: hsl(0, 0%, 3%);
-  --dark-gray: #151515;
-  --dark-gray-accent: #212121;
-  --gray: #666666;
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --gray: hsl(0, 0%, 40%);
+  --white: hsl(30, 100%, 99%);
+  --border: hsl(0, 0%, 19%);
+  --dark-gray: hsl(0, 0%, 8%);
+  --dark-gray-accent: hsl(0, 0%, 13%);
+  --purple: hsl(253, 73%, 56%);
+  --emerald: hsl(149, 89%, 43%);
+  --light-gray: hsl(0, 0%, 92%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,19 +24,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
   background-color: var(--dark-gray);
-  /* background-image: radial-gradient(
-    circle at 1px 1px,
-    var(--dark-gray-accent) 1px,
-    var(--black) 0
-  );
-  background-size: 40px 40px; */
 }
 
 @layer utilities {
