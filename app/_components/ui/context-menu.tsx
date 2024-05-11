@@ -1,31 +1,31 @@
 import React, { useRef } from "react";
 import { useOutsideClick } from "@/app/hooks/useOutsideClick";
+import { MenuI } from "@/app/types/types";
 import { FiFolderPlus } from "react-icons/fi";
 import { PiNotePencil } from "react-icons/pi";
-import { MENUI } from "@/app/types/types";
-import { createFolder } from "@/app/utils/utils";
 
 interface Props {
   x: number;
   y: number;
   onClose: () => void;
+  createFolder: () => void;
 }
 
-const MENU: MENUI[] = [
+export const MENU: MenuI[] = [
   {
     name: "New Folder",
     icon: <FiFolderPlus />,
-    onClick: createFolder,
   },
   {
     name: "New Note",
     icon: <PiNotePencil />,
-    onClick: createFolder,
   },
 ];
 
-const ContextMenu = ({ x, y, onClose }: Props) => {
+const ContextMenu = ({ x, y, onClose, createFolder }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
+  const menuControlls = [createFolder, createFolder];
+
   useOutsideClick(ref, onClose);
 
   return (
@@ -39,8 +39,8 @@ const ContextMenu = ({ x, y, onClose }: Props) => {
         {MENU.map((el, idx) => (
           <li
             key={idx}
-            onClick={el.onClick}
-            className="flex items-center cursor-pointer text-gray p-2 rounded-full text-xs uppercase font-bold tracking-wide hover:bg-gray/20"
+            onClick={menuControlls[idx]}
+            className="flex items-center cursor-pointer text-gray p-2 rounded-full text-xs uppercase font-bold tracking-wide hover:bg-white"
           >
             <span className="mr-2 text-base">{el.icon}</span>
             {el.name}

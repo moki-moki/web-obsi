@@ -1,19 +1,28 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import Folder from "../ui/folder";
 import ContextMenu from "../ui/context-menu";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { FiEdit } from "react-icons/fi";
-import { InputChangeEventHandler } from "@/app/types/types";
-import { FOLDER_STATE, INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
-import Input from "../ui/input";
+import { FolderI, InputChangeEventHandler } from "@/app/types/types";
+import { useLocalStorage } from "@/app/hooks/useLocalStorage";
+import { INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
 
 export default function Sidebar() {
-  const [showInput, setShowInput] = useState<null | number>(null);
-  const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
-  const [rotatedIcons, setRotatedIcons] = useState(
-    Array(FOLDER_STATE.length).fill(false)
-  );
+  const [isClient, setIsClient] = useState<boolean>(false); // Fixes Next.js hydration issue with local storage
   const [renameValue, setRenameValue] = useState<string>("");
+  const [showInput, setShowInput] = useState<null | number>(null);
+  const [state, setState] = useLocalStorage<FolderI[]>("folders", []);
+  const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
+
+  const createFolder = () => {
+    const newFolder = {
+      name: "(No Title)",
+    };
+    setState((prev) => {
+      return [...prev, newFolder];
+    });
+    localStorage.setItem("folders", JSON.stringify([...state, newFolder]));
+  };
 
   const handleContextMenu = (
     e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
@@ -26,25 +35,23 @@ export default function Sidebar() {
 
   const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
-  const iconHandler = (idx: number) => {
-    setRotatedIcons((prevState) => {
-      const newState = [...prevState];
-      newState[idx] = !newState[idx];
-      return newState;
-    });
-  };
-
   const onChangeHandler: InputChangeEventHandler = (e) => {
     setRenameValue(e.target.value);
   };
 
-  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDownHandler = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    idx: number
+  ) => {
     if (e.key === "Enter") {
+      setState((prev) => {
+        const newState = [...prev];
+        newState[idx].name = renameValue;
+        return newState;
+      });
       setShowInput(null);
     }
   };
-
-  console.log(renameValue);
 
   const changeNameHandler = (
     e: React.MouseEvent<HTMLSpanElement>,
@@ -56,6 +63,11 @@ export default function Sidebar() {
     setShowInput(idx);
     setRenameValue(name);
   };
+
+  // This Fixes Next.js hydration issue with local storage. TODO: find better approach
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <>
@@ -73,48 +85,31 @@ export default function Sidebar() {
         </div>
         <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
         <ul className="px-2 flex flex-col gap-3">
-          {FOLDER_STATE.map((el, idx) => (
-            <li
-              key={idx}
-              onClick={() => iconHandler(idx)}
-              className={`flex items-center justify-between cursor-pointer text-gray p-2 rounded-full text-xs uppercase font-bold tracking-wide hover:bg-gray/20 ${
-                showInput === idx && "bg-gray/20"
-              }`}
-            >
-              <div className="flex items-center">
-                <span className="mr-2 text-base">
-                  <MdOutlineKeyboardArrowRight
-                    className="transition-transform ease-in duration-150"
-                    style={{
-                      transform: rotatedIcons[idx] ? "rotate(90deg)" : "none",
-                    }}
-                  />
-                </span>
-                {showInput === idx ? (
-                  <Input
-                    type="text"
-                    value={renameValue}
-                    onChange={onChangeHandler}
-                    onKeyDown={onKeyDownHandler}
-                    rounded="md"
-                    className="px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple"
-                  />
-                ) : (
-                  <span>{el.name}</span>
-                )}
-              </div>
-              <span
-                onClick={(e) => changeNameHandler(e, idx, el.name)}
-                className="text-base"
-              >
-                <FiEdit />
-              </span>
-            </li>
-          ))}
+          {isClient ? (
+            state.map((el: FolderI, idx) => (
+              <Folder
+                name={el.name}
+                idx={idx}
+                key={idx}
+                showInput={showInput}
+                renameValue={renameValue}
+                changeNameHandler={changeNameHandler}
+                onChangeHandler={onChangeHandler}
+                onKeyDownHandler={onKeyDownHandler}
+              />
+            ))
+          ) : (
+            <></>
+          )}
         </ul>
       </div>
       {contextMenu.show ? (
-        <ContextMenu x={contextMenu.x} y={contextMenu.y} onClose={onClose} />
+        <ContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={onClose}
+          createFolder={createFolder}
+        />
       ) : null}
     </>
   );

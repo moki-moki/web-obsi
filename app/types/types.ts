@@ -13,8 +13,11 @@ export interface ContextMenuI {
   y: number;
 }
 
-export interface MENUI {
+export interface MenuI {
   name: string;
   icon: React.JSX.Element;
-  onClick: () => void;
+}
+
+export interface FolderI {
+  name: string;
 }

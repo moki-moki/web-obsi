@@ -1,4 +1,4 @@
-import { ContextMenuI } from "../types/types";
+import { ContextMenuI, FolderI, MenuI } from "../types/types";
 
 export const INITIAL_CONTEXT_MENU: ContextMenuI = {
   show: false,
@@ -6,14 +6,4 @@ export const INITIAL_CONTEXT_MENU: ContextMenuI = {
   y: 0,
 };
 
-export const FOLDER_STATE = [
-  {
-    name: "Folder 1",
-  },
-  {
-    name: "Folder 2",
-  },
-  {
-    name: "Folder 3",
-  },
-];
+export const FOLDER_STATE: FolderI[] | [] = [];
