@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { FiEdit } from "react-icons/fi";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Input from "./input";
+import { ChevronRight, SquarePen } from "lucide-react";
 import { FOLDER_STATE } from "@/app/data/initial-state";
-import { InputChangeEventHandler } from "@/app/types/types";
+import { FileI, InputChangeEventHandler } from "@/app/types/types";
 
 interface Props {
   idx: number;
   name: string;
-  showInput: null | number;
+  files?: FileI[];
   renameValue: string;
+  showInput: null | number;
   onChangeHandler: InputChangeEventHandler;
   changeNameHandler: (
     e: React.MouseEvent<HTMLSpanElement>,
@@ -23,8 +23,9 @@ interface Props {
 }
 
 const Folder = ({
-  name,
   idx,
+  name,
+  files,
   showInput,
   renameValue,
   onChangeHandler,
@@ -45,14 +46,13 @@ const Folder = ({
   return (
     <li
       onClick={() => iconHandler(idx)}
-      className={`flex items-center justify-between cursor-pointer text-gray p-2 rounded-full text-xs uppercase font-bold tracking-wide hover:bg-gray/20 ${
+      className={`flex items-center justify-between cursor-pointer text-gray p-2 rounded-full text-xs uppercase font-bold tracking-wide hover:bg-dark-gray-accent ${
         showInput === idx && "bg-gray/20"
       }`}
     >
       <div className="flex items-center">
         <span className="mr-2 text-base">
-          <MdOutlineKeyboardArrowRight
-            className="transition-transform ease-in duration-150"
+          <ChevronRight
             style={{
               transform: rotatedIcons[idx] ? "rotate(90deg)" : "none",
             }}
@@ -75,8 +75,11 @@ const Folder = ({
         onClick={(e) => changeNameHandler(e, idx, name)}
         className="text-base"
       >
-        <FiEdit />
+        <SquarePen />
       </span>
+      {files?.map((el) => (
+        <h2>{el.name}</h2>
+      ))}
     </li>
   );
 };

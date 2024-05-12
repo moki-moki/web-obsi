@@ -19,7 +19,7 @@ const config: Config = {
       black: "var(--black)",
       border: "var(--border)",
       gray: "var(--gray)",
-      "light-gray": "var(--light-gray",
+      "light-gray": "var(--light-gray)",
       "dark-gray": "var(--dark-gray)",
       "dark-gray-accent": "var(--dark-gray-accent)",
       purple: "var(--purple)",

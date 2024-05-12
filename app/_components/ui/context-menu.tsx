@@ -1,30 +1,30 @@
 import React, { useRef } from "react";
 import { useOutsideClick } from "@/app/hooks/useOutsideClick";
 import { MenuI } from "@/app/types/types";
-import { FiFolderPlus } from "react-icons/fi";
-import { PiNotePencil } from "react-icons/pi";
+import { FolderPlus, NotebookPen } from "lucide-react";
 
 interface Props {
   x: number;
   y: number;
   onClose: () => void;
   createFolder: () => void;
+  createFile: () => void;
 }
 
 export const MENU: MenuI[] = [
   {
     name: "New Folder",
-    icon: <FiFolderPlus />,
+    icon: <FolderPlus />,
   },
   {
     name: "New Note",
-    icon: <PiNotePencil />,
+    icon: <NotebookPen />,
   },
 ];
 
-const ContextMenu = ({ x, y, onClose, createFolder }: Props) => {
+const ContextMenu = ({ x, y, onClose, createFolder, createFile }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
-  const menuControlls = [createFolder, createFolder];
+  const menuControlls = [createFolder, createFile];
 
   useOutsideClick(ref, onClose);
 

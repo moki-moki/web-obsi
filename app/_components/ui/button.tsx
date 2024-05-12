@@ -21,7 +21,7 @@ export const btnVarians = cva(
         outlined:
           "border border-border bg-dark-gray-accent bg-none hover:bg-white hover:text-black hover:border-white",
         "ghost-outlined":
-          "text-white border border-gray bg-none hover:bg-white hover:text-black hover:border-white",
+          "text-white border border-border bg-none hover:bg-border hover:text-white",
         icon: "text-white mx-1 border-none font-none bg-gray/50 hover:bg-gray",
       },
       size: {
@@ -38,7 +38,6 @@ export const btnVarians = cva(
     },
     defaultVariants: {
       font: "default",
-      size: "default",
       variants: "default",
     },
   }

@@ -20,4 +20,9 @@ export interface MenuI {
 
 export interface FolderI {
   name: string;
+  files?: { name: string }[];
+}
+
+export interface FileI {
+  name: string;
 }
