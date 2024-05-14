@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useOutsideClick } from "@/app/hooks/useOutsideClick";
 import { MenuI } from "@/app/types/types";
-import { FolderPlus, NotebookPen } from "lucide-react";
+import { FolderPlus, NotebookPen, Trash2 } from "lucide-react";
 
 interface Props {
   x: number;
@@ -31,7 +31,7 @@ const ContextMenu = ({ x, y, onClose, createFolder, createFile }: Props) => {
   return (
     <div
       ref={ref}
-      className="absolute border border-border py-5 px-3 bg-dark-gray-accent rounded-lg"
+      className="absolute border border-border py-5 px-3 bg-dark-gray-accent rounded-lg min-w-44"
       style={{ top: `${y}px`, left: `${x}px` }}
       onClick={onClose}
     >
@@ -40,12 +40,19 @@ const ContextMenu = ({ x, y, onClose, createFolder, createFile }: Props) => {
           <li
             key={idx}
             onClick={menuControlls[idx]}
-            className="flex items-center cursor-pointer text-gray p-2 rounded-full text-xs uppercase font-bold tracking-wide hover:bg-white"
+            className="flex justify-between items-center cursor-pointer text-gray px-2 py-1 rounded-full text-xs uppercase font-bold tracking-wide hover:bg-gray/30"
           >
-            <span className="mr-2 text-base">{el.icon}</span>
             {el.name}
+            <span className="ml-2 text-base">{el.icon}</span>
           </li>
         ))}
+        <div className="w-full bg-gray h-0.5" />
+        <li className="flex items-center justify-between cursor-pointer text-red px-2 py-1 rounded-full text-xs uppercase font-bold tracking-wide hover:bg-red/30">
+          Delete
+          <span className="ml-2">
+            <Trash2 />
+          </span>
+        </li>
       </ul>
     </div>
   );

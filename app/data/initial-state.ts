@@ -1,4 +1,4 @@
-import { ContextMenuI, FolderI, MenuI } from "../types/types";
+import { ContextMenuI, FolderI } from "../types/types";
 
 export const INITIAL_CONTEXT_MENU: ContextMenuI = {
   show: false,

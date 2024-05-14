@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --black: hsl(0, 0%, 3%);
-  --gray: hsl(0, 0%, 40%);
-  --white: hsl(30, 100%, 99%);
-  --border: hsl(0, 0%, 19%);
-  --dark-gray: hsl(0, 0%, 8%);
-  --dark-gray-accent: hsl(0, 0%, 13%);
-  --purple: hsl(253, 73%, 56%);
-  --emerald: hsl(149, 89%, 43%);
-  --light-gray: hsl(0, 0%, 92%);
+  --black: 8, 8, 8;
+  --gray: 102, 102, 102;
+  --white: 255, 252, 250;
+  --border: 48, 48, 48;
+  --dark-gray: 20, 20, 20;
+  --dark-gray-accent: 33, 33, 33;
+  --purple: 96, 61, 225;
+  --emerald: 12, 207, 106;
+  --light-gray: 235, 235, 235;
+  --red: 236, 65, 65;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,7 +25,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: var(--dark-gray);
+  background-color: rgb(var(--dark-gray));
 }
 
 @layer utilities {
