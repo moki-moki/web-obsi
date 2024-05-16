@@ -2,8 +2,8 @@ import Button from "../ui/button";
 import { FilePlus2, FolderPlus } from "lucide-react";
 
 interface Props {
-  createFolder: () => void;
   createFile: () => void;
+  createFolder: () => void;
 }
 
 const SidebarControlls = ({ createFolder, createFile }: Props) => {
