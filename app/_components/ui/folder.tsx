@@ -1,8 +1,8 @@
 import { MouseEvent, useState } from "react";
 import Input from "./input";
 import { ChevronRight, SquarePen, Trash2 } from "lucide-react";
+import { FileI, InputChangeEventHandler, MenuI } from "@/app/types/types";
 import { FOLDER_STATE } from "@/app/data/initial-state";
-import { FileI, InputChangeEventHandler } from "@/app/types/types";
 
 interface Props {
   id: string;
@@ -23,6 +23,13 @@ interface Props {
   ) => void;
   deleteFolder: (id: string) => void;
 }
+
+export const MENU: MenuI[] = [
+  {
+    name: "Delete Folder",
+    icon: <Trash2 />,
+  },
+];
 
 const Folder = ({
   id,

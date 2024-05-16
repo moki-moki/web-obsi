@@ -10,12 +10,10 @@ export default function Droppable({ id, children }: Props) {
     id: id,
   });
 
-  const style = {
-    backgroundColor: isOver ? "lightblue" : "",
-  };
+  const style = isOver ? "bg-gray/20" : "";
 
   return (
-    <li ref={setNodeRef} style={style}>
+    <li ref={setNodeRef} className={`${style} rounded-full`}>
       {children}
     </li>
   );

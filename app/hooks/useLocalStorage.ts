@@ -18,6 +18,8 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
   const handleStorageChange = (e: StorageEvent) => {
     if (e.key === "myData" && e.newValue) {
       setState(JSON.parse(e.newValue));
+
+      console.log(e.newValue);
     }
   };
 
