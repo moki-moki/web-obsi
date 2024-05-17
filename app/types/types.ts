@@ -18,16 +18,15 @@ export interface MenuI {
   icon: React.JSX.Element;
 }
 
-interface Folder extends FolderI {}
-
 export interface FolderI {
   id: string;
   name: string;
   files: FileI[] | [];
-  folders: Folder[] | [];
+  type: string;
 }
 
 export interface FileI {
   id: string;
   name: string;
+  type: string;
 }
