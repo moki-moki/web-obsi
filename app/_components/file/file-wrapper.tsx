@@ -1,18 +1,10 @@
+import { DraggableI } from "@/app/types/types";
 import Draggable from "../Draggable/draggable";
 
-interface Props {
-  id: string;
-  type: string;
-  children: React.ReactNode;
-}
-
-const FileWrapper = ({ id, type, children }: Props) => {
+const FileWrapper = ({ id, title, type, children }: DraggableI) => {
   return (
-    <Draggable id={id} type={type}>
-      <div className="flex flex-col gap-2 p-2">
-        <span className="block w-full h-0.5 bg-gray rounded-full"></span>
-        {children}
-      </div>
+    <Draggable id={id} type={type} title={title}>
+      <div className="flex flex-col gap-2 p-2">{children}</div>
     </Draggable>
   );
 };

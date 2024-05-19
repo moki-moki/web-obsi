@@ -2,20 +2,14 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import {
-  DndContext,
-  DragEndEvent,
-  DragOverlay,
-  DragStartEvent,
-} from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragStartEvent } from "@dnd-kit/core";
 
 import Note from "../ui/note";
 import File from "../ui/file";
-import Draggable from "../Draggable/draggable";
 import FileWrapper from "../file/file-wrapper";
 import FolderTitle from "../folder/folder-title";
 import SidebarControlls from "./sidebar-controlls";
-import DragOverlayItem from "../drag-overlay-item";
+import DragOverlayItem from "../Draggable/drag-overlay-item";
 import { FilePlus, FolderPlus } from "lucide-react";
 import FolderWrapper from "../folder/folder-wrapper";
 import ContextMenu from "../context-menu/context-menu";
@@ -104,15 +98,20 @@ export default function Sidebar() {
     const item = e.active.data.current?.children;
     if (!item || !e.active || !e.over) return;
     const active = e.active.id;
-    const over = e.over?.id;
+    const over = e.over.id;
 
     const noteIdx: number = notes.findIndex((note) => note.id === active);
     const idxTransferFolder: number = folders.findIndex(
       (folder) => folder.id === over
     );
 
-    const noteToTransfer = notes[noteIdx];
+    const folderId = folders[idxTransferFolder].id;
+
+    // Checkes if we drag in same file
+    if (folderId === active) return;
+
     const prevfolders = [...folders];
+    const noteToTransfer = notes[noteIdx];
 
     // finds the folder being dragged to and updates it
     const updatedGroup = [...prevfolders[idxTransferFolder].files];
@@ -150,9 +149,10 @@ export default function Sidebar() {
 
   const handleDragStart = (e: DragStartEvent) => {
     const data = {
-      title: e.active.data.current?.children.props.name,
+      title: e.active.data.current?.title,
       type: e.active.data.current?.type,
     };
+    console.log(e);
     if (data) {
       setDraggingItem(data);
     }
@@ -164,6 +164,8 @@ export default function Sidebar() {
     setIsClient(true);
   }, []);
 
+  console.log(draggingItem);
+
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
       <div
@@ -172,7 +174,7 @@ export default function Sidebar() {
       >
         <SidebarControlls createFolder={createFolder} createFile={createFile} />
         <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
-        <ul className="px-2 flex flex-col">
+        <ul className="px-2 flex flex-col gap-2">
           {isClient ? (
             <>
               {folders.map((el: FolderI, idx) => (
@@ -203,7 +205,7 @@ export default function Sidebar() {
                     />
                   </div>
                   {el.files?.length && rotatedIcons[idx] ? (
-                    <FileWrapper type={el.type} id={el.id}>
+                    <FileWrapper type={el.type} id={el.id} title={el.name}>
                       {el.files?.map((note) => (
                         <File name={note.name} key={note.id} />
                       ))}
@@ -211,9 +213,12 @@ export default function Sidebar() {
                   ) : null}
                 </FolderWrapper>
               ))}
+              {notes.length > 0 && (
+                <span className="block w-full h-0.5 bg-gray rounded-full"></span>
+              )}
               {notes.map((el) => (
                 <li key={el.id}>
-                  <FileWrapper id={el.id} type={el.type}>
+                  <FileWrapper id={el.id} type={el.type} title={el.name}>
                     <Note name={el.name} />
                   </FileWrapper>
                 </li>
@@ -225,14 +230,9 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      <DragOverlay>
-        {isDragging && draggingItem ? (
-          <DragOverlayItem
-            title={draggingItem.title}
-            type={draggingItem.type}
-          />
-        ) : null}
-      </DragOverlay>
+      {isDragging && draggingItem ? (
+        <DragOverlayItem title={draggingItem.title} type={draggingItem.type} />
+      ) : null}
 
       {contextMenu.show ? (
         <ContextMenu x={contextMenu.x} y={contextMenu.y} onClose={onClose}>

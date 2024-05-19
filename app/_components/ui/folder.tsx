@@ -1,34 +1,25 @@
-import { MouseEvent } from "react";
-import Input from "./input";
-import { FileI, InputChangeEventHandler } from "@/app/types/types";
-import { ChevronRight, SquarePen, Trash2 } from "lucide-react";
 import File from "./file";
+import Input from "./input";
+import { ChevronRight } from "lucide-react";
 import FileWrapper from "../file/file-wrapper";
+import { FileI, InputChangeEventHandler } from "@/app/types/types";
 
 interface Props {
-  id: string;
   idx: number;
   name: string;
   files: FileI[];
   rotateIcon: boolean[];
   renameValue: string;
   showInput: null | number;
-  iconHandler: (e: MouseEvent, idx: number) => void;
+  iconHandler: (e: React.MouseEvent, idx: number) => void;
   onChangeHandler: InputChangeEventHandler;
-  changeNameHandler: (
-    e: React.MouseEvent<HTMLSpanElement>,
-    idx: number,
-    name: string
-  ) => void;
   onKeyDownHandler: (
     e: React.KeyboardEvent<HTMLInputElement>,
     idx: number
   ) => void;
-  deleteFolder: (id: string) => void;
 }
 
 const Folder = ({
-  id,
   idx,
   name,
   files,
@@ -36,10 +27,8 @@ const Folder = ({
   rotateIcon,
   renameValue,
   iconHandler,
-  deleteFolder,
   onChangeHandler,
   onKeyDownHandler,
-  changeNameHandler,
 }: Props) => {
   return (
     <div
@@ -71,25 +60,11 @@ const Folder = ({
             <span className="text-sm font-bold">{name}</span>
           )}
         </div>
-        {/* <div className="flex items-center gap-2">
-          <span
-            onClick={(e) => changeNameHandler(e, idx, name)}
-            className="text-sm transition-colors duration-200 hover:text-white"
-          >
-            <SquarePen size={20} />
-          </span>
-          <span
-            onClick={() => deleteFolder(id)}
-            className="text-sm transition-colors duration-200 hover:text-white"
-          >
-            <Trash2 size={20} />
-          </span>
-        </div> */}
       </div>
 
       {files?.length && rotateIcon[idx]
         ? files?.map((el) => (
-            <FileWrapper type={el.type} id={el.id}>
+            <FileWrapper type={el.type} id={el.id} title={el.name}>
               <File name={el.name} key={el.id} />
             </FileWrapper>
           ))

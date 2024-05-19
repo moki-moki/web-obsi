@@ -30,3 +30,16 @@ export interface FileI {
   name: string;
   type: string;
 }
+
+export interface DragOverlayI {
+  title: string;
+  type: string;
+  children: React.ReactNode;
+}
+
+export interface DraggableI {
+  id: string;
+  type: string;
+  title: string;
+  children: React.ReactNode;
+}
