@@ -8,18 +8,21 @@ import {
   DragOverlay,
   DragStartEvent,
 } from "@dnd-kit/core";
-import SidebarControlls from "./sidebar-controlls";
 
 import Note from "../ui/note";
-import Folder from "../ui/folder";
-import Draggable from "../draggable";
-import Droppable from "../droppable";
+import File from "../ui/file";
+import Draggable from "../Draggable/draggable";
+import FileWrapper from "../file/file-wrapper";
+import FolderTitle from "../folder/folder-title";
+import SidebarControlls from "./sidebar-controlls";
+import DragOverlayItem from "../drag-overlay-item";
+import { FilePlus, FolderPlus } from "lucide-react";
+import FolderWrapper from "../folder/folder-wrapper";
+import ContextMenu from "../context-menu/context-menu";
+import FolderControlls from "../folder/folder-controlls";
 import { useLocalStorage } from "@/app/hooks/useLocalStorage";
 import { FileI, FolderI, InputChangeEventHandler } from "@/app/types/types";
 import { FOLDER_STATE, INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
-import ContextMenu from "../context-menu/context-menu";
-import { FilePlus, FolderPlus } from "lucide-react";
-import DragOverlayItem from "../drag-overlay-item";
 
 interface DraggingItemI {
   title: string;
@@ -29,11 +32,12 @@ interface DraggingItemI {
 export default function Sidebar() {
   const [isClient, setIsClient] = useState<boolean>(false); // Fixes Next.js hydration issue with local storage
   const [renameValue, setRenameValue] = useState<string>("");
-  const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [showInput, setShowInput] = useState<null | number>(null);
   const [notes, setNotes] = useLocalStorage<FileI[]>("notes", []);
   const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
   const [folders, setFolders] = useLocalStorage<FolderI[]>("folders", []);
+  const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
   const [rotatedIcons, setRotatedIcons] = useState(
     Array(FOLDER_STATE.length).fill(false)
   );
@@ -144,8 +148,6 @@ export default function Sidebar() {
     setContextMenu({ show: true, x: pageX, y: pageY });
   };
 
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-
   const handleDragStart = (e: DragStartEvent) => {
     const data = {
       title: e.active.data.current?.children.props.name,
@@ -174,27 +176,47 @@ export default function Sidebar() {
           {isClient ? (
             <>
               {folders.map((el: FolderI, idx) => (
-                <Droppable id={el.id} key={el.id}>
-                  <Folder
-                    idx={idx}
-                    id={el.id}
-                    name={el.name}
-                    files={el.files}
-                    showInput={showInput}
-                    rotateIcon={rotatedIcons}
-                    renameValue={renameValue}
-                    iconHandler={iconHandler}
-                    deleteFolder={deleteFolder}
-                    onChangeHandler={onChangeHandler}
-                    onKeyDownHandler={onKeyDownHandler}
-                    changeNameHandler={changeNameHandler}
-                  />
-                </Droppable>
+                <FolderWrapper
+                  idx={idx}
+                  id={el.id}
+                  key={el.id}
+                  showInput={showInput}
+                  rotateIcon={rotatedIcons}
+                  iconHandler={iconHandler}
+                >
+                  <div className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent">
+                    <FolderTitle
+                      idx={idx}
+                      name={el.name}
+                      showInput={showInput}
+                      rotateIcon={rotatedIcons}
+                      renameValue={renameValue}
+                      onChangeHandler={onChangeHandler}
+                      onKeyDownHandler={onKeyDownHandler}
+                    />
+                    <FolderControlls
+                      idx={idx}
+                      id={el.id}
+                      name={el.name}
+                      deleteFolder={deleteFolder}
+                      changeNameHandler={changeNameHandler}
+                    />
+                  </div>
+                  {el.files?.length && rotatedIcons[idx] ? (
+                    <FileWrapper type={el.type} id={el.id}>
+                      {el.files?.map((note) => (
+                        <File name={note.name} key={note.id} />
+                      ))}
+                    </FileWrapper>
+                  ) : null}
+                </FolderWrapper>
               ))}
               {notes.map((el) => (
-                <Draggable id={el.id} type={el.type} key={el.id}>
-                  <Note name={el.name} />
-                </Draggable>
+                <li key={el.id}>
+                  <FileWrapper id={el.id} type={el.type}>
+                    <Note name={el.name} />
+                  </FileWrapper>
+                </li>
               ))}
             </>
           ) : (

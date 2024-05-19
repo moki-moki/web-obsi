@@ -19,8 +19,8 @@ export default function Draggable({ id, type, children }: Props) {
     : undefined;
 
   return (
-    <li ref={setNodeRef} {...listeners} {...attributes} style={style}>
+    <div ref={setNodeRef} {...listeners} {...attributes} style={style}>
       {children}
-    </li>
+    </div>
   );
 }

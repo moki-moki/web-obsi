@@ -3,6 +3,7 @@ import Input from "./input";
 import { FileI, InputChangeEventHandler } from "@/app/types/types";
 import { ChevronRight, SquarePen, Trash2 } from "lucide-react";
 import File from "./file";
+import FileWrapper from "../file/file-wrapper";
 
 interface Props {
   id: string;
@@ -70,7 +71,7 @@ const Folder = ({
             <span className="text-sm font-bold">{name}</span>
           )}
         </div>
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <span
             onClick={(e) => changeNameHandler(e, idx, name)}
             className="text-sm transition-colors duration-200 hover:text-white"
@@ -83,17 +84,16 @@ const Folder = ({
           >
             <Trash2 size={20} />
           </span>
-        </div>
+        </div> */}
       </div>
 
-      {files?.length && rotateIcon[idx] ? (
-        <div className="flex flex-col gap-2 p-2">
-          <span className="block w-full h-0.5 bg-gray rounded-full"></span>
-          {files?.map((el) => (
-            <File name={el.name} key={el.id} />
-          ))}
-        </div>
-      ) : null}
+      {files?.length && rotateIcon[idx]
+        ? files?.map((el) => (
+            <FileWrapper type={el.type} id={el.id}>
+              <File name={el.name} key={el.id} />
+            </FileWrapper>
+          ))
+        : null}
     </div>
   );
 };
