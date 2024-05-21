@@ -15,15 +15,27 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
     }
   });
 
+  const setValue = (value: any) => {
+    try {
+      const valueToStore = value instanceof Function ? value(state) : value;
+      setValue(valueToStore);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        window.dispatchEvent(new Event("storage"));
+      }
+    } catch (error) {
+      console.warn(`Error setting localStorage key “${key}”:`, error);
+    }
+  };
+
   const handleStorageChange = (e: StorageEvent) => {
     if (e.key === "myData" && e.newValue) {
       setState(JSON.parse(e.newValue));
-
-      console.log(e.newValue);
     }
   };
 
   useEffect(() => {
+    console.log("state changed");
     localStorage.setItem(key, JSON.stringify(state));
 
     window.addEventListener("storage", handleStorageChange);
@@ -33,5 +45,5 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
     };
   }, [state, key]);
 
-  return [state, setState] as [T, typeof setState];
+  return [state, setState, setValue] as [T, typeof setState, any];
 }

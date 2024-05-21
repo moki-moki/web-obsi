@@ -5,7 +5,7 @@ import { DraggableI } from "@/app/types/types";
 export default function Draggable({ id, title, type, children }: DraggableI) {
   const { attributes, listeners, transform, setNodeRef } = useDraggable({
     id: id,
-    data: { children, type: type, title },
+    data: { children, type, title, id },
   });
   const style = transform
     ? {

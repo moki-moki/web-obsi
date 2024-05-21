@@ -19,7 +19,7 @@ const FolderWrapper = ({
   iconHandler,
 }: Props) => {
   return (
-    <Droppable id={id} key={id}>
+    <Droppable id={id} key={id} type="folder">
       <div
         className={`cursor-pointer text-gray uppercase font-bold tracking-wide rounded-xl ${
           showInput === idx && "bg-gray/20"

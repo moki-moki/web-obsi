@@ -2,21 +2,24 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { DndContext, DragEndEvent, DragStartEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  DragStartEvent,
+  UniqueIdentifier,
+} from "@dnd-kit/core";
 
 import Note from "../ui/note";
-import File from "../ui/file";
-import FileWrapper from "../file/file-wrapper";
-import FolderTitle from "../folder/folder-title";
 import SidebarControlls from "./sidebar-controlls";
 import DragOverlayItem from "../Draggable/drag-overlay-item";
 import { FilePlus, FolderPlus } from "lucide-react";
-import FolderWrapper from "../folder/folder-wrapper";
 import ContextMenu from "../context-menu/context-menu";
-import FolderControlls from "../folder/folder-controlls";
 import { useLocalStorage } from "@/app/hooks/useLocalStorage";
 import { FileI, FolderI, InputChangeEventHandler } from "@/app/types/types";
-import { FOLDER_STATE, INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
+import { INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
+import Droppable from "../Draggable/droppable";
+import Folders from "./folders";
+import Draggable from "../Draggable/draggable";
 
 interface DraggingItemI {
   title: string;
@@ -25,16 +28,13 @@ interface DraggingItemI {
 
 export default function Sidebar() {
   const [isClient, setIsClient] = useState<boolean>(false); // Fixes Next.js hydration issue with local storage
-  const [renameValue, setRenameValue] = useState<string>("");
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [renameValue, setRenameValue] = useState<string>("");
   const [showInput, setShowInput] = useState<null | number>(null);
   const [notes, setNotes] = useLocalStorage<FileI[]>("notes", []);
   const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
   const [folders, setFolders] = useLocalStorage<FolderI[]>("folders", []);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
-  const [rotatedIcons, setRotatedIcons] = useState(
-    Array(FOLDER_STATE.length).fill(false)
-  );
 
   const createFolder = () => {
     const newFolder = {
@@ -55,87 +55,69 @@ export default function Sidebar() {
     setNotes((prev) => [...prev, newNote]);
   };
 
-  const onChangeHandler: InputChangeEventHandler = (e) => {
-    e.stopPropagation();
-    setRenameValue(e.target.value);
-  };
-
-  const onKeyDownHandler = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    idx: number
-  ) => {
-    if (e.key === "Enter") {
-      setFolders((prev) => {
-        const newfolders = [...prev];
-        newfolders[idx].name = renameValue;
-        return newfolders;
-      });
-      setShowInput(null);
-    }
-  };
-
-  const changeNameHandler = (
-    e: React.MouseEvent<HTMLSpanElement>,
-    idx: number,
-    name: string
-  ) => {
-    e.stopPropagation();
-
-    setShowInput(idx);
-    setRenameValue(name);
-  };
-
-  const deleteFolder = (id: string) => {
-    setFolders((prev) => {
-      const newState = [...prev].filter((item) => item.id !== id);
-      return newState;
-    });
-  };
-
   const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
-  const onDragEnd = (e: DragEndEvent) => {
-    const item = e.active.data.current?.children;
-    if (!item || !e.active || !e.over) return;
-    const active = e.active.id;
-    const over = e.over.id;
-
-    const noteIdx: number = notes.findIndex((note) => note.id === active);
-    const idxTransferFolder: number = folders.findIndex(
-      (folder) => folder.id === over
+  const onDragNote = (over: UniqueIdentifier, item: FileI) => {
+    const noteIdx = folders.findIndex((note) =>
+      note.files.findIndex((item) => item.id === over)
     );
-
-    const folderId = folders[idxTransferFolder].id;
-
-    // Checkes if we drag in same file
-    if (folderId === active) return;
-
-    const prevfolders = [...folders];
-    const noteToTransfer = notes[noteIdx];
-
-    // finds the folder being dragged to and updates it
-    const updatedGroup = [...prevfolders[idxTransferFolder].files];
-    updatedGroup.push(noteToTransfer);
-    prevfolders[idxTransferFolder] = {
-      ...prevfolders[idxTransferFolder],
-      files: updatedGroup,
-    };
-
-    setNotes((prev) => {
-      prev.splice(noteIdx, 1);
+    setFolders((prev) => {
+      prev.map((child) => {
+        child.files.splice(noteIdx, 1);
+        return child;
+      });
       return [...prev];
     });
-    setFolders(prevfolders);
-    setIsDragging(false);
+    setNotes((prev) => [...prev, item]);
   };
 
-  const iconHandler = (e: React.MouseEvent, idx: number) => {
-    if ((e.target as HTMLElement).tagName === "INPUT") return;
-    setRotatedIcons((prevState) => {
-      const newState = [...prevState];
-      newState[idx] = !newState[idx];
-      return newState;
-    });
+  const onDragEnd = (e: DragEndEvent) => {
+    console.log(e);
+    if (!e.active || !e.over || !e.over.data.current || !e.active.data.current)
+      return;
+
+    const active = e.active.id;
+    const over = e.over.id;
+    const location = e.over.data.current.type;
+    const { id, type, title } = e.active.data.current;
+
+    const dataTransfer = {
+      id,
+      type,
+      name: title,
+    };
+
+    if (location === "notes") {
+      onDragNote(over, dataTransfer);
+    } else {
+      const noteIdx: number = notes.findIndex((note) => note.id === active);
+      const idxTransferFolder: number = folders.findIndex(
+        (folder) => folder.id === over
+      );
+
+      const folderId = folders[idxTransferFolder].id;
+
+      // Checkes if we drag in same file
+      if (folderId === active) return;
+
+      const prevfolders = [...folders];
+      const noteToTransfer = notes[noteIdx];
+
+      // finds the folder being dragged to and updates it
+      const updatedGroup = [...prevfolders[idxTransferFolder].files];
+      updatedGroup.push(noteToTransfer);
+      prevfolders[idxTransferFolder] = {
+        ...prevfolders[idxTransferFolder],
+        files: updatedGroup,
+      };
+
+      setNotes((prev) => {
+        prev.splice(noteIdx, 1);
+        return [...prev];
+      });
+      setFolders(prevfolders);
+      setIsDragging(false);
+    }
   };
 
   const handleContextMenu = (
@@ -152,11 +134,49 @@ export default function Sidebar() {
       title: e.active.data.current?.title,
       type: e.active.data.current?.type,
     };
-    console.log(e);
+
     if (data) {
       setDraggingItem(data);
     }
     setIsDragging(true);
+  };
+
+  // functions below should be moved to different component
+  const onKeyDownHandler = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    idx: number
+  ) => {
+    if (e.key === "Enter") {
+      setFolders((prev) => {
+        const newfolders = [...prev];
+        newfolders[idx].name = renameValue;
+        return newfolders;
+      });
+      setShowInput(null);
+    }
+  };
+
+  const deleteFolder = (id: string) => {
+    setFolders((prev) => {
+      const newState = [...prev].filter((item) => item.id !== id);
+      return newState;
+    });
+  };
+
+  const onChangeHandler: InputChangeEventHandler = (e) => {
+    e.stopPropagation();
+    setRenameValue(e.target.value);
+  };
+
+  const changeNameHandler = (
+    e: React.MouseEvent<HTMLSpanElement>,
+    idx: number,
+    name: string
+  ) => {
+    e.stopPropagation();
+
+    setShowInput(idx);
+    setRenameValue(name);
   };
 
   // This Fixes Next.js hydration issue with local storage. TODO: find better approach
@@ -164,75 +184,49 @@ export default function Sidebar() {
     setIsClient(true);
   }, []);
 
-  console.log(draggingItem);
-
   return (
-    <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
+    <>
       <div
         onContextMenu={handleContextMenu}
-        className="w-1/4 border-r border-r-border h-screen"
+        className="w-1/4 border-r border-r-border h-screen flex flex-col"
       >
         <SidebarControlls createFolder={createFolder} createFile={createFile} />
         <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
-        <ul className="px-2 flex flex-col gap-2">
-          {isClient ? (
-            <>
-              {folders.map((el: FolderI, idx) => (
-                <FolderWrapper
-                  idx={idx}
-                  id={el.id}
-                  key={el.id}
-                  showInput={showInput}
-                  rotateIcon={rotatedIcons}
-                  iconHandler={iconHandler}
-                >
-                  <div className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent">
-                    <FolderTitle
-                      idx={idx}
-                      name={el.name}
-                      showInput={showInput}
-                      rotateIcon={rotatedIcons}
-                      renameValue={renameValue}
-                      onChangeHandler={onChangeHandler}
-                      onKeyDownHandler={onKeyDownHandler}
-                    />
-                    <FolderControlls
-                      idx={idx}
-                      id={el.id}
-                      name={el.name}
-                      deleteFolder={deleteFolder}
-                      changeNameHandler={changeNameHandler}
-                    />
-                  </div>
-                  {el.files?.length && rotatedIcons[idx] ? (
-                    <FileWrapper type={el.type} id={el.id} title={el.name}>
-                      {el.files?.map((note) => (
-                        <File name={note.name} key={note.id} />
-                      ))}
-                    </FileWrapper>
-                  ) : null}
-                </FolderWrapper>
-              ))}
-              {notes.length > 0 && (
-                <span className="block w-full h-0.5 bg-gray rounded-full"></span>
-              )}
-              {notes.map((el) => (
-                <li key={el.id}>
-                  <FileWrapper id={el.id} type={el.type} title={el.name}>
-                    <Note name={el.name} />
-                  </FileWrapper>
-                </li>
-              ))}
-            </>
-          ) : (
-            <></>
-          )}
-        </ul>
+        {isClient ? (
+          <>
+            <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
+              <Folders
+                changeNameHandler={changeNameHandler}
+                deleteFolder={deleteFolder}
+                onChangeHandler={onChangeHandler}
+                onKeyDownHandler={onKeyDownHandler}
+                renameValue={renameValue}
+                showInput={showInput}
+                folders={folders}
+              />
+              {isDragging && draggingItem ? (
+                <DragOverlayItem
+                  title={draggingItem.title}
+                  type={draggingItem.type}
+                />
+              ) : null}
+              <ul className="h-full flex-auto">
+                <Droppable id={uuidv4()} type="notes">
+                  {notes.map((el) => (
+                    <li key={el.id}>
+                      <Draggable id={el.id} title={el.name} type={el.type}>
+                        <Note name={el.name} />
+                      </Draggable>
+                    </li>
+                  ))}
+                </Droppable>
+              </ul>
+            </DndContext>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
-
-      {isDragging && draggingItem ? (
-        <DragOverlayItem title={draggingItem.title} type={draggingItem.type} />
-      ) : null}
 
       {contextMenu.show ? (
         <ContextMenu x={contextMenu.x} y={contextMenu.y} onClose={onClose}>
@@ -256,6 +250,6 @@ export default function Sidebar() {
           </li>
         </ContextMenu>
       ) : null}
-    </DndContext>
+    </>
   );
 }
