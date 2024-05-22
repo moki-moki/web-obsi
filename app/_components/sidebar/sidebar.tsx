@@ -9,51 +9,35 @@ import {
   UniqueIdentifier,
 } from "@dnd-kit/core";
 
-import Note from "../ui/note";
-import SidebarControlls from "./sidebar-controlls";
-import DragOverlayItem from "../Draggable/drag-overlay-item";
 import { FilePlus, FolderPlus } from "lucide-react";
-import ContextMenu from "../context-menu/context-menu";
-import { useLocalStorage } from "@/app/hooks/useLocalStorage";
-import { FileI, FolderI, InputChangeEventHandler } from "@/app/types/types";
-import { INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
-import Droppable from "../Draggable/droppable";
+
+import Note from "../ui/note";
 import Folders from "./folders";
+import SidebarControlls from "./sidebar-controlls";
+import ContextMenu from "../context-menu/context-menu";
+
+import { DraggingItemI, FileI } from "@/app/types/types";
+import { INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
+import { useSidebarContext } from "@/app/context/sidebar-conext";
+
+import Droppable from "../Draggable/droppable";
 import Draggable from "../Draggable/draggable";
+import DragOverlayItem from "../Draggable/drag-overlay-item";
 
-interface DraggingItemI {
-  title: string;
-  type: string;
-}
-
-export default function Sidebar() {
+function Sidebar() {
   const [isClient, setIsClient] = useState<boolean>(false); // Fixes Next.js hydration issue with local storage
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [renameValue, setRenameValue] = useState<string>("");
-  const [showInput, setShowInput] = useState<null | number>(null);
-  const [notes, setNotes] = useLocalStorage<FileI[]>("notes", []);
   const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
-  const [folders, setFolders] = useLocalStorage<FolderI[]>("folders", []);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
-
-  const createFolder = () => {
-    const newFolder = {
-      id: uuidv4(),
-      name: "(No Title)",
-      type: "folder",
-      files: [],
-    };
-    setFolders((prev) => [...prev, newFolder]);
-  };
-
-  const createFile = () => {
-    const newNote: FileI = {
-      id: uuidv4(),
-      name: "(No title)",
-      type: "note",
-    };
-    setNotes((prev) => [...prev, newNote]);
-  };
+  const {
+    notes,
+    folders,
+    setFolders,
+    setNotes,
+    createNote,
+    createFolder,
+    deleteFolder,
+  } = useSidebarContext();
 
   const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
@@ -75,18 +59,15 @@ export default function Sidebar() {
     console.log(e);
     if (!e.active || !e.over || !e.over.data.current || !e.active.data.current)
       return;
-
     const active = e.active.id;
     const over = e.over.id;
     const location = e.over.data.current.type;
     const { id, type, title } = e.active.data.current;
-
     const dataTransfer = {
       id,
       type,
       name: title,
     };
-
     if (location === "notes") {
       onDragNote(over, dataTransfer);
     } else {
@@ -94,15 +75,11 @@ export default function Sidebar() {
       const idxTransferFolder: number = folders.findIndex(
         (folder) => folder.id === over
       );
-
       const folderId = folders[idxTransferFolder].id;
-
       // Checkes if we drag in same file
       if (folderId === active) return;
-
       const prevfolders = [...folders];
       const noteToTransfer = notes[noteIdx];
-
       // finds the folder being dragged to and updates it
       const updatedGroup = [...prevfolders[idxTransferFolder].files];
       updatedGroup.push(noteToTransfer);
@@ -110,7 +87,6 @@ export default function Sidebar() {
         ...prevfolders[idxTransferFolder],
         files: updatedGroup,
       };
-
       setNotes((prev) => {
         prev.splice(noteIdx, 1);
         return [...prev];
@@ -141,44 +117,6 @@ export default function Sidebar() {
     setIsDragging(true);
   };
 
-  // functions below should be moved to different component
-  const onKeyDownHandler = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    idx: number
-  ) => {
-    if (e.key === "Enter") {
-      setFolders((prev) => {
-        const newfolders = [...prev];
-        newfolders[idx].name = renameValue;
-        return newfolders;
-      });
-      setShowInput(null);
-    }
-  };
-
-  const deleteFolder = (id: string) => {
-    setFolders((prev) => {
-      const newState = [...prev].filter((item) => item.id !== id);
-      return newState;
-    });
-  };
-
-  const onChangeHandler: InputChangeEventHandler = (e) => {
-    e.stopPropagation();
-    setRenameValue(e.target.value);
-  };
-
-  const changeNameHandler = (
-    e: React.MouseEvent<HTMLSpanElement>,
-    idx: number,
-    name: string
-  ) => {
-    e.stopPropagation();
-
-    setShowInput(idx);
-    setRenameValue(name);
-  };
-
   // This Fixes Next.js hydration issue with local storage. TODO: find better approach
   useEffect(() => {
     setIsClient(true);
@@ -190,19 +128,15 @@ export default function Sidebar() {
         onContextMenu={handleContextMenu}
         className="w-1/4 border-r border-r-border h-screen flex flex-col"
       >
-        <SidebarControlls createFolder={createFolder} createFile={createFile} />
+        <SidebarControlls createFolder={createFolder} createNote={createNote} />
         <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
         {isClient ? (
           <>
             <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
               <Folders
-                changeNameHandler={changeNameHandler}
-                deleteFolder={deleteFolder}
-                onChangeHandler={onChangeHandler}
-                onKeyDownHandler={onKeyDownHandler}
-                renameValue={renameValue}
-                showInput={showInput}
                 folders={folders}
+                setFolders={setFolders}
+                deleteFolder={deleteFolder}
               />
               {isDragging && draggingItem ? (
                 <DragOverlayItem
@@ -240,7 +174,7 @@ export default function Sidebar() {
             </span>
           </li>
           <li
-            onClick={createFile}
+            onClick={createNote}
             className="folder flex justify-between items-center cursor-pointer text-gray px-2 py-1 rounded-full text-xs font-bold uppercase hover:bg-gray/20"
           >
             New File
@@ -253,3 +187,5 @@ export default function Sidebar() {
     </>
   );
 }
+
+export default Sidebar;

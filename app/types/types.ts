@@ -43,3 +43,8 @@ export interface DraggableI {
   title: string;
   children: React.ReactNode;
 }
+
+export interface DraggingItemI {
+  title: string;
+  type: string;
+}

@@ -16,8 +16,8 @@ const FolderControlls = ({
   id,
   idx,
   name,
-  changeNameHandler,
   deleteFolder,
+  changeNameHandler,
 }: Props) => {
   return (
     <div className="flex items-center gap-2">

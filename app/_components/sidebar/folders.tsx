@@ -1,4 +1,3 @@
-import { useLocalStorage } from "@/app/hooks/useLocalStorage";
 import { FolderI, InputChangeEventHandler } from "@/app/types/types";
 import FolderWrapper from "../folder/folder-wrapper";
 import FolderTitle from "../folder/folder-title";
@@ -9,34 +8,48 @@ import { useState } from "react";
 import { FOLDER_STATE } from "@/app/data/initial-state";
 
 interface Props {
-  showInput: null | number;
-  renameValue: string;
   folders: FolderI[];
   deleteFolder: (id: string) => void;
-  onChangeHandler: InputChangeEventHandler;
-  onKeyDownHandler: (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    idx: number
-  ) => void;
-  changeNameHandler: (
-    e: React.MouseEvent<HTMLSpanElement>,
-    idx: number,
-    name: string
-  ) => void;
+  setFolders: React.Dispatch<React.SetStateAction<FolderI[]>>;
 }
 
-const Folders = ({
-  deleteFolder,
-  onChangeHandler,
-  onKeyDownHandler,
-  changeNameHandler,
-  renameValue,
-  showInput,
-  folders,
-}: Props) => {
+const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
+  const [renameValue, setRenameValue] = useState<string>("");
+  const [showInput, setShowInput] = useState<null | number>(null);
   const [rotatedIcons, setRotatedIcons] = useState(
     Array(FOLDER_STATE.length).fill(false)
   );
+
+  const onChangeHandler: InputChangeEventHandler = (e) => {
+    e.stopPropagation();
+    setRenameValue(e.target.value);
+  };
+
+  const changeNameHandler = (
+    e: React.MouseEvent<HTMLSpanElement>,
+    idx: number,
+    name: string
+  ) => {
+    console.log("firess");
+    e.stopPropagation();
+
+    setShowInput(idx);
+    setRenameValue(name);
+  };
+
+  const onKeyDownHandler = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    idx: number
+  ) => {
+    if (e.key === "Enter") {
+      setFolders((prev: any) => {
+        const newfolders = [...prev];
+        newfolders[idx].name = renameValue;
+        return newfolders;
+      });
+      setShowInput(null);
+    }
+  };
 
   const iconHandler = (e: React.MouseEvent, idx: number) => {
     if ((e.target as HTMLElement).tagName === "INPUT") return;
@@ -63,8 +76,8 @@ const Folders = ({
               idx={idx}
               name={el.name}
               showInput={showInput}
-              rotateIcon={rotatedIcons}
               renameValue={renameValue}
+              rotateIcon={rotatedIcons}
               onChangeHandler={onChangeHandler}
               onKeyDownHandler={onKeyDownHandler}
             />
