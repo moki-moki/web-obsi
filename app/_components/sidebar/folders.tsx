@@ -1,11 +1,12 @@
-import { FolderI, InputChangeEventHandler } from "@/app/types/types";
-import FolderWrapper from "../folder/folder-wrapper";
-import FolderTitle from "../folder/folder-title";
-import FolderControlls from "../folder/folder-controlls";
-import FileWrapper from "../file/file-wrapper";
-import File from "../ui/file";
 import { useState } from "react";
+import File from "../ui/file";
+import FileWrapper from "../file/file-wrapper";
+import FolderTitle from "../folder/folder-title";
+import FolderWrapper from "../folder/folder-wrapper";
+import FolderControlls from "../folder/folder-controlls";
+
 import { FOLDER_STATE } from "@/app/data/initial-state";
+import { FolderI, InputChangeEventHandler } from "@/app/types/types";
 
 interface Props {
   folders: FolderI[];
@@ -89,12 +90,19 @@ const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
               changeNameHandler={changeNameHandler}
             />
           </div>
-          {el.files?.length && rotatedIcons[idx] ? (
-            <FileWrapper type={el.type} id={el.id} title={el.name}>
-              {el.files?.map((note) => (
-                <File name={note.name} key={note.id} />
+          {el.files.length && rotatedIcons[idx] ? (
+            <>
+              {el.files.map((note) => (
+                <FileWrapper
+                  key={note.id}
+                  type={note.type}
+                  id={note.id}
+                  title={note.name}
+                >
+                  <File name={note.name} key={note.id} />
+                </FileWrapper>
               ))}
-            </FileWrapper>
+            </>
           ) : null}
         </FolderWrapper>
       ))}

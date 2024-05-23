@@ -56,11 +56,10 @@ function Sidebar() {
   };
 
   const onDragEnd = (e: DragEndEvent) => {
-    console.log(e);
     if (!e.active || !e.over || !e.over.data.current || !e.active.data.current)
       return;
-    const active = e.active.id;
-    const over = e.over.id;
+    const activeId = e.active.id;
+    const overId = e.over.id;
     const location = e.over.data.current.type;
     const { id, type, title } = e.active.data.current;
     const dataTransfer = {
@@ -68,30 +67,30 @@ function Sidebar() {
       type,
       name: title,
     };
+
+    console.log(e, location);
+
     if (location === "notes") {
-      onDragNote(over, dataTransfer);
+      onDragNote(overId, dataTransfer);
     } else {
-      const noteIdx: number = notes.findIndex((note) => note.id === active);
-      const idxTransferFolder: number = folders.findIndex(
-        (folder) => folder.id === over
+      const noteIdx: number = notes.findIndex((note) => note.id === activeId);
+      const folderTransferIdx: number = folders.findIndex(
+        (folder) => folder.id === overId
       );
-      const folderId = folders[idxTransferFolder].id;
-      // Checkes if we drag in same file
-      if (folderId === active) return;
-      const prevfolders = [...folders];
+      // TODO: Check if we drop in same folder
+
+      const updatedFolders = [...folders];
       const noteToTransfer = notes[noteIdx];
       // finds the folder being dragged to and updates it
-      const updatedGroup = [...prevfolders[idxTransferFolder].files];
-      updatedGroup.push(noteToTransfer);
-      prevfolders[idxTransferFolder] = {
-        ...prevfolders[idxTransferFolder],
-        files: updatedGroup,
-      };
+      const updatedGroup = { ...updatedFolders[folderTransferIdx] };
+      updatedGroup.files = [...updatedGroup.files, noteToTransfer];
+      updatedFolders[folderTransferIdx] = updatedGroup;
+
+      setFolders(updatedFolders);
       setNotes((prev) => {
         prev.splice(noteIdx, 1);
         return [...prev];
       });
-      setFolders(prevfolders);
       setIsDragging(false);
     }
   };
@@ -110,7 +109,7 @@ function Sidebar() {
       title: e.active.data.current?.title,
       type: e.active.data.current?.type,
     };
-
+    console.log(e.active.data.current);
     if (data) {
       setDraggingItem(data);
     }
