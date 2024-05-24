@@ -41,10 +41,21 @@ function Sidebar() {
 
   const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
-  const onDragNote = (over: UniqueIdentifier, item: FileI) => {
+  const onDragNote = (
+    overId: UniqueIdentifier,
+    activeId: UniqueIdentifier,
+    item: FileI
+  ) => {
+    // Checks if we drop the item in same place
+    const checkDrop = notes.some((note) => note.id === activeId);
+
+    console.log(checkDrop, "fire");
+
+    if (checkDrop) return;
     const noteIdx = folders.findIndex((note) =>
-      note.files.findIndex((item) => item.id === over)
+      note.files.findIndex((item) => item.id === overId)
     );
+
     setFolders((prev) => {
       prev.map((child) => {
         child.files.splice(noteIdx, 1);
@@ -56,28 +67,32 @@ function Sidebar() {
   };
 
   const onDragEnd = (e: DragEndEvent) => {
-    if (!e.active || !e.over || !e.over.data.current || !e.active.data.current)
-      return;
-    const activeId = e.active.id;
-    const overId = e.over.id;
-    const location = e.over.data.current.type;
-    const { id, type, title } = e.active.data.current;
+    const { active, over } = e;
+    if (!active || !over || !over.data.current || !active.data.current) return;
+    const activeId = active.id;
+    const overId = over.id;
+    const location = over.data.current.type;
+    const { id, type, title } = active.data.current;
     const dataTransfer = {
       id,
       type,
       name: title,
     };
 
-    console.log(e, location);
-
     if (location === "notes") {
-      onDragNote(overId, dataTransfer);
+      onDragNote(overId, activeId, dataTransfer);
     } else {
       const noteIdx: number = notes.findIndex((note) => note.id === activeId);
       const folderTransferIdx: number = folders.findIndex(
         (folder) => folder.id === overId
       );
-      // TODO: Check if we drop in same folder
+
+      // Checks if we drop the item in same place
+      const checkForSameDropLocation = folders[folderTransferIdx].files.some(
+        (note) => note.id === activeId
+      );
+
+      if (checkForSameDropLocation) return;
 
       const updatedFolders = [...folders];
       const noteToTransfer = notes[noteIdx];
@@ -105,11 +120,13 @@ function Sidebar() {
   };
 
   const handleDragStart = (e: DragStartEvent) => {
+    if (!e.active.data.current) return;
+    const { title, type } = e.active.data.current;
     const data = {
-      title: e.active.data.current?.title,
-      type: e.active.data.current?.type,
+      title,
+      type,
     };
-    console.log(e.active.data.current);
+
     if (data) {
       setDraggingItem(data);
     }

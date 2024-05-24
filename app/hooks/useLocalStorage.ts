@@ -22,7 +22,6 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
   };
 
   useEffect(() => {
-    console.log("state changed");
     localStorage.setItem(key, JSON.stringify(state));
 
     window.addEventListener("storage", handleStorageChange);

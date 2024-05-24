@@ -7,6 +7,7 @@ export default function Draggable({ id, title, type, children }: DraggableI) {
     id: id,
     data: { children, type, title, id },
   });
+
   const style = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
