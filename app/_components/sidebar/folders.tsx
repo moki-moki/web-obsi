@@ -31,7 +31,6 @@ const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
     idx: number,
     name: string
   ) => {
-    console.log("firess");
     e.stopPropagation();
 
     setShowInput(idx);
@@ -91,18 +90,20 @@ const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
             />
           </div>
           {el.files.length && rotatedIcons[idx] ? (
-            <>
-              {el.files.map((note) => (
-                <FileWrapper
-                  key={note.id}
-                  type={note.type}
-                  id={note.id}
-                  title={note.name}
-                >
-                  <File name={note.name} key={note.id} />
-                </FileWrapper>
-              ))}
-            </>
+            <div className="p-2">
+              <>
+                {el.files.map((note) => (
+                  <FileWrapper
+                    id={note.id}
+                    key={note.id}
+                    type={note.type}
+                    title={note.name}
+                  >
+                    <File name={note.name} key={note.id} />
+                  </FileWrapper>
+                ))}
+              </>
+            </div>
           ) : null}
         </FolderWrapper>
       ))}

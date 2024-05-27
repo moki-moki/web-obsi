@@ -18,6 +18,7 @@ import ContextMenu from "../context-menu/context-menu";
 
 import { DraggingItemI, FileI } from "@/app/types/types";
 import { INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
+import { findFolderIndexByInnerFiles, findIndexById } from "@/app/utils/utils";
 import { useSidebarContext } from "@/app/context/sidebar-conext";
 
 import Droppable from "../Draggable/droppable";
@@ -41,29 +42,50 @@ function Sidebar() {
 
   const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
-  const onDragNote = (
-    overId: UniqueIdentifier,
-    activeId: UniqueIdentifier,
-    item: FileI
-  ) => {
+  const dragNoteHandler = (activeId: UniqueIdentifier, item: FileI) => {
     // Checks if we drop the item in same place
     const checkDrop = notes.some((note) => note.id === activeId);
-
-    console.log(checkDrop, "fire");
-
     if (checkDrop) return;
-    const noteIdx = folders.findIndex((note) =>
-      note.files.findIndex((item) => item.id === overId)
+
+    const updatedFolders = [...folders];
+
+    const folderTransferIdx = findFolderIndexByInnerFiles(
+      updatedFolders,
+      item.id
+    );
+    const noteIdx = findIndexById(
+      updatedFolders[folderTransferIdx].files,
+      activeId
     );
 
-    setFolders((prev) => {
-      prev.map((child) => {
-        child.files.splice(noteIdx, 1);
-        return child;
-      });
-      return [...prev];
-    });
+    updatedFolders[folderTransferIdx].files.splice(noteIdx, 1);
+
     setNotes((prev) => [...prev, item]);
+    setFolders(updatedFolders);
+  };
+
+  const dragFolderHandler = (
+    activeId: UniqueIdentifier,
+    overId: UniqueIdentifier,
+    item: FileI
+  ) => {
+    const noteIdx: number = findIndexById(notes, activeId);
+    const folderTransferIdx: number = findIndexById(folders, overId);
+
+    // Checks if we drop the item in same place
+    const checkForSameDropLocation: boolean = folders[
+      folderTransferIdx
+    ].files.some((note) => note.id === activeId);
+    if (checkForSameDropLocation) return;
+    const updatedFolders = folders;
+    const updatedNotes = [...notes];
+    // finds the folder being dragged to and updates it
+    updatedNotes.splice(noteIdx, 1);
+    updatedFolders[folderTransferIdx].files.push(item);
+
+    setNotes(updatedNotes);
+    setFolders(updatedFolders);
+    setIsDragging(false);
   };
 
   const onDragEnd = (e: DragEndEvent) => {
@@ -80,39 +102,16 @@ function Sidebar() {
     };
 
     if (location === "notes") {
-      onDragNote(overId, activeId, dataTransfer);
+      dragNoteHandler(activeId, dataTransfer);
     } else {
-      const noteIdx: number = notes.findIndex((note) => note.id === activeId);
-      const folderTransferIdx: number = folders.findIndex(
-        (folder) => folder.id === overId
-      );
-
-      // Checks if we drop the item in same place
-      const checkForSameDropLocation = folders[folderTransferIdx].files.some(
-        (note) => note.id === activeId
-      );
-
-      if (checkForSameDropLocation) return;
-
-      const updatedFolders = [...folders];
-      const noteToTransfer = notes[noteIdx];
-      // finds the folder being dragged to and updates it
-      const updatedGroup = { ...updatedFolders[folderTransferIdx] };
-      updatedGroup.files = [...updatedGroup.files, noteToTransfer];
-      updatedFolders[folderTransferIdx] = updatedGroup;
-
-      setFolders(updatedFolders);
-      setNotes((prev) => {
-        prev.splice(noteIdx, 1);
-        return [...prev];
-      });
-      setIsDragging(false);
+      dragFolderHandler(activeId, overId, dataTransfer);
     }
   };
 
   const handleContextMenu = (
     e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
   ) => {
+    e.stopPropagation();
     e.preventDefault();
 
     const { pageX, pageY } = e;

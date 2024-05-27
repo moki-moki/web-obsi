@@ -21,7 +21,7 @@ export interface MenuI {
 export interface FolderI {
   id: string;
   name: string;
-  files: FileI[] | [];
+  files: FileI[];
   type: string;
 }
 

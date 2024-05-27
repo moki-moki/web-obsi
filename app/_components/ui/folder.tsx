@@ -1,6 +1,6 @@
 import File from "./file";
 import Input from "./input";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Link } from "lucide-react";
 import FileWrapper from "../file/file-wrapper";
 import { FileI, InputChangeEventHandler } from "@/app/types/types";
 

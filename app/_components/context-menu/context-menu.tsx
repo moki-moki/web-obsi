@@ -1,7 +1,5 @@
 import React, { useRef } from "react";
-import { MenuI } from "@/app/types/types";
 import { useOutsideClick } from "@/app/hooks/useOutsideClick";
-import { FolderPlus, NotebookPen, Trash2 } from "lucide-react";
 
 interface Props {
   x: number;
@@ -10,18 +8,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const MENU: MenuI[] = [
-  {
-    name: "New Folder",
-    icon: <FolderPlus />,
-  },
-  {
-    name: "New Note",
-    icon: <NotebookPen />,
-  },
-];
-
-const ContextMenu = ({ x, y, onClose, children }: Props) => {
+const ContextMenu = ({ x, y, children, onClose }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useOutsideClick(ref, onClose);

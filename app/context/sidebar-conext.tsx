@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 import { FileI, FolderI } from "../types/types";
 import { v4 as uuidv4 } from "uuid";
@@ -24,11 +24,13 @@ export default function SidebarConextProvider({
 }) {
   const [notes, setNotes] = useLocalStorage<FileI[]>("notes", []);
   const [folders, setFolders] = useLocalStorage<FolderI[]>("folders", []);
+  const [count, setCount] = useState(0);
 
   const createNote = () => {
+    setCount((prev) => prev + 1);
     const newNote = {
       id: uuidv4(),
-      name: "(No title)",
+      name: `(No title) ${count}`,
       type: "note",
     };
     setNotes((prev) => [...prev, newNote]);
@@ -44,17 +46,16 @@ export default function SidebarConextProvider({
     setFolders((prev) => [...prev, newFolder]);
   };
 
-  const deleteFolder = (id: string) => {
+  const deleteFolder = (id: string) =>
     setFolders((prev) => [...prev].filter((item) => item.id !== id));
-  };
 
   return (
     <SidebarContext.Provider
       value={{
         notes,
         folders,
-        setFolders,
         setNotes,
+        setFolders,
         createNote,
         createFolder,
         deleteFolder,
