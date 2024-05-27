@@ -1,5 +1,5 @@
 import { DraggableI } from "@/app/types/types";
-import Draggable from "../Draggable/draggable";
+import Draggable from "../Draggable/draggable-link";
 
 const FileWrapper = ({ id, title, type, children }: DraggableI) => {
   return (

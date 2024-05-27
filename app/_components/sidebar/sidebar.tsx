@@ -22,7 +22,7 @@ import { findFolderIndexByInnerFiles, findIndexById } from "@/app/utils/utils";
 import { useSidebarContext } from "@/app/context/sidebar-conext";
 
 import Droppable from "../Draggable/droppable";
-import Draggable from "../Draggable/draggable";
+import Draggable from "../Draggable/draggable-link";
 import DragOverlayItem from "../Draggable/drag-overlay-item";
 
 function Sidebar() {
@@ -77,7 +77,7 @@ function Sidebar() {
       folderTransferIdx
     ].files.some((note) => note.id === activeId);
     if (checkForSameDropLocation) return;
-    const updatedFolders = folders;
+    const updatedFolders = [...folders];
     const updatedNotes = [...notes];
     // finds the folder being dragged to and updates it
     updatedNotes.splice(noteIdx, 1);
@@ -85,8 +85,9 @@ function Sidebar() {
 
     setNotes(updatedNotes);
     setFolders(updatedFolders);
-    setIsDragging(false);
   };
+
+  console.log(isDragging);
 
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -106,6 +107,8 @@ function Sidebar() {
     } else {
       dragFolderHandler(activeId, overId, dataTransfer);
     }
+
+    setIsDragging(false);
   };
 
   const handleContextMenu = (
@@ -129,7 +132,10 @@ function Sidebar() {
     if (data) {
       setDraggingItem(data);
     }
-    setIsDragging(true);
+
+    setTimeout(() => {
+      setIsDragging(true);
+    }, 200);
   };
 
   // This Fixes Next.js hydration issue with local storage. TODO: find better approach
@@ -153,16 +159,13 @@ function Sidebar() {
                 setFolders={setFolders}
                 deleteFolder={deleteFolder}
               />
-              {isDragging && draggingItem ? (
-                <DragOverlayItem
-                  title={draggingItem.title}
-                  type={draggingItem.type}
-                />
-              ) : null}
-              <ul className="h-full flex-auto">
+              <ul className="h-full flex-auto p-1">
                 <Droppable id={uuidv4()} type="notes">
                   {notes.map((el) => (
-                    <li key={el.id}>
+                    <li
+                      className="rounded-full my-0.5 hover:bg-dark-gray-accent"
+                      key={el.id}
+                    >
                       <Draggable id={el.id} title={el.name} type={el.type}>
                         <Note name={el.name} />
                       </Draggable>
@@ -170,6 +173,12 @@ function Sidebar() {
                   ))}
                 </Droppable>
               </ul>
+              {isDragging && draggingItem ? (
+                <DragOverlayItem
+                  title={draggingItem.title}
+                  type={draggingItem.type}
+                />
+              ) : null}
             </DndContext>
           </>
         ) : (

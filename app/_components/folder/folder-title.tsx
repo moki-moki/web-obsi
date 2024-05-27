@@ -45,7 +45,9 @@ const FolderTitle = ({
           className="px-2 py-1 mr-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple"
         />
       ) : (
-        <span className="text-sm font-bold">{name}</span>
+        <span className="text-sm font-bold">
+          {name.length > 15 ? `${name.substring(0, 15)}...` : name}
+        </span>
       )}
     </div>
   );

@@ -1,6 +1,8 @@
 import React from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { DraggableI } from "@/app/types/types";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Draggable({ id, title, type, children }: DraggableI) {
   const { attributes, listeners, transform, setNodeRef } = useDraggable({
@@ -15,8 +17,14 @@ export default function Draggable({ id, title, type, children }: DraggableI) {
     : undefined;
 
   return (
-    <div ref={setNodeRef} {...listeners} {...attributes} style={style}>
+    <Link
+      href={`/folders/${id}`}
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
+    >
       {children}
-    </div>
+    </Link>
   );
 }

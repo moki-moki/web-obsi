@@ -91,18 +91,16 @@ const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
           </div>
           {el.files.length && rotatedIcons[idx] ? (
             <div className="p-2">
-              <>
-                {el.files.map((note) => (
-                  <FileWrapper
-                    id={note.id}
-                    key={note.id}
-                    type={note.type}
-                    title={note.name}
-                  >
-                    <File name={note.name} key={note.id} />
-                  </FileWrapper>
-                ))}
-              </>
+              {el.files.map((note) => (
+                <FileWrapper
+                  id={note.id}
+                  key={note.id}
+                  type={note.type}
+                  title={note.name}
+                >
+                  <File name={note.name} key={note.id} />
+                </FileWrapper>
+              ))}
             </div>
           ) : null}
         </FolderWrapper>
