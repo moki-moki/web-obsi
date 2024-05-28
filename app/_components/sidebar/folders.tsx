@@ -10,11 +10,10 @@ import { FolderI, InputChangeEventHandler } from "@/app/types/types";
 
 interface Props {
   folders: FolderI[];
-  deleteFolder: (id: string) => void;
   setFolders: React.Dispatch<React.SetStateAction<FolderI[]>>;
 }
 
-const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
+const Folders = ({ folders, setFolders }: Props) => {
   const [renameValue, setRenameValue] = useState<string>("");
   const [showInput, setShowInput] = useState<null | number>(null);
   const [rotatedIcons, setRotatedIcons] = useState(
@@ -61,7 +60,7 @@ const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
   };
 
   return (
-    <ul className="px-2 flex flex-col gap-2">
+    <ul className="px-1 flex flex-col gap-2">
       {folders.map((el: FolderI, idx: number) => (
         <FolderWrapper
           idx={idx}
@@ -85,7 +84,6 @@ const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
               idx={idx}
               id={el.id}
               name={el.name}
-              deleteFolder={deleteFolder}
               changeNameHandler={changeNameHandler}
             />
           </div>
@@ -95,6 +93,7 @@ const Folders = ({ folders, setFolders, deleteFolder }: Props) => {
                 <FileWrapper
                   id={note.id}
                   key={note.id}
+                  parentId={el.id}
                   type={note.type}
                   title={note.name}
                 >

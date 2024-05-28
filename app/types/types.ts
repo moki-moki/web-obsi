@@ -48,3 +48,7 @@ export interface DraggingItemI {
   title: string;
   type: string;
 }
+
+export interface FileWrapperI extends DraggableI {
+  parentId: string;
+}

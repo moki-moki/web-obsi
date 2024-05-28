@@ -1,7 +1,6 @@
 import React from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { DraggableI } from "@/app/types/types";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function Draggable({ id, title, type, children }: DraggableI) {

@@ -1,10 +1,10 @@
+import { useSidebarContext } from "@/app/context/sidebar-conext";
 import { SquarePen, Trash2 } from "lucide-react";
 
 interface Props {
   id: string;
   idx: number;
   name: string;
-  deleteFolder: (id: string) => void;
   changeNameHandler: (
     e: React.MouseEvent<HTMLSpanElement>,
     idx: number,
@@ -12,13 +12,8 @@ interface Props {
   ) => void;
 }
 
-const FolderControlls = ({
-  id,
-  idx,
-  name,
-  deleteFolder,
-  changeNameHandler,
-}: Props) => {
+const FolderControlls = ({ id, idx, name, changeNameHandler }: Props) => {
+  const { deleteFolder } = useSidebarContext();
   return (
     <div className="flex items-center gap-2">
       <span

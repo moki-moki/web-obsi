@@ -30,15 +30,8 @@ function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
-  const {
-    notes,
-    folders,
-    setFolders,
-    setNotes,
-    createNote,
-    createFolder,
-    deleteFolder,
-  } = useSidebarContext();
+  const { notes, folders, setFolders, setNotes, createNote, createFolder } =
+    useSidebarContext();
 
   const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
@@ -85,13 +78,11 @@ function Sidebar() {
     );
 
     if (sourceFolderArray) {
-      const noteIdx = sourceFolderArray.files.findIndex(
-        (item) => item.id === activeId
-      );
+      const noteIdx = findIndexById(sourceFolderArray.files, activeId);
 
       if (noteIdx !== -1) {
-        const [itemToTransfer] = sourceFolderArray.files.splice(noteIdx, 1);
-        updatedFolders[folderTransferIdx].files.push(itemToTransfer);
+        const [noteToTransfer] = sourceFolderArray.files.splice(noteIdx, 1);
+        updatedFolders[folderTransferIdx].files.push(noteToTransfer);
         setFolders(updatedFolders);
       }
     } else {
@@ -115,8 +106,6 @@ function Sidebar() {
       type,
       name: title,
     };
-
-    console.log(e);
 
     if (location === "notes") {
       dragNoteHandler(activeId, dataTransfer);
@@ -170,16 +159,12 @@ function Sidebar() {
         {isClient ? (
           <>
             <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
-              <Folders
-                folders={folders}
-                setFolders={setFolders}
-                deleteFolder={deleteFolder}
-              />
+              <Folders folders={folders} setFolders={setFolders} />
               <ul className="h-full flex-auto p-1">
                 <Droppable id={uuidv4()} type="notes">
                   {notes.map((el) => (
                     <li
-                      className="rounded-full my-0.5 hover:bg-dark-gray-accent"
+                      className="rounded-full p-1 my-0.5 hover:bg-dark-gray-accent"
                       key={el.id}
                     >
                       <Draggable id={el.id} title={el.name} type={el.type}>

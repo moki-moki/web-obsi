@@ -12,6 +12,7 @@ type SidebarContextI = {
   deleteFolder: (id: string) => void;
   setNotes: React.Dispatch<React.SetStateAction<FileI[]>>;
   setFolders: React.Dispatch<React.SetStateAction<FolderI[]>>;
+  deleteNoteInsideFolder: (parentId: string, id: string) => void;
 };
 
 const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
@@ -46,6 +47,22 @@ export default function SidebarConextProvider({
   const deleteFolder = (id: string) =>
     setFolders((prev) => [...prev].filter((item) => item.id !== id));
 
+  const deleteNoteInsideFolder = (parentId: string, id: string) => {
+    const folderIndex = folders.findIndex((folder) => folder.id === parentId);
+
+    if (folderIndex !== -1) {
+      const parentFolder = folders[folderIndex];
+      const updatedNotes = parentFolder.files.filter((note) => note.id !== id);
+
+      if (updatedNotes.length !== parentFolder.files.length) {
+        const updatedState = [...folders];
+        updatedState[folderIndex] = { ...parentFolder, files: updatedNotes };
+
+        setFolders(updatedState);
+      }
+    }
+  };
+
   return (
     <SidebarContext.Provider
       value={{
@@ -56,6 +73,7 @@ export default function SidebarConextProvider({
         createNote,
         createFolder,
         deleteFolder,
+        deleteNoteInsideFolder,
       }}
     >
       {children}

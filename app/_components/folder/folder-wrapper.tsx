@@ -61,7 +61,7 @@ const FolderWrapper = ({
             <span className="mr-2 text-base">
               <Trash2 size={20} />
             </span>
-            Delete File
+            Delete Folder
           </li>
         </ContextMenu>
       ) : null}
