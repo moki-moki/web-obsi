@@ -9,31 +9,26 @@ import {
   UniqueIdentifier,
 } from "@dnd-kit/core";
 
-import { FilePlus, FolderPlus } from "lucide-react";
-
 import Note from "../ui/note";
 import Folders from "./folders";
 import SidebarControlls from "./sidebar-controlls";
-import ContextMenu from "../context-menu/context-menu";
 
 import { DraggingItemI, FileI } from "@/app/types/types";
-import { INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
-import { findFolderIndexByInnerFiles, findIndexById } from "@/app/utils/utils";
 import { useSidebarContext } from "@/app/context/sidebar-conext";
+import { findFolderIndexByInnerFiles, findIndexById } from "@/app/utils/utils";
 
 import Droppable from "../Draggable/droppable";
 import Draggable from "../Draggable/draggable-link";
 import DragOverlayItem from "../Draggable/drag-overlay-item";
+import { useContextMenu } from "@/app/context/context-menu";
 
 function Sidebar() {
   const [isClient, setIsClient] = useState<boolean>(false); // Fixes Next.js hydration issue with local storage
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
+  const { handleContextMenu } = useContextMenu();
   const { notes, folders, setFolders, setNotes, createNote, createFolder } =
     useSidebarContext();
-
-  const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
   const dragNoteHandler = (activeId: UniqueIdentifier, item: FileI) => {
     // Checks if we drop the item in same place
@@ -116,16 +111,6 @@ function Sidebar() {
     setIsDragging(false);
   };
 
-  const handleContextMenu = (
-    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
-  ) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    const { pageX, pageY } = e;
-    setContextMenu({ show: true, x: pageX, y: pageY });
-  };
-
   const handleDragStart = (e: DragStartEvent) => {
     if (!e.active.data.current) return;
     const { title, type } = e.active.data.current;
@@ -151,7 +136,7 @@ function Sidebar() {
   return (
     <>
       <div
-        onContextMenu={handleContextMenu}
+        onContextMenu={(e) => handleContextMenu(e, "main")}
         className="w-1/4 border-r border-r-border h-screen flex flex-col"
       >
         <SidebarControlls createFolder={createFolder} createNote={createNote} />
@@ -186,29 +171,6 @@ function Sidebar() {
           <></>
         )}
       </div>
-
-      {contextMenu.show ? (
-        <ContextMenu x={contextMenu.x} y={contextMenu.y} onClose={onClose}>
-          <li
-            onClick={createFolder}
-            className="folder flex justify-between items-center cursor-pointer text-gray px-2 py-1 rounded-full text-xs font-bold uppercase hover:bg-gray/20"
-          >
-            New Folder
-            <span className="ml-2 text-base">
-              <FolderPlus />
-            </span>
-          </li>
-          <li
-            onClick={createNote}
-            className="folder flex justify-between items-center cursor-pointer text-gray px-2 py-1 rounded-full text-xs font-bold uppercase hover:bg-gray/20"
-          >
-            New File
-            <span className="ml-2 text-base">
-              <FilePlus />
-            </span>
-          </li>
-        </ContextMenu>
-      ) : null}
     </>
   );
 }

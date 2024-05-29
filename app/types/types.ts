@@ -11,6 +11,7 @@ export interface ContextMenuI {
   show: boolean;
   x: number;
   y: number;
+  type: string;
 }
 
 export interface MenuI {

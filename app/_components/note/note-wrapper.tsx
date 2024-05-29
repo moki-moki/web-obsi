@@ -1,35 +1,24 @@
-import { useState } from "react";
 import Draggable from "../Draggable/draggable-link";
-import { FileWrapperI } from "@/app/types/types";
-import { useSidebarContext } from "@/app/context/sidebar-conext";
-import { INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
 import ContextMenu from "../context-menu/context-menu";
+import { FileWrapperI } from "@/app/types/types";
+import { useContextMenu } from "@/app/context/context-menu";
+import { useSidebarContext } from "@/app/context/sidebar-conext";
 import { Trash2 } from "lucide-react";
 
 const FileWrapper = ({ id, title, type, parentId, children }: FileWrapperI) => {
-  const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
+  const { contextMenu: contextM, handleContextMenu } = useContextMenu();
   const { deleteNoteInsideFolder } = useSidebarContext();
-
-  const handleContextMenu = (
-    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
-  ) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    const { pageX, pageY } = e;
-    setContextMenu({ show: true, x: pageX, y: pageY });
-  };
-
-  const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
   return (
     <>
       <Draggable id={id} type={type} title={title}>
-        <div onContextMenu={handleContextMenu}>{children}</div>
+        <div onContextMenu={(e) => handleContextMenu(e, "file")}>
+          {children}
+        </div>
       </Draggable>
 
-      {contextMenu.show ? (
-        <ContextMenu x={contextMenu.x} y={contextMenu.y} onClose={onClose}>
+      {contextM.show && contextM.type === "file" ? (
+        <ContextMenu>
           <li
             onClick={() => deleteNoteInsideFolder(parentId, id)}
             className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"

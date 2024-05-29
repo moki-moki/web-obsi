@@ -1,6 +1,6 @@
 import { useState } from "react";
 import File from "../ui/file";
-import FileWrapper from "../file/file-wrapper";
+import FileWrapper from "../note/note-wrapper";
 import FolderTitle from "../folder/folder-title";
 import FolderWrapper from "../folder/folder-wrapper";
 import FolderControlls from "../folder/folder-controlls";

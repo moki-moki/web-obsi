@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Trash2 } from "lucide-react";
 import Droppable from "../Draggable/droppable";
 import ContextMenu from "../context-menu/context-menu";
-import { INITIAL_CONTEXT_MENU } from "@/app/data/initial-state";
 import { useSidebarContext } from "@/app/context/sidebar-conext";
+import { useContextMenu } from "@/app/context/context-menu";
 
 interface Props {
   id: string;
@@ -22,27 +22,15 @@ const FolderWrapper = ({
   rotateIcon,
   iconHandler,
 }: Props) => {
-  const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
+  const { contextMenu, handleContextMenu } = useContextMenu();
 
   const { deleteFolder } = useSidebarContext();
-
-  const handleContextMenu = (
-    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
-  ) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    const { pageX, pageY } = e;
-    setContextMenu({ show: true, x: pageX, y: pageY });
-  };
-
-  const onClose = () => setContextMenu(INITIAL_CONTEXT_MENU);
 
   return (
     <>
       <Droppable id={id} key={id} type="folder">
         <div
-          onContextMenu={handleContextMenu}
+          onContextMenu={(e) => handleContextMenu(e, "folder")}
           className={`cursor-pointer text-gray uppercase font-bold tracking-wide rounded-xl ${
             showInput === idx && "bg-gray/20"
           } ${rotateIcon[idx] && "bg-dark-gray-accent"}`}
@@ -52,8 +40,8 @@ const FolderWrapper = ({
         </div>
       </Droppable>
 
-      {contextMenu.show ? (
-        <ContextMenu x={contextMenu.x} y={contextMenu.y} onClose={onClose}>
+      {contextMenu.show && contextMenu.type === "folder" ? (
+        <ContextMenu>
           <li
             onClick={() => deleteFolder(id)}
             className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
