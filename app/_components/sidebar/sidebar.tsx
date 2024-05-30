@@ -14,19 +14,23 @@ import Folders from "./folders";
 import SidebarControlls from "./sidebar-controlls";
 
 import { DraggingItemI, FileI } from "@/app/types/types";
+import { useContextMenu } from "@/app/context/context-menu";
 import { useSidebarContext } from "@/app/context/sidebar-conext";
 import { findFolderIndexByInnerFiles, findIndexById } from "@/app/utils/utils";
 
 import Droppable from "../Draggable/droppable";
 import Draggable from "../Draggable/draggable-link";
+import ContextMenu from "../context-menu/context-menu";
 import DragOverlayItem from "../Draggable/drag-overlay-item";
-import { useContextMenu } from "@/app/context/context-menu";
+import ContextMenuControlls from "../context-menu/context-menu-controlls";
 
 function Sidebar() {
   const [isClient, setIsClient] = useState<boolean>(false); // Fixes Next.js hydration issue with local storage
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
-  const { handleContextMenu } = useContextMenu();
+
+  const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } =
+    useContextMenu();
   const { notes, folders, setFolders, setNotes, createNote, createFolder } =
     useSidebarContext();
 
@@ -125,7 +129,7 @@ function Sidebar() {
 
     setTimeout(() => {
       setIsDragging(true);
-    }, 200);
+    }, 150);
   };
 
   // This Fixes Next.js hydration issue with local storage. TODO: find better approach
@@ -136,7 +140,7 @@ function Sidebar() {
   return (
     <>
       <div
-        onContextMenu={(e) => handleContextMenu(e, "main")}
+        onContextMenu={handleContextMenu}
         className="w-1/4 border-r border-r-border h-screen flex flex-col"
       >
         <SidebarControlls createFolder={createFolder} createNote={createNote} />
@@ -144,16 +148,25 @@ function Sidebar() {
         {isClient ? (
           <>
             <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
-              <Folders folders={folders} setFolders={setFolders} />
+              <Folders
+                folders={folders}
+                setFolders={setFolders}
+                getItemDataOnClick={getItemDataOnClick}
+              />
               <ul className="h-full flex-auto p-1">
                 <Droppable id={uuidv4()} type="notes">
-                  {notes.map((el) => (
+                  {notes.map((note) => (
                     <li
+                      key={note.id}
+                      onContextMenu={(e) => getItemDataOnClick(e, note)}
                       className="rounded-full p-1 my-0.5 hover:bg-dark-gray-accent"
-                      key={el.id}
                     >
-                      <Draggable id={el.id} title={el.name} type={el.type}>
-                        <Note name={el.name} />
+                      <Draggable
+                        id={note.id}
+                        type={note.type}
+                        title={note.name}
+                      >
+                        <Note name={note.name} />
                       </Draggable>
                     </li>
                   ))}
@@ -166,6 +179,12 @@ function Sidebar() {
                 />
               ) : null}
             </DndContext>
+
+            {contextMenu.show && clickedItem ? (
+              <ContextMenu>
+                <ContextMenuControlls itemData={clickedItem} />
+              </ContextMenu>
+            ) : null}
           </>
         ) : (
           <></>

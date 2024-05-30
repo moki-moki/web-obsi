@@ -11,7 +11,6 @@ export interface ContextMenuI {
   show: boolean;
   x: number;
   y: number;
-  type: string;
 }
 
 export interface MenuI {
@@ -48,8 +47,4 @@ export interface DraggableI {
 export interface DraggingItemI {
   title: string;
   type: string;
-}
-
-export interface FileWrapperI extends DraggableI {
-  parentId: string;
 }

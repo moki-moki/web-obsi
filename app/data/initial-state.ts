@@ -4,7 +4,6 @@ export const INITIAL_CONTEXT_MENU: ContextMenuI = {
   show: false,
   x: 0,
   y: 0,
-  type: "",
 };
 
 export const FOLDER_STATE: FolderI[] | [] = [];

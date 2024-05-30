@@ -6,14 +6,15 @@ import FolderWrapper from "../folder/folder-wrapper";
 import FolderControlls from "../folder/folder-controlls";
 
 import { FOLDER_STATE } from "@/app/data/initial-state";
-import { FolderI, InputChangeEventHandler } from "@/app/types/types";
+import { FileI, FolderI, InputChangeEventHandler } from "@/app/types/types";
 
 interface Props {
   folders: FolderI[];
   setFolders: React.Dispatch<React.SetStateAction<FolderI[]>>;
+  getItemDataOnClick: (e: React.SyntheticEvent, data: FolderI | FileI) => void;
 }
 
-const Folders = ({ folders, setFolders }: Props) => {
+const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
   const [renameValue, setRenameValue] = useState<string>("");
   const [showInput, setShowInput] = useState<null | number>(null);
   const [rotatedIcons, setRotatedIcons] = useState(
@@ -61,48 +62,55 @@ const Folders = ({ folders, setFolders }: Props) => {
 
   return (
     <ul className="px-1 flex flex-col gap-2">
-      {folders.map((el: FolderI, idx: number) => (
-        <FolderWrapper
-          idx={idx}
-          id={el.id}
-          key={el.id}
-          showInput={showInput}
-          rotateIcon={rotatedIcons}
-          iconHandler={iconHandler}
-        >
-          <div className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent">
-            <FolderTitle
-              idx={idx}
-              name={el.name}
-              showInput={showInput}
-              renameValue={renameValue}
-              rotateIcon={rotatedIcons}
-              onChangeHandler={onChangeHandler}
-              onKeyDownHandler={onKeyDownHandler}
-            />
-            <FolderControlls
-              idx={idx}
-              id={el.id}
-              name={el.name}
-              changeNameHandler={changeNameHandler}
-            />
-          </div>
-          {el.files.length && rotatedIcons[idx] ? (
-            <div className="p-2">
-              {el.files.map((note) => (
-                <FileWrapper
-                  id={note.id}
-                  key={note.id}
-                  parentId={el.id}
-                  type={note.type}
-                  title={note.name}
-                >
-                  <File name={note.name} key={note.id} />
-                </FileWrapper>
-              ))}
+      {folders.map((folder: FolderI, idx: number) => (
+        <li key={folder.id}>
+          <FolderWrapper
+            idx={idx}
+            id={folder.id}
+            showInput={showInput}
+            rotateIcon={rotatedIcons}
+            iconHandler={iconHandler}
+          >
+            <div
+              onContextMenu={(e) => getItemDataOnClick(e, folder)}
+              className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent"
+            >
+              <FolderTitle
+                idx={idx}
+                name={folder.name}
+                showInput={showInput}
+                renameValue={renameValue}
+                rotateIcon={rotatedIcons}
+                onChangeHandler={onChangeHandler}
+                onKeyDownHandler={onKeyDownHandler}
+              />
+              <FolderControlls
+                idx={idx}
+                id={folder.id}
+                name={folder.name}
+                changeNameHandler={changeNameHandler}
+              />
             </div>
-          ) : null}
-        </FolderWrapper>
+            {folder.files.length && rotatedIcons[idx] ? (
+              <ul className="p-2">
+                {folder.files.map((note) => (
+                  <li
+                    key={note.id}
+                    onContextMenu={(e) => getItemDataOnClick(e, note)}
+                  >
+                    <FileWrapper
+                      id={note.id}
+                      type={note.type}
+                      title={note.name}
+                    >
+                      <File name={note.name} />
+                    </FileWrapper>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </FolderWrapper>
+        </li>
       ))}
     </ul>
   );
