@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { FileI, FolderI } from "../types/types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -7,8 +7,10 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 type SidebarContextI = {
   notes: FileI[];
   folders: FolderI[];
+  noteId: string | null;
   createNote: () => void;
   createFolder: () => void;
+  getNoteId: (id: string) => void;
   deleteNote: (id: string) => void;
   deleteFolder: (id: string) => void;
   setNotes: React.Dispatch<React.SetStateAction<FileI[]>>;
@@ -24,6 +26,7 @@ export default function SidebarConextProvider({
 }) {
   const [notes, setNotes] = useLocalStorage<FileI[]>("notes", []);
   const [folders, setFolders] = useLocalStorage<FolderI[]>("folders", []);
+  const [noteId, setNoteId] = useState<string | null>(null);
 
   const createNote = () => {
     const newNote = {
@@ -67,17 +70,23 @@ export default function SidebarConextProvider({
     }
   };
 
+  const getNoteId = (id: string) => {
+    setNoteId(id);
+  };
+
   return (
     <SidebarContext.Provider
       value={{
         notes,
+        noteId,
         folders,
         setNotes,
-        setFolders,
+        getNoteId,
+        deleteNote,
         createNote,
+        setFolders,
         createFolder,
         deleteFolder,
-        deleteNote,
       }}
     >
       {children}

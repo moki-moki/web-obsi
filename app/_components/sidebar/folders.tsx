@@ -1,6 +1,5 @@
 import { useState } from "react";
 import File from "../ui/file";
-import FileWrapper from "../note/note-wrapper";
 import FolderTitle from "../folder/folder-title";
 import FolderWrapper from "../folder/folder-wrapper";
 import FolderControlls from "../folder/folder-controlls";
@@ -10,6 +9,7 @@ import { FileI, FolderI, InputChangeEventHandler } from "@/app/types/types";
 
 interface Props {
   folders: FolderI[];
+  noteId: string | null;
   setFolders: React.Dispatch<React.SetStateAction<FolderI[]>>;
   getItemDataOnClick: (e: React.SyntheticEvent, data: FolderI | FileI) => void;
 }
@@ -94,18 +94,7 @@ const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
             {folder.files.length && rotatedIcons[idx] ? (
               <ul className="p-2">
                 {folder.files.map((note) => (
-                  <li
-                    key={note.id}
-                    onContextMenu={(e) => getItemDataOnClick(e, note)}
-                  >
-                    <FileWrapper
-                      id={note.id}
-                      type={note.type}
-                      title={note.name}
-                    >
-                      <File name={note.name} />
-                    </FileWrapper>
-                  </li>
+                  <File key={note.id} note={note} />
                 ))}
               </ul>
             ) : null}

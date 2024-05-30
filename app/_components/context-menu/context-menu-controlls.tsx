@@ -9,30 +9,31 @@ interface Props {
 const ContextMenuControlls = ({ itemData }: Props) => {
   if (!itemData) return;
 
-  const { deleteFolder, deleteNote } = useSidebarContext();
-  const { id, name, type } = itemData;
+  const { deleteFolder, deleteNote, getNoteId } = useSidebarContext();
+  const { type, id } = itemData;
+
   return (
     <>
-      {itemData.type === "folder" && (
+      {type === "folder" && (
         <li
           onClick={() => deleteFolder(id)}
           className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
         >
           <span className="mr-2 text-base">
-            <Trash2 size={20} />
+            <Trash2 size={15} />
           </span>
           Delete Folder
         </li>
       )}
 
-      {itemData.type === "note" && (
+      {type === "note" && (
         <>
           <li
-            onClick={() => deleteFolder(id)}
+            onClick={() => getNoteId(id)}
             className="folder flex items-center cursor-pointer text-gray px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-gray/30"
           >
             <span className="mr-2 text-base">
-              <SquarePen size={20} />
+              <SquarePen size={15} />
             </span>
             Rename File
           </li>
@@ -41,7 +42,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
             className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
           >
             <span className="mr-2 text-base">
-              <Trash2 size={20} />
+              <Trash2 size={15} />
             </span>
             Delete File
           </li>

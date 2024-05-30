@@ -1,12 +1,9 @@
 import Button from "../ui/button";
+import { useSidebarContext } from "@/app/context/sidebar-conext";
 import { FilePlus2, FolderPlus } from "lucide-react";
 
-interface Props {
-  createNote: () => void;
-  createFolder: () => void;
-}
-
-const SidebarControlls = ({ createFolder, createNote }: Props) => {
+const SidebarControlls = () => {
+  const { createFolder, createNote } = useSidebarContext();
   return (
     <div className="p-2 border-b border-border text-end">
       <Button

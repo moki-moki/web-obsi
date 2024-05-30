@@ -9,17 +9,15 @@ import {
   UniqueIdentifier,
 } from "@dnd-kit/core";
 
-import Note from "../ui/note";
-import Folders from "./folders";
-import SidebarControlls from "./sidebar-controlls";
-
 import { DraggingItemI, FileI } from "@/app/types/types";
 import { useContextMenu } from "@/app/context/context-menu";
 import { useSidebarContext } from "@/app/context/sidebar-conext";
 import { findFolderIndexByInnerFiles, findIndexById } from "@/app/utils/utils";
 
+import Notes from "./notes";
+import Folders from "./folders";
 import Droppable from "../Draggable/droppable";
-import Draggable from "../Draggable/draggable-link";
+import SidebarControlls from "./sidebar-controlls";
 import ContextMenu from "../context-menu/context-menu";
 import DragOverlayItem from "../Draggable/drag-overlay-item";
 import ContextMenuControlls from "../context-menu/context-menu-controlls";
@@ -29,10 +27,9 @@ function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
+  const { notes, noteId, folders, setFolders, setNotes } = useSidebarContext();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } =
     useContextMenu();
-  const { notes, folders, setFolders, setNotes, createNote, createFolder } =
-    useSidebarContext();
 
   const dragNoteHandler = (activeId: UniqueIdentifier, item: FileI) => {
     // Checks if we drop the item in same place
@@ -143,12 +140,13 @@ function Sidebar() {
         onContextMenu={handleContextMenu}
         className="w-1/4 border-r border-r-border h-screen flex flex-col"
       >
-        <SidebarControlls createFolder={createFolder} createNote={createNote} />
+        <SidebarControlls />
         <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
         {isClient ? (
           <>
             <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
               <Folders
+                noteId={noteId}
                 folders={folders}
                 setFolders={setFolders}
                 getItemDataOnClick={getItemDataOnClick}
@@ -156,19 +154,12 @@ function Sidebar() {
               <ul className="h-full flex-auto p-1">
                 <Droppable id={uuidv4()} type="notes">
                   {notes.map((note) => (
-                    <li
+                    <Notes
+                      note={note}
                       key={note.id}
-                      onContextMenu={(e) => getItemDataOnClick(e, note)}
-                      className="rounded-full p-1 my-0.5 hover:bg-dark-gray-accent"
-                    >
-                      <Draggable
-                        id={note.id}
-                        type={note.type}
-                        title={note.name}
-                      >
-                        <Note name={note.name} />
-                      </Draggable>
-                    </li>
+                      noteId={noteId}
+                      getItemDataOnClick={getItemDataOnClick}
+                    />
                   ))}
                 </Droppable>
               </ul>

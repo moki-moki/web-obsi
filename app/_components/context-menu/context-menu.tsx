@@ -15,7 +15,7 @@ const ContextMenu = ({ children }: Props) => {
   return (
     <div
       ref={ref}
-      className="absolute border border-border py-5 px-3 bg-dark-gray-accent rounded-lg min-w-44"
+      className="absolute border border-border p-2 bg-dark-gray-accent rounded-lg min-w-44"
       style={{ top: `${menu.y}px`, left: `${menu.x}px` }}
       onClick={onClose}
     >

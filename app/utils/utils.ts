@@ -22,3 +22,12 @@ export const findIndexById = <T extends UniqueId>(
   array: T[],
   id: UniqueIdentifier
 ) => array.findIndex((item) => item.id === id);
+
+export const findNoteIdx = (folders: FolderI[], id: UniqueIdentifier) => {
+  const folderIdx = folders.findIndex((folder) =>
+    folder.files.some((note) => note.id === id)
+  );
+
+  const noteIdx = findIndexById(folders[folderIdx].files, id);
+  return noteIdx;
+};
