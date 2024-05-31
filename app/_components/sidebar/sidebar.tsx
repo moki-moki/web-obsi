@@ -27,7 +27,8 @@ function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
-  const { notes, noteId, folders, setFolders, setNotes } = useSidebarContext();
+  const { notes, noteId, folders, setFolders, setNotes, setNoteId } =
+    useSidebarContext();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } =
     useContextMenu();
 
@@ -158,6 +159,7 @@ function Sidebar() {
                       note={note}
                       key={note.id}
                       noteId={noteId}
+                      setNoteId={setNoteId}
                       getItemDataOnClick={getItemDataOnClick}
                     />
                   ))}

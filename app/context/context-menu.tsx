@@ -56,7 +56,6 @@ export default function ContextMenuProvider({
     e.preventDefault();
     setClickedItem(data);
   };
-  console.log(clickedItem);
 
   return (
     <MenuContext.Provider

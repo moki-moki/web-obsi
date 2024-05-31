@@ -42,7 +42,7 @@ const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
     idx: number
   ) => {
     if (e.key === "Enter") {
-      setFolders((prev: any) => {
+      setFolders((prev) => {
         const newfolders = [...prev];
         newfolders[idx].name = renameValue;
         return newfolders;

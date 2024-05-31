@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { FileI, FolderI } from "../types/types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { findFolderIndexByInnerFiles, findIndexById } from "../utils/utils";
 
 type SidebarContextI = {
   notes: FileI[];
@@ -13,8 +14,10 @@ type SidebarContextI = {
   getNoteId: (id: string) => void;
   deleteNote: (id: string) => void;
   deleteFolder: (id: string) => void;
+  changeNoteName: (id: string, newName: string) => void;
   setNotes: React.Dispatch<React.SetStateAction<FileI[]>>;
   setFolders: React.Dispatch<React.SetStateAction<FolderI[]>>;
+  setNoteId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
@@ -24,9 +27,9 @@ export default function SidebarConextProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const [noteId, setNoteId] = useState<string | null>(null);
   const [notes, setNotes] = useLocalStorage<FileI[]>("notes", []);
   const [folders, setFolders] = useLocalStorage<FolderI[]>("folders", []);
-  const [noteId, setNoteId] = useState<string | null>(null);
 
   const createNote = () => {
     const newNote = {
@@ -45,6 +48,27 @@ export default function SidebarConextProvider({
       files: [],
     };
     setFolders((prev) => [...prev, newFolder]);
+  };
+
+  const changeNoteName = (id: string, newName: string) => {
+    const updatedNotes = [...notes];
+    const noteIdx = findIndexById(notes, id);
+
+    if (noteIdx !== -1) {
+      updatedNotes[noteIdx].name = newName;
+      setNotes(updatedNotes);
+    } else {
+      const updatedFolders = [...folders];
+      const folderIdx = findFolderIndexByInnerFiles(folders, id);
+
+      if (folderIdx !== -1) {
+        const noteIdx = findIndexById(updatedFolders[folderIdx].files, id);
+
+        if (noteIdx !== -1)
+          updatedFolders[folderIdx].files[noteIdx].name = newName;
+        setFolders(updatedFolders);
+      }
+    }
   };
 
   const deleteFolder = (id: string) =>
@@ -70,9 +94,7 @@ export default function SidebarConextProvider({
     }
   };
 
-  const getNoteId = (id: string) => {
-    setNoteId(id);
-  };
+  const getNoteId = (id: string) => setNoteId(id);
 
   return (
     <SidebarContext.Provider
@@ -81,12 +103,14 @@ export default function SidebarConextProvider({
         noteId,
         folders,
         setNotes,
+        setNoteId,
         getNoteId,
         deleteNote,
         createNote,
         setFolders,
         createFolder,
         deleteFolder,
+        changeNoteName,
       }}
     >
       {children}

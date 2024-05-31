@@ -7,7 +7,7 @@ export interface InputProps
     VariantProps<typeof inputVariants> {}
 
 export const inputVariants = cva(
-  "bg-dark-gray-accent outline-none text-gray w-full p-2 border border-border",
+  "bg-dark-gray-accent outline-none text-gray w-full p-2 border border-border focus:ring-2 focus:ring-purple",
   {
     variants: {
       variants: {

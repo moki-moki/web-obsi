@@ -1,9 +1,11 @@
 import Input from "./input";
 import FileWrapper from "../note/note-wrapper";
 
-import { FileI } from "@/app/types/types";
+import { FileI, InputChangeEventHandler } from "@/app/types/types";
 import { useContextMenu } from "@/app/context/context-menu";
+import { useOutsideClick } from "@/app/hooks/useOutsideClick";
 import { useSidebarContext } from "@/app/context/sidebar-conext";
+import { useRef, useState } from "react";
 
 interface Props {
   note: FileI;
@@ -11,16 +13,35 @@ interface Props {
 
 const File = ({ note }: Props) => {
   const { id, name, type } = note;
-  const { noteId } = useSidebarContext();
+  const ref = useRef<HTMLInputElement>(null);
+  const [renameValue, setRenameValue] = useState<string>(name);
+
   const { getItemDataOnClick } = useContextMenu();
+  const { noteId, setNoteId, changeNoteName } = useSidebarContext();
+
+  const onChangeHandler: InputChangeEventHandler = (e) =>
+    setRenameValue(e.target.value);
+
+  const onClose = () => {
+    setNoteId(null);
+    changeNoteName(id, renameValue);
+    setRenameValue(renameValue);
+  };
+
+  const listRef = useOutsideClick(ref, onClose);
+
   return (
     <>
       {noteId === id ? (
         <li key={note.id}>
           <Input
+            autoFocus
             type="text"
             rounded="md"
-            className="px-2 py-0.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            ref={listRef}
+            value={renameValue}
+            onChange={onChangeHandler}
+            className="px-2 py-0.5 text-sm focus:outline-none"
           />
         </li>
       ) : (
