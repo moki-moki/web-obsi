@@ -1,5 +1,5 @@
-import React from "react";
-import Droppable from "../Draggable/droppable";
+import React from 'react';
+import Droppable from '../Draggable/droppable';
 
 interface Props {
   id: string;
@@ -23,8 +23,8 @@ const FolderWrapper = ({
       <Droppable id={id} key={id} type="folder">
         <div
           className={`cursor-pointer text-gray uppercase font-bold tracking-wide rounded-xl ${
-            showInput === idx && "bg-gray/20"
-          } ${rotateIcon[idx] && "bg-dark-gray-accent"}`}
+            showInput === idx && 'bg-gray/20'
+          } ${rotateIcon[idx] && 'bg-dark-gray-accent'}`}
           onClick={(e) => iconHandler(e, idx)}
         >
           {children}

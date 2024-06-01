@@ -1,20 +1,20 @@
-import { FileI, FolderI } from "@/app/types/types";
-import { useSidebarContext } from "@/app/context/sidebar-conext";
-import { SquarePen, Trash2 } from "lucide-react";
+import { FileI, FolderI } from '@/app/types/types';
+import { useSidebarContext } from '@/app/context/sidebar-conext';
+import { SquarePen, Trash2 } from 'lucide-react';
 
 interface Props {
   itemData: FileI | FolderI | null;
 }
 
 const ContextMenuControlls = ({ itemData }: Props) => {
+  const { deleteFolder, deleteNote, getNoteId } = useSidebarContext();
   if (!itemData) return;
 
-  const { deleteFolder, deleteNote, getNoteId } = useSidebarContext();
   const { type, id } = itemData;
 
   return (
     <>
-      {type === "folder" && (
+      {type === 'folder' && (
         <li
           onClick={() => deleteFolder(id)}
           className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
@@ -26,7 +26,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
         </li>
       )}
 
-      {type === "note" && (
+      {type === 'note' && (
         <>
           <li
             onClick={() => getNoteId(id)}

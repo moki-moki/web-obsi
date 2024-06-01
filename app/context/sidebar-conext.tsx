@@ -1,9 +1,9 @@
-"use client";
-import { createContext, useContext, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { FileI, FolderI } from "../types/types";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { findFolderIndexByInnerFiles, findIndexById } from "../utils/utils";
+'use client';
+import React, { createContext, useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { FileI, FolderI } from '../types/types';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { findFolderIndexByInnerFiles, findIndexById } from '../utils/utils';
 
 type SidebarContextI = {
   notes: FileI[];
@@ -28,14 +28,14 @@ export default function SidebarConextProvider({
   children: React.ReactNode;
 }) {
   const [noteId, setNoteId] = useState<string | null>(null);
-  const [notes, setNotes] = useLocalStorage<FileI[]>("notes", []);
-  const [folders, setFolders] = useLocalStorage<FolderI[]>("folders", []);
+  const [notes, setNotes] = useLocalStorage<FileI[]>('notes', []);
+  const [folders, setFolders] = useLocalStorage<FolderI[]>('folders', []);
 
   const createNote = () => {
     const newNote = {
       id: uuidv4(),
       name: `(No title)`,
-      type: "note",
+      type: 'note',
     };
     setNotes((prev) => [...prev, newNote]);
   };
@@ -43,8 +43,8 @@ export default function SidebarConextProvider({
   const createFolder = () => {
     const newFolder: FolderI = {
       id: uuidv4(),
-      name: "(No title)",
-      type: "folder",
+      name: '(No title)',
+      type: 'folder',
       files: [],
     };
     setFolders((prev) => [...prev, newFolder]);
@@ -123,7 +123,7 @@ export function useSidebarContext() {
 
   if (context === undefined) {
     throw new Error(
-      "useSidebarContext must be used within a SidebarContextProvider"
+      'useSidebarContext must be used within a SidebarContextProvider'
     );
   }
 

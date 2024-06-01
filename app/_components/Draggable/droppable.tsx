@@ -1,4 +1,4 @@
-import { useDroppable } from "@dnd-kit/core";
+import { useDroppable } from '@dnd-kit/core';
 
 interface Props {
   id: string;
@@ -14,7 +14,7 @@ export default function Droppable({ id, type, children }: Props) {
     },
   });
 
-  const style = isOver ? "bg-gray/20" : "";
+  const style = isOver ? 'bg-gray/20' : '';
 
   return (
     <div ref={setNodeRef} className={`${style} rounded-xl h-full`}>

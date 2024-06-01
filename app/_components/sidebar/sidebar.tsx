@@ -1,26 +1,26 @@
-"use client";
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+'use client';
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   DndContext,
   DragEndEvent,
   DragStartEvent,
   UniqueIdentifier,
-} from "@dnd-kit/core";
+} from '@dnd-kit/core';
 
-import { DraggingItemI, FileI } from "@/app/types/types";
-import { useContextMenu } from "@/app/context/context-menu";
-import { useSidebarContext } from "@/app/context/sidebar-conext";
-import { findFolderIndexByInnerFiles, findIndexById } from "@/app/utils/utils";
+import { DraggingItemI, FileI } from '@/app/types/types';
+import { useContextMenu } from '@/app/context/context-menu';
+import { useSidebarContext } from '@/app/context/sidebar-conext';
+import { findFolderIndexByInnerFiles, findIndexById } from '@/app/utils/utils';
 
-import Notes from "./notes";
-import Folders from "./folders";
-import Droppable from "../Draggable/droppable";
-import SidebarControlls from "./sidebar-controlls";
-import ContextMenu from "../context-menu/context-menu";
-import DragOverlayItem from "../Draggable/drag-overlay-item";
-import ContextMenuControlls from "../context-menu/context-menu-controlls";
+import Notes from './notes';
+import Folders from './folders';
+import Droppable from '../Draggable/droppable';
+import SidebarControlls from './sidebar-controlls';
+import ContextMenu from '../context-menu/context-menu';
+import DragOverlayItem from '../Draggable/drag-overlay-item';
+import ContextMenuControlls from '../context-menu/context-menu-controlls';
 
 function Sidebar() {
   const [isClient, setIsClient] = useState<boolean>(false); // Fixes Next.js hydration issue with local storage
@@ -104,7 +104,7 @@ function Sidebar() {
       name: title,
     };
 
-    if (location === "notes") {
+    if (location === 'notes') {
       dragNoteHandler(activeId, dataTransfer);
     } else {
       dragFolderHandler(activeId, overId, dataTransfer);

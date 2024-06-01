@@ -1,8 +1,8 @@
-import clsx from "clsx";
-import { ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { FolderI } from "../types/types";
-import { UniqueIdentifier } from "@dnd-kit/core";
+import clsx from 'clsx';
+import { ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { FolderI } from '../types/types';
+import { UniqueIdentifier } from '@dnd-kit/core';
 
 interface UniqueId {
   id: string;

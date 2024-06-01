@@ -1,5 +1,5 @@
-import { useSidebarContext } from "@/app/context/sidebar-conext";
-import { SquarePen, Trash2 } from "lucide-react";
+import { useSidebarContext } from '@/app/context/sidebar-conext';
+import { SquarePen, Trash2 } from 'lucide-react';
 
 interface Props {
   id: string;

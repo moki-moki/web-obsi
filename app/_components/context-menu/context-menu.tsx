@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
-import { useContextMenu } from "@/app/context/context-menu";
-import { useOutsideClick } from "@/app/hooks/useOutsideClick";
+import React, { useRef } from 'react';
+import { useContextMenu } from '@/app/context/context-menu';
+import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 
 interface Props {
   children: React.ReactNode;

@@ -1,27 +1,27 @@
-import { cn } from "@/app/utils/utils";
-import { VariantProps, cva } from "class-variance-authority";
-import React from "react";
+import { cn } from '@/app/utils/utils';
+import { VariantProps, cva } from 'class-variance-authority';
+import React from 'react';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     VariantProps<typeof inputVariants> {}
 
 export const inputVariants = cva(
-  "bg-dark-gray-accent outline-none text-gray w-full p-2 border border-border focus:ring-2 focus:ring-purple",
+  'bg-dark-gray-accent outline-none text-gray w-full p-2 border border-border focus:ring-2 focus:ring-purple',
   {
     variants: {
       variants: {
-        default: "bg-dark-gray-accent",
+        default: 'bg-dark-gray-accent',
       },
       rounded: {
-        sm: "rounded",
-        md: "rounded-md",
-        lg: "rounded-lg",
-        full: "rounded-full",
+        sm: 'rounded',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
       },
     },
     defaultVariants: {
-      variants: "default",
+      variants: 'default',
     },
   }
 );
@@ -38,5 +38,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
+
+Input.displayName = 'Input';
 
 export default Input;

@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
 
-import Note from "../ui/note";
-import Input from "../ui/input";
-import Draggable from "../Draggable/draggable-link";
+import Note from '../ui/note';
+import Input from '../ui/input';
+import Draggable from '../Draggable/draggable-link';
 
-import { useOutsideClick } from "@/app/hooks/useOutsideClick";
-import { useSidebarContext } from "@/app/context/sidebar-conext";
-import { FileI, FolderI, InputChangeEventHandler } from "@/app/types/types";
+import { useOutsideClick } from '@/app/hooks/useOutsideClick';
+import { useSidebarContext } from '@/app/context/sidebar-conext';
+import { FileI, FolderI, InputChangeEventHandler } from '@/app/types/types';
 
 interface Props {
   note: FileI;
@@ -31,9 +31,6 @@ const Notes = ({ note, noteId, setNoteId, getItemDataOnClick }: Props) => {
   };
 
   const listRef = useOutsideClick(ref, onClose);
-  const onFocusHandler = () => {
-    if (listRef.current) listRef.current.focus();
-  };
 
   return (
     <>

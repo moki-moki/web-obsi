@@ -1,7 +1,7 @@
-import { ChevronRight } from "lucide-react";
-import React from "react";
-import Input from "../ui/input";
-import { InputChangeEventHandler } from "@/app/types/types";
+import { ChevronRight } from 'lucide-react';
+import React from 'react';
+import Input from '../ui/input';
+import { InputChangeEventHandler } from '@/app/types/types';
 
 interface Props {
   idx: number;
@@ -31,7 +31,7 @@ const FolderTitle = ({
         <ChevronRight
           size={20}
           style={{
-            transform: rotateIcon[idx] ? "rotate(90deg)" : "none",
+            transform: rotateIcon[idx] ? 'rotate(90deg)' : 'none',
           }}
         />
       </span>

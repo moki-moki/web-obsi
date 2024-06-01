@@ -1,6 +1,6 @@
-import Button from "../ui/button";
-import { useSidebarContext } from "@/app/context/sidebar-conext";
-import { FilePlus2, FolderPlus } from "lucide-react";
+import Button from '../ui/button';
+import { useSidebarContext } from '@/app/context/sidebar-conext';
+import { FilePlus2, FolderPlus } from 'lucide-react';
 
 const SidebarControlls = () => {
   const { createFolder, createNote } = useSidebarContext();

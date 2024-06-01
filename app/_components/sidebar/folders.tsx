@@ -1,11 +1,11 @@
-import { useState } from "react";
-import File from "../ui/file";
-import FolderTitle from "../folder/folder-title";
-import FolderWrapper from "../folder/folder-wrapper";
-import FolderControlls from "../folder/folder-controlls";
+import { useState } from 'react';
+import File from '../ui/file';
+import FolderTitle from '../folder/folder-title';
+import FolderWrapper from '../folder/folder-wrapper';
+import FolderControlls from '../folder/folder-controlls';
 
-import { FOLDER_STATE } from "@/app/data/initial-state";
-import { FileI, FolderI, InputChangeEventHandler } from "@/app/types/types";
+import { FOLDER_STATE } from '@/app/data/initial-state';
+import { FileI, FolderI, InputChangeEventHandler } from '@/app/types/types';
 
 interface Props {
   folders: FolderI[];
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
-  const [renameValue, setRenameValue] = useState<string>("");
+  const [renameValue, setRenameValue] = useState<string>('');
   const [showInput, setShowInput] = useState<null | number>(null);
   const [rotatedIcons, setRotatedIcons] = useState(
     Array(FOLDER_STATE.length).fill(false)
@@ -41,7 +41,7 @@ const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
     e: React.KeyboardEvent<HTMLInputElement>,
     idx: number
   ) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       setFolders((prev) => {
         const newfolders = [...prev];
         newfolders[idx].name = renameValue;
@@ -52,7 +52,7 @@ const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
   };
 
   const iconHandler = (e: React.MouseEvent, idx: number) => {
-    if ((e.target as HTMLElement).tagName === "INPUT") return;
+    if ((e.target as HTMLElement).tagName === 'INPUT') return;
     setRotatedIcons((prevState) => {
       const newState = [...prevState];
       newState[idx] = !newState[idx];

@@ -1,11 +1,12 @@
-import Input from "./input";
-import FileWrapper from "../note/note-wrapper";
+import Input from './input';
+import { useRef, useState } from 'react';
 
-import { FileI, InputChangeEventHandler } from "@/app/types/types";
-import { useContextMenu } from "@/app/context/context-menu";
-import { useOutsideClick } from "@/app/hooks/useOutsideClick";
-import { useSidebarContext } from "@/app/context/sidebar-conext";
-import { useRef, useState } from "react";
+import FileWrapper from '../note/note-wrapper';
+
+import { FileI, InputChangeEventHandler } from '@/app/types/types';
+import { useContextMenu } from '@/app/context/context-menu';
+import { useOutsideClick } from '@/app/hooks/useOutsideClick';
+import { useSidebarContext } from '@/app/context/sidebar-conext';
 
 interface Props {
   note: FileI;

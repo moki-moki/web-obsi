@@ -1,5 +1,5 @@
-import { DragOverlay } from "@dnd-kit/core";
-import { File, Folder } from "lucide-react";
+import { DragOverlay } from '@dnd-kit/core';
+import { File, Folder } from 'lucide-react';
 
 interface Props {
   title: string;
@@ -11,7 +11,7 @@ const DragOverlayItem = ({ title, type }: Props) => {
     <DragOverlay>
       <div className="bg-black rounded-xl p-1.5 text-sm flex gap-2 items-center cursor-grab">
         <div className="text-white">
-          {type === "note" ? <File size={15} /> : <Folder size={15} />}
+          {type === 'note' ? <File size={15} /> : <Folder size={15} />}
         </div>
         <div className="text-white font-bold">{title}</div>
       </div>
