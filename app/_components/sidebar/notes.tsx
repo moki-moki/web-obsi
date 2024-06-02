@@ -30,6 +30,10 @@ const Notes = ({ note, noteId, setNoteId, getItemDataOnClick }: Props) => {
     setRenameValue(renameValue);
   };
 
+  const onKeyDownHandler = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') onClose();
+  };
+
   const listRef = useOutsideClick(ref, onClose);
 
   return (
@@ -43,6 +47,7 @@ const Notes = ({ note, noteId, setNoteId, getItemDataOnClick }: Props) => {
             ref={listRef}
             value={renameValue}
             onChange={onChangeHandler}
+            onKeyDown={onKeyDownHandler}
             className="px-2 py-1 mr-2 text-sm focus:outline-none"
           />
         </li>
