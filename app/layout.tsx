@@ -4,7 +4,6 @@ import './globals.css';
 import Sidebar from './_components/sidebar/sidebar';
 import SidebarConextProvider from './context/sidebar-conext';
 import ContextMenuProvider from './context/context-menu';
-import React from 'react';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 

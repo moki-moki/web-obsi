@@ -32,6 +32,21 @@ function Sidebar() {
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } =
     useContextMenu();
 
+  const getData = async () => {
+    try {
+      const response = await fetch('/api/notes');
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   const dragNoteHandler = (activeId: UniqueIdentifier, item: FileI) => {
     // Checks if we drop the item in same place
     const checkDrop = notes.some((note) => note.id === activeId);
@@ -142,7 +157,7 @@ function Sidebar() {
         className="w-1/4 border-r border-r-border h-screen flex flex-col"
       >
         <SidebarControlls />
-        <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
+        <h2 className="px-4 mb-4 text-white uppercase font-bold">Your Notes</h2>
         {isClient ? (
           <>
             <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>

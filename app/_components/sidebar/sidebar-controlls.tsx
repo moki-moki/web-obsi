@@ -8,7 +8,6 @@ const SidebarControlls = () => {
     <div className="p-2 border-b border-border text-end">
       <Button
         type="button"
-        variants="ghost-outlined"
         className="rounded-full p-1.5 text-gray mx-2"
         onClick={createNote}
       >
@@ -16,7 +15,6 @@ const SidebarControlls = () => {
       </Button>
       <Button
         type="button"
-        variants="ghost-outlined"
         className="rounded-full p-1.5 text-gray"
         onClick={createFolder}
       >

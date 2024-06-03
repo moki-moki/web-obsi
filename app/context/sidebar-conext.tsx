@@ -31,16 +31,28 @@ export default function SidebarConextProvider({
   const [notes, setNotes] = useLocalStorage<FileI[]>('notes', []);
   const [folders, setFolders] = useLocalStorage<FolderI[]>('folders', []);
 
-  const createNote = () => {
+  const createNote = async () => {
     const newNote = {
       id: uuidv4(),
       name: `(No title)`,
       type: 'note',
     };
     setNotes((prev) => [...prev, newNote]);
+
+    try {
+      await fetch('/api/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('went');
+    } catch (error) {
+      console.error('Error creating note:', error);
+    }
   };
 
-  const createFolder = () => {
+  const createFolder = async () => {
     const newFolder: FolderI = {
       id: uuidv4(),
       name: '(No title)',
@@ -48,6 +60,17 @@ export default function SidebarConextProvider({
       files: [],
     };
     setFolders((prev) => [...prev, newFolder]);
+
+    try {
+      await fetch('/api/folders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      console.error('Error creating folder:', error);
+    }
   };
 
   const changeNoteName = (id: string, newName: string) => {
