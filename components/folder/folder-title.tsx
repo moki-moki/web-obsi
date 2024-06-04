@@ -1,7 +1,7 @@
 import { ChevronRight } from 'lucide-react';
 import React from 'react';
 import Input from '../ui/input';
-import { InputChangeEventHandler } from '@/app/types/types';
+import { InputChangeEventHandler } from '@/types/types';
 
 interface Props {
   idx: number;

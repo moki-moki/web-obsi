@@ -20,14 +20,14 @@ export interface MenuI {
 
 export interface FolderI {
   id: string;
-  name: string;
-  files: FileI[];
+  title: string;
+  notes: FileI[];
   type: string;
 }
 
 export interface FileI {
   id: string;
-  name: string;
+  title: string;
   type: string;
 }
 

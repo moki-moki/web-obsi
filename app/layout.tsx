@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
-import Sidebar from './_components/sidebar/sidebar';
+import Sidebar from '../components/sidebar/sidebar';
 import SidebarConextProvider from './context/sidebar-conext';
 import ContextMenuProvider from './context/context-menu';
 

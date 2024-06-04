@@ -1,4 +1,4 @@
-import { FileI, FolderI } from '@/app/types/types';
+import { FileI, FolderI } from '@/types/types';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 import { SquarePen, Trash2 } from 'lucide-react';
 

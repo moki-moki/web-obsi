@@ -1,9 +1,8 @@
 'use client';
-import React, { createContext, useContext, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { FileI, FolderI } from '../types/types';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { findFolderIndexByInnerFiles, findIndexById } from '../utils/utils';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+
+import { FileI, FolderI } from '@/types/types';
+import { findIndexById, findFolderIndexByInnerFiles } from '@/utils/utils';
 
 type SidebarContextI = {
   notes: FileI[];
@@ -28,17 +27,41 @@ export default function SidebarConextProvider({
   children: React.ReactNode;
 }) {
   const [noteId, setNoteId] = useState<string | null>(null);
-  const [notes, setNotes] = useLocalStorage<FileI[]>('notes', []);
-  const [folders, setFolders] = useLocalStorage<FolderI[]>('folders', []);
+  // const [notes, setNotes] = useLocalStorage<FileI[]>('notes', []);
+  // const [folders, setFolders] = useLocalStorage<FolderI[]>('folders', []);
+  const [notes, setNotes] = useState<FileI[]>([]);
+  const [folders, setFolders] = useState<FolderI[]>([]);
+
+  const getNotes = async () => {
+    try {
+      const res = await fetch('/api/notes');
+      if (res.ok) {
+        const data = await res.json();
+        setNotes(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getFolders = async () => {
+    try {
+      const res = await fetch('/api/folders');
+      if (res.ok) {
+        const data = await res.json();
+        setFolders(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getNotes();
+    getFolders();
+  }, []);
 
   const createNote = async () => {
-    const newNote = {
-      id: uuidv4(),
-      name: `(No title)`,
-      type: 'note',
-    };
-    setNotes((prev) => [...prev, newNote]);
-
     try {
       await fetch('/api/notes', {
         method: 'POST',
@@ -46,21 +69,12 @@ export default function SidebarConextProvider({
           'Content-Type': 'application/json',
         },
       });
-      console.log('went');
     } catch (error) {
       console.error('Error creating note:', error);
     }
   };
 
   const createFolder = async () => {
-    const newFolder: FolderI = {
-      id: uuidv4(),
-      name: '(No title)',
-      type: 'folder',
-      files: [],
-    };
-    setFolders((prev) => [...prev, newFolder]);
-
     try {
       await fetch('/api/folders', {
         method: 'POST',
@@ -78,37 +92,60 @@ export default function SidebarConextProvider({
     const noteIdx = findIndexById(notes, id);
 
     if (noteIdx !== -1) {
-      updatedNotes[noteIdx].name = newName;
+      updatedNotes[noteIdx].title = newName;
       setNotes(updatedNotes);
     } else {
       const updatedFolders = [...folders];
       const folderIdx = findFolderIndexByInnerFiles(folders, id);
 
       if (folderIdx !== -1) {
-        const noteIdx = findIndexById(updatedFolders[folderIdx].files, id);
+        const noteIdx = findIndexById(updatedFolders[folderIdx].notes, id);
 
         if (noteIdx !== -1)
-          updatedFolders[folderIdx].files[noteIdx].name = newName;
+          updatedFolders[folderIdx].notes[noteIdx].title = newName;
         setFolders(updatedFolders);
       }
     }
   };
 
-  const deleteFolder = (id: string) =>
-    setFolders((prev) => [...prev].filter((item) => item.id !== id));
+  const deleteFolder = async (id: string) => {
+    try {
+      await fetch('/api/folders', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ noteId: id }),
+      });
+    } catch (error) {
+      console.error('Error creating folder:', error);
+    }
+  };
 
-  const deleteNote = (id: string) => {
+  const deleteNote = async (id: string) => {
+    try {
+      await fetch('/api/notes', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+    } catch (error) {
+      console.error('Error creating folder:', error);
+    }
+
     const folderIdx = folders.findIndex((folder) =>
-      folder.files.some((note) => note.id === id)
+      folder.notes.some((note) => note.id === id)
     );
 
     if (folderIdx !== -1) {
       const parentFolder = folders[folderIdx];
-      const updatedNotes = parentFolder.files.filter((note) => note.id !== id);
+      const updatedNotes = parentFolder.notes.filter((note) => note.id !== id);
 
-      if (updatedNotes.length !== parentFolder.files.length) {
+      if (updatedNotes.length !== parentFolder.notes.length) {
         const updatedState = [...folders];
-        updatedState[folderIdx] = { ...parentFolder, files: updatedNotes };
+        updatedState[folderIdx] = { ...parentFolder, notes: updatedNotes };
 
         setFolders(updatedState);
       }

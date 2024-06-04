@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 
 import FileWrapper from '../note/note-wrapper';
 
-import { FileI, InputChangeEventHandler } from '@/app/types/types';
+import { FileI, InputChangeEventHandler } from '@/types/types';
 import { useContextMenu } from '@/app/context/context-menu';
 import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
@@ -13,9 +13,9 @@ interface Props {
 }
 
 const File = ({ note }: Props) => {
-  const { id, name, type } = note;
+  const { id, title, type } = note;
   const ref = useRef<HTMLInputElement>(null);
-  const [renameValue, setRenameValue] = useState<string>(name);
+  const [renameValue, setRenameValue] = useState<string>(title);
 
   const { getItemDataOnClick } = useContextMenu();
   const { noteId, setNoteId, changeNoteName } = useSidebarContext();
@@ -47,9 +47,9 @@ const File = ({ note }: Props) => {
         </li>
       ) : (
         <li onContextMenu={(e) => getItemDataOnClick(e, note)}>
-          <FileWrapper id={id} type={type} title={name}>
+          <FileWrapper id={id} type={type} title={title}>
             <div className="p-1.5 text-xs rounded-full hover:bg-dark-gray">
-              {name}
+              {title}
             </div>
           </FileWrapper>
         </li>

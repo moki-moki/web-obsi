@@ -1,5 +1,5 @@
 import React from 'react';
-import Droppable from '../Draggable/droppable';
+import Droppable from '../draggable/droppable';
 
 interface Props {
   id: string;

@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
 
-import Note from '../ui/note';
 import Input from '../ui/input';
-import Draggable from '../Draggable/draggable-link';
+import Note from '../note/note';
+import Draggable from '../draggable/draggable-link';
 
 import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
-import { FileI, FolderI, InputChangeEventHandler } from '@/app/types/types';
+import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
 
 interface Props {
   note: FileI;
@@ -18,8 +18,8 @@ interface Props {
 const Notes = ({ note, noteId, setNoteId, getItemDataOnClick }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
   const { changeNoteName } = useSidebarContext();
-  const { id, name, type } = note;
-  const [renameValue, setRenameValue] = useState<string>(name);
+  const { id, title, type } = note;
+  const [renameValue, setRenameValue] = useState<string>(title);
 
   const onChangeHandler: InputChangeEventHandler = (e) =>
     setRenameValue(e.target.value);
@@ -56,8 +56,8 @@ const Notes = ({ note, noteId, setNoteId, getItemDataOnClick }: Props) => {
           className="rounded-full p-1 my-0.5 hover:bg-dark-gray-accent"
           onContextMenu={(e) => getItemDataOnClick(e, note)}
         >
-          <Draggable id={id} type={type} title={name}>
-            <Note name={name} />
+          <Draggable id={id} type={type} title={title}>
+            <Note title={title} />
           </Draggable>
         </li>
       )}

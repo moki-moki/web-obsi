@@ -1,9 +1,11 @@
-import prisma from '../prisma-client';
 import { NextResponse } from 'next/server';
+import prisma from '@/services/prisma-client';
 
 export async function GET() {
   try {
-    const notes = await prisma.note.findMany();
+    const notes = await prisma.note.findMany({
+      where: { folderId: null },
+    });
 
     return NextResponse.json(notes);
   } catch (error) {
@@ -13,7 +15,7 @@ export async function GET() {
     );
   }
 }
-
+// Change to POST
 export async function POST() {
   try {
     const newNote = await prisma.note.create({
@@ -23,11 +25,30 @@ export async function POST() {
         folderId: null,
       },
     });
-    console.log(newNote);
+
     return NextResponse.json(newNote);
   } catch (error) {
     return NextResponse.json(
       { error: 'Error creating notes' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  const { id } = await request.json();
+
+  if (!id)
+    return NextResponse.json({ error: 'Note ID is required' }, { status: 400 });
+
+  try {
+    const deletedNote = await prisma.note.delete({
+      where: { id },
+    });
+    return NextResponse.json(deletedNote);
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Failed to delete note' },
       { status: 500 }
     );
   }

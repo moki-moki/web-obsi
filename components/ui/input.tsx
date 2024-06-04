@@ -1,4 +1,4 @@
-import { cn } from '@/app/utils/utils';
+import { cn } from '@/utils/utils';
 import { VariantProps, cva } from 'class-variance-authority';
 import React from 'react';
 

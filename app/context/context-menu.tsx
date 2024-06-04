@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, useState } from 'react';
 import { INITIAL_CONTEXT_MENU } from '../data/initial-state';
-import { ContextMenuI, FileI, FolderI } from '../types/types';
+import { ContextMenuI, FileI, FolderI } from '../../types/types';
 
 type ContextMenuT = {
   clickedItem: FolderI | FileI | null;

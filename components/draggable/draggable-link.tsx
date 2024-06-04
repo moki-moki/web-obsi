@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useDraggable } from '@dnd-kit/core';
-import { DraggableI } from '@/app/types/types';
+import { DraggableI } from '@/types/types';
 
 export default function Draggable({ id, title, type, children }: DraggableI) {
   const { attributes, listeners, transform, setNodeRef } = useDraggable({
@@ -21,7 +21,7 @@ export default function Draggable({ id, title, type, children }: DraggableI) {
       {...listeners}
       {...attributes}
       ref={setNodeRef}
-      href={`/pages/notes/${id}`}
+      href={`/${id}`}
     >
       {children}
     </Link>

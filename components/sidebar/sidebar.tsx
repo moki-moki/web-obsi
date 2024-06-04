@@ -9,17 +9,16 @@ import {
   UniqueIdentifier,
 } from '@dnd-kit/core';
 
-import { DraggingItemI, FileI } from '@/app/types/types';
+import { DraggingItemI } from '@/types/types';
 import { useContextMenu } from '@/app/context/context-menu';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
-import { findFolderIndexByInnerFiles, findIndexById } from '@/app/utils/utils';
 
 import Notes from './notes';
 import Folders from './folders';
-import Droppable from '../Draggable/droppable';
+import Droppable from '../draggable/droppable';
 import SidebarControlls from './sidebar-controlls';
 import ContextMenu from '../context-menu/context-menu';
-import DragOverlayItem from '../Draggable/drag-overlay-item';
+import DragOverlayItem from '../draggable/drag-overlay-item';
 import ContextMenuControlls from '../context-menu/context-menu-controlls';
 
 function Sidebar() {
@@ -32,97 +31,49 @@ function Sidebar() {
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } =
     useContextMenu();
 
-  const getData = async () => {
+  const moveNoteToFolder = async (id: string, folderId: UniqueIdentifier) => {
     try {
-      const response = await fetch('/api/notes');
-
-      const data = await response.json();
-      console.log(data);
+      await fetch('/api/moveNote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id,
+          folderId,
+        }),
+      });
     } catch (error) {
-      console.log(error);
+      console.error('Error creating note:', error);
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const dragNoteHandler = (activeId: UniqueIdentifier, item: FileI) => {
-    // Checks if we drop the item in same place
-    const checkDrop = notes.some((note) => note.id === activeId);
-    if (checkDrop) return;
-
-    const updatedFolders = [...folders];
-
-    const folderTransferIdx = findFolderIndexByInnerFiles(
-      updatedFolders,
-      item.id
-    );
-    const noteIdx = findIndexById(
-      updatedFolders[folderTransferIdx].files,
-      activeId
-    );
-
-    updatedFolders[folderTransferIdx].files.splice(noteIdx, 1);
-
-    setNotes((prev) => [...prev, item]);
-    setFolders(updatedFolders);
-  };
-
-  const dragFolderHandler = (
-    activeId: UniqueIdentifier,
-    overId: UniqueIdentifier,
-    item: FileI
-  ) => {
-    const folderTransferIdx: number = findIndexById(folders, overId);
-
-    // Checks if we drop the item in same place
-    const checkForSameDropLocation: boolean = folders[
-      folderTransferIdx
-    ].files.some((note) => note.id === activeId);
-    if (checkForSameDropLocation) return;
-    const noteIdx: number = findIndexById(notes, activeId);
-    const updatedFolders = [...folders];
-    const updatedNotes = [...notes];
-
-    const sourceFolderArray = updatedFolders.find((item) =>
-      item.files.find((note) => note.id === activeId)
-    );
-
-    if (sourceFolderArray) {
-      const noteIdx = findIndexById(sourceFolderArray.files, activeId);
-
-      if (noteIdx !== -1) {
-        const [noteToTransfer] = sourceFolderArray.files.splice(noteIdx, 1);
-        updatedFolders[folderTransferIdx].files.push(noteToTransfer);
-        setFolders(updatedFolders);
-      }
-    } else {
-      updatedNotes.splice(noteIdx, 1);
-      updatedFolders[folderTransferIdx].files.push(item);
-
-      setNotes(updatedNotes);
-      setFolders(updatedFolders);
+  const moveNoteFromFolder = async (id: string) => {
+    try {
+      await fetch('/api/removeNoteFromFolder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+    } catch (error) {
+      console.error('Error creating note:', error);
     }
   };
 
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
     if (!active || !over || !over.data.current || !active.data.current) return;
-    const activeId = active.id;
     const overId = over.id;
     const location = over.data.current.type;
-    const { id, type, title } = active.data.current;
-    const dataTransfer = {
-      id,
-      type,
-      name: title,
-    };
-
+    const { id } = active.data.current;
     if (location === 'notes') {
-      dragNoteHandler(activeId, dataTransfer);
+      moveNoteFromFolder(id);
     } else {
-      dragFolderHandler(activeId, overId, dataTransfer);
+      moveNoteToFolder(id, overId);
     }
 
     setIsDragging(false);

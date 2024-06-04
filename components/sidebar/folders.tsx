@@ -5,7 +5,7 @@ import FolderWrapper from '../folder/folder-wrapper';
 import FolderControlls from '../folder/folder-controlls';
 
 import { FOLDER_STATE } from '@/app/data/initial-state';
-import { FileI, FolderI, InputChangeEventHandler } from '@/app/types/types';
+import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
 
 interface Props {
   folders: FolderI[];
@@ -44,7 +44,7 @@ const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
     if (e.key === 'Enter') {
       setFolders((prev) => {
         const newfolders = [...prev];
-        newfolders[idx].name = renameValue;
+        newfolders[idx].title = renameValue;
         return newfolders;
       });
       setShowInput(null);
@@ -77,7 +77,7 @@ const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
             >
               <FolderTitle
                 idx={idx}
-                name={folder.name}
+                name={folder.title}
                 showInput={showInput}
                 renameValue={renameValue}
                 rotateIcon={rotatedIcons}
@@ -87,13 +87,13 @@ const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
               <FolderControlls
                 idx={idx}
                 id={folder.id}
-                name={folder.name}
+                name={folder.title}
                 changeNameHandler={changeNameHandler}
               />
             </div>
-            {folder.files.length && rotatedIcons[idx] ? (
+            {folder.notes.length && rotatedIcons[idx] ? (
               <ul className="p-2">
-                {folder.files.map((note) => (
+                {folder.notes.map((note) => (
                   <File key={note.id} note={note} />
                 ))}
               </ul>
