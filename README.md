@@ -10,3 +10,4 @@
   - [x] Make function for moving notes to different folders
   - [] Make function for renaming notes
 - [] Add optimistic updates and data revalidation
+  - [] Add optimistc update when deleting a note inside a folder

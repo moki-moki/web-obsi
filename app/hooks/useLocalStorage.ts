@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
+export const useLocalStorage = <T>(key: string, initialValue: T | (() => T)) => {
   const [state, setState] = useState<T>(() => {
     if (typeof localStorage !== 'undefined') {
       const jsonValue = localStorage.getItem(key);
@@ -32,4 +32,4 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
   }, [state, key]);
 
   return [state, setState] as [T, typeof setState];
-}
+};

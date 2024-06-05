@@ -10,10 +10,7 @@ export async function GET() {
     });
     return NextResponse.json(folders);
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Error fetching folders' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Error fetching folders' }, { status: 500 });
   }
 }
 
@@ -30,21 +27,14 @@ export async function POST() {
     });
     return NextResponse.json(newFolder);
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Error creating folder' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Error creating folder' }, { status: 500 });
   }
 }
 
 export async function DELETE(request: Request) {
   const { id } = await request.json();
 
-  if (!id)
-    return NextResponse.json(
-      { error: 'Folder ID is required' },
-      { status: 400 }
-    );
+  if (!id) return NextResponse.json({ error: 'Folder ID is required' }, { status: 400 });
 
   try {
     const deletedNote = await prisma.folder.delete({
@@ -52,9 +42,6 @@ export async function DELETE(request: Request) {
     });
     return NextResponse.json(deletedNote);
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to delete folder' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to delete folder' }, { status: 500 });
   }
 }

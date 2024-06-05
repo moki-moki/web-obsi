@@ -10,22 +10,18 @@ import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
 
 interface Props {
   note: FileI;
-  noteId: string | null;
-  setNoteId: React.Dispatch<React.SetStateAction<string | null>>;
   getItemDataOnClick: (e: React.SyntheticEvent, data: FolderI | FileI) => void;
 }
 
-const Notes = ({ note, noteId, setNoteId, getItemDataOnClick }: Props) => {
+const Notes = ({ note, getItemDataOnClick }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
-  const { changeNoteName } = useSidebarContext();
   const { id, title, type } = note;
+  const { noteId, changeNoteName } = useSidebarContext();
   const [renameValue, setRenameValue] = useState<string>(title);
 
-  const onChangeHandler: InputChangeEventHandler = (e) =>
-    setRenameValue(e.target.value);
+  const onChangeHandler: InputChangeEventHandler = (e) => setRenameValue(e.target.value);
 
   const onClose = () => {
-    setNoteId(null);
     changeNoteName(id, renameValue);
     setRenameValue(renameValue);
   };

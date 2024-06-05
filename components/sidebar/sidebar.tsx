@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { DndContext, DragEndEvent, DragStartEvent, UniqueIdentifier } from '@dnd-kit/core';
@@ -17,11 +17,10 @@ import DragOverlayItem from '../draggable/drag-overlay-item';
 import ContextMenuControlls from '../context-menu/context-menu-controlls';
 
 function Sidebar() {
-  const [isClient, setIsClient] = useState<boolean>(false); // Fixes Next.js hydration issue with local storage
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
-  const { notes, noteId, folders, setFolders, setNoteId } = useSidebarContext();
+  const { notes, notesLoading, folders, foldersLoading } = useSidebarContext();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
 
   const moveNoteToFolder = async (id: string, folderId: UniqueIdentifier) => {
@@ -89,11 +88,6 @@ function Sidebar() {
     }, 150);
   };
 
-  // This Fixes Next.js hydration issue with local storage. TODO: find better approach
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   return (
     <>
       <div
@@ -102,42 +96,31 @@ function Sidebar() {
       >
         <SidebarControlls />
         <h2 className="px-4 mb-4 text-white uppercase font-bold">Your Notes</h2>
-        {isClient ? (
-          <>
-            <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
-              <Folders
-                noteId={noteId}
-                folders={folders}
-                setFolders={setFolders}
-                getItemDataOnClick={getItemDataOnClick}
-              />
+        <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
+          {foldersLoading || notesLoading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <>
+              <Folders folders={folders} getItemDataOnClick={getItemDataOnClick} />
               <ul className="h-full flex-auto p-1">
                 <Droppable id={uuidv4()} type="notes">
                   {notes.map((note) => (
-                    <Notes
-                      note={note}
-                      key={note.id}
-                      noteId={noteId}
-                      setNoteId={setNoteId}
-                      getItemDataOnClick={getItemDataOnClick}
-                    />
+                    <Notes note={note} key={note.id} getItemDataOnClick={getItemDataOnClick} />
                   ))}
                 </Droppable>
               </ul>
               {isDragging && draggingItem ? (
                 <DragOverlayItem title={draggingItem.title} type={draggingItem.type} />
               ) : null}
-            </DndContext>
+            </>
+          )}
+        </DndContext>
 
-            {contextMenu.show && clickedItem ? (
-              <ContextMenu>
-                <ContextMenuControlls itemData={clickedItem} />
-              </ContextMenu>
-            ) : null}
-          </>
-        ) : (
-          <></>
-        )}
+        {contextMenu.show && clickedItem ? (
+          <ContextMenu>
+            <ContextMenuControlls itemData={clickedItem} />
+          </ContextMenu>
+        ) : null}
       </div>
     </>
   );

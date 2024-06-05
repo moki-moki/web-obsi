@@ -9,44 +9,28 @@ import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
 
 interface Props {
   folders: FolderI[];
-  noteId: string | null;
-  setFolders: React.Dispatch<React.SetStateAction<FolderI[]>>;
   getItemDataOnClick: (e: React.SyntheticEvent, data: FolderI | FileI) => void;
 }
 
-const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
+const Folders = ({ folders, getItemDataOnClick }: Props) => {
   const [renameValue, setRenameValue] = useState<string>('');
   const [showInput, setShowInput] = useState<null | number>(null);
-  const [rotatedIcons, setRotatedIcons] = useState(
-    Array(FOLDER_STATE.length).fill(false)
-  );
+  const [rotatedIcons, setRotatedIcons] = useState(Array(FOLDER_STATE.length).fill(false));
 
   const onChangeHandler: InputChangeEventHandler = (e) => {
     e.stopPropagation();
     setRenameValue(e.target.value);
   };
 
-  const changeNameHandler = (
-    e: React.MouseEvent<HTMLSpanElement>,
-    idx: number,
-    name: string
-  ) => {
+  const changeNameHandler = (e: React.MouseEvent<HTMLSpanElement>, idx: number, name: string) => {
     e.stopPropagation();
 
     setShowInput(idx);
     setRenameValue(name);
   };
 
-  const onKeyDownHandler = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    idx: number
-  ) => {
+  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>, idx: number) => {
     if (e.key === 'Enter') {
-      setFolders((prev) => {
-        const newfolders = [...prev];
-        newfolders[idx].title = renameValue;
-        return newfolders;
-      });
       setShowInput(null);
     }
   };
@@ -91,7 +75,7 @@ const Folders = ({ folders, setFolders, getItemDataOnClick }: Props) => {
                 changeNameHandler={changeNameHandler}
               />
             </div>
-            {folder.notes.length && rotatedIcons[idx] ? (
+            {folder?.notes.length && rotatedIcons[idx] ? (
               <ul className="p-2">
                 {folder.notes.map((note) => (
                   <File key={note.id} note={note} />

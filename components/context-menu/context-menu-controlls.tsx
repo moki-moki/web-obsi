@@ -1,13 +1,17 @@
 import { FileI, FolderI } from '@/types/types';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 import { SquarePen, Trash2 } from 'lucide-react';
+import { useDeleteFolder } from '@/api-calls/folders';
+import { useDeleteNote } from '@/api-calls/notes';
 
 interface Props {
   itemData: FileI | FolderI | null;
 }
 
 const ContextMenuControlls = ({ itemData }: Props) => {
-  const { deleteFolder, deleteNote, getNoteId } = useSidebarContext();
+  const { getNoteId } = useSidebarContext();
+  const { deleteFolder } = useDeleteFolder();
+  const { deleteNote } = useDeleteNote();
   if (!itemData) return;
 
   const { type, id } = itemData;
