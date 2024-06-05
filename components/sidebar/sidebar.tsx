@@ -2,12 +2,7 @@
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import {
-  DndContext,
-  DragEndEvent,
-  DragStartEvent,
-  UniqueIdentifier,
-} from '@dnd-kit/core';
+import { DndContext, DragEndEvent, DragStartEvent, UniqueIdentifier } from '@dnd-kit/core';
 
 import { DraggingItemI } from '@/types/types';
 import { useContextMenu } from '@/app/context/context-menu';
@@ -26,10 +21,8 @@ function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
-  const { notes, noteId, folders, setFolders, setNotes, setNoteId } =
-    useSidebarContext();
-  const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } =
-    useContextMenu();
+  const { notes, noteId, folders, setFolders, setNoteId } = useSidebarContext();
+  const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
 
   const moveNoteToFolder = async (id: string, folderId: UniqueIdentifier) => {
     try {
@@ -132,10 +125,7 @@ function Sidebar() {
                 </Droppable>
               </ul>
               {isDragging && draggingItem ? (
-                <DragOverlayItem
-                  title={draggingItem.title}
-                  type={draggingItem.type}
-                />
+                <DragOverlayItem title={draggingItem.title} type={draggingItem.type} />
               ) : null}
             </DndContext>
 
