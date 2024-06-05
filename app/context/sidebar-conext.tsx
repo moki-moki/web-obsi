@@ -26,11 +26,9 @@ export default function SidebarConextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [noteId, setNoteId] = useState<string | null>(null);
-  // const [notes, setNotes] = useLocalStorage<FileI[]>('notes', []);
-  // const [folders, setFolders] = useLocalStorage<FolderI[]>('folders', []);
   const [notes, setNotes] = useState<FileI[]>([]);
   const [folders, setFolders] = useState<FolderI[]>([]);
+  const [noteId, setNoteId] = useState<string | null>(null);
 
   const getNotes = async () => {
     try {
