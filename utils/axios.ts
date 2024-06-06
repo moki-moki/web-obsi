@@ -25,6 +25,8 @@ export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
 };
 
 export const endponints = {
-  folder: '/api/folders',
   notes: '/api/notes',
+  folder: '/api/folders',
+  moveNotetoFolder: '/api/moveNote',
+  moveNoteFromFolder: '/api/removeNoteFromFolder',
 };

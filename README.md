@@ -11,3 +11,5 @@
   - [] Make function for renaming notes
 - [] Add optimistic updates and data revalidation
   - [] Add optimistc update when deleting a note inside a folder
+- [] Find better approach to deleting notes that are in folder
+- [] Implement loading skeleton on sidebar component

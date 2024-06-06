@@ -45,3 +45,20 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: 'Failed to delete folder' }, { status: 500 });
   }
 }
+
+export async function PUT(request: Request) {
+  const { id, title } = await request.json();
+
+  if (!id || !title) return NextResponse.json({ error: 'Title and is required' }, { status: 400 });
+
+  try {
+    const updateFolderTitle = await prisma.folder.update({
+      where: { id },
+      data: { title },
+    });
+    return NextResponse.json(updateFolderTitle);
+  } catch (error) {
+    console.error('Error updating post:', error);
+    return NextResponse.json({ error: 'Error updating post' }, { status: 500 });
+  }
+}

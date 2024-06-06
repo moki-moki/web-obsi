@@ -14,7 +14,7 @@ type SidebarContextI = {
   notesError: undefined | boolean;
   foldersError: undefined | boolean;
   getNoteId: (id: string) => void;
-  changeNoteName: (id: string, newName: string) => void;
+  setNoteId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
@@ -24,9 +24,7 @@ export default function SidebarConextProvider({ children }: { children: React.Re
   const { data: notes, error: notesError, isLoading: notesLoading } = useGetNotes();
   const { data: folders, error: foldersError, isLoading: foldersLoading } = useGetFolders();
 
-  const changeNoteName = (id: string, newName: string) => {
-    // Make API CALL Here
-  };
+  console.log(notes, folders);
 
   const getNoteId = (id: string) => setNoteId(id);
 
@@ -40,8 +38,8 @@ export default function SidebarConextProvider({ children }: { children: React.Re
         notesLoading,
         foldersError,
         foldersLoading,
+        setNoteId,
         getNoteId,
-        changeNoteName,
       }}
     >
       {children}

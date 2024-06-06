@@ -7,6 +7,7 @@ import Draggable from '../draggable/draggable-link';
 import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
+import { useRenameNote } from '@/api-calls/notes';
 
 interface Props {
   note: FileI;
@@ -16,21 +17,27 @@ interface Props {
 const Notes = ({ note, getItemDataOnClick }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
   const { id, title, type } = note;
-  const { noteId, changeNoteName } = useSidebarContext();
   const [renameValue, setRenameValue] = useState<string>(title);
+
+  const { renameNoteTitle } = useRenameNote();
+
+  const { noteId, setNoteId } = useSidebarContext();
 
   const onChangeHandler: InputChangeEventHandler = (e) => setRenameValue(e.target.value);
 
   const onClose = () => {
-    changeNoteName(id, renameValue);
     setRenameValue(renameValue);
-  };
-
-  const onKeyDownHandler = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') onClose();
+    setNoteId(null);
   };
 
   const listRef = useOutsideClick(ref, onClose);
+
+  const onKeyDownHandler = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      onClose();
+      renameNoteTitle(id, renameValue);
+    }
+  };
 
   return (
     <>

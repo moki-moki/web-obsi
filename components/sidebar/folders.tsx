@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import File from '../ui/file';
 import FolderTitle from '../folder/folder-title';
 import FolderWrapper from '../folder/folder-wrapper';
@@ -6,6 +6,8 @@ import FolderControlls from '../folder/folder-controlls';
 
 import { FOLDER_STATE } from '@/app/data/initial-state';
 import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
+import { useRenameFolderTitle } from '@/api-calls/folders';
+import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 
 interface Props {
   folders: FolderI[];
@@ -13,9 +15,17 @@ interface Props {
 }
 
 const Folders = ({ folders, getItemDataOnClick }: Props) => {
+  const ref = useRef<HTMLInputElement>(null);
+
   const [renameValue, setRenameValue] = useState<string>('');
   const [showInput, setShowInput] = useState<null | number>(null);
   const [rotatedIcons, setRotatedIcons] = useState(Array(FOLDER_STATE.length).fill(false));
+
+  const { renameFolderTitle } = useRenameFolderTitle();
+
+  const onClose = () => setShowInput(null);
+
+  const inputRef = useOutsideClick(ref, onClose);
 
   const onChangeHandler: InputChangeEventHandler = (e) => {
     e.stopPropagation();
@@ -24,13 +34,13 @@ const Folders = ({ folders, getItemDataOnClick }: Props) => {
 
   const changeNameHandler = (e: React.MouseEvent<HTMLSpanElement>, idx: number, name: string) => {
     e.stopPropagation();
-
     setShowInput(idx);
     setRenameValue(name);
   };
 
-  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>, idx: number) => {
+  const onKeyDownHandler = (id: string, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      renameFolderTitle(id, renameValue);
       setShowInput(null);
     }
   };
@@ -61,7 +71,9 @@ const Folders = ({ folders, getItemDataOnClick }: Props) => {
             >
               <FolderTitle
                 idx={idx}
+                id={folder.id}
                 name={folder.title}
+                inputRef={inputRef}
                 showInput={showInput}
                 renameValue={renameValue}
                 rotateIcon={rotatedIcons}

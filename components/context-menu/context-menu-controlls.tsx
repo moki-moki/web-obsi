@@ -42,7 +42,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
             Rename File
           </li>
           <li
-            onClick={() => deleteNote(id)}
+            onClick={() => deleteNote(id, type)}
             className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
           >
             <span className="mr-2 text-base">

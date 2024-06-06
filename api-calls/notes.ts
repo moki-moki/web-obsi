@@ -1,8 +1,11 @@
-import { endponints, fetcher } from '@/utils/axios';
-import axios from 'axios';
 import useSWR from 'swr';
+import axios from 'axios';
+import { useGetFolders } from './folders';
+import { UniqueIdentifier } from '@dnd-kit/core';
+import { endponints, fetcher } from '@/utils/axios';
 
 const URL = endponints.notes;
+const MOVE_NOTE_URL = endponints.moveNotetoFolder;
 
 export const useGetNotes = () => {
   const { data, error, isLoading, mutate } = useSWR(URL, fetcher);
@@ -22,12 +25,38 @@ export const useCreateNote = () => {
 };
 
 export const useDeleteNote = () => {
-  const { mutate } = useGetNotes();
+  const { mutate: mutateNote } = useGetNotes();
+  const { mutate: mutateFolders } = useGetFolders();
 
-  const deleteNote = async (id: string) => {
+  const deleteNote = async (id: string, type: 'note' | 'folder') => {
     await axios.delete(URL, { data: { id } });
-    mutate();
+    mutateNote();
+    mutateFolders();
   };
 
   return { deleteNote };
+};
+
+export const useMoveNoteToFolder = () => {
+  const { mutate: mutateNote } = useGetNotes();
+  const { mutate: mutateFolders } = useGetFolders();
+
+  const moveNoteToFolder = async (id: string, folderId: UniqueIdentifier) => {
+    await axios.post(MOVE_NOTE_URL, { id, folderId });
+    await mutateNote();
+    await mutateFolders();
+  };
+
+  return { moveNoteToFolder };
+};
+
+export const useRenameNote = () => {
+  const { mutate } = useGetNotes();
+
+  const renameNoteTitle = async (id: string, title: string) => {
+    await axios.put(URL, { id, title });
+    mutate();
+  };
+
+  return { renameNoteTitle };
 };

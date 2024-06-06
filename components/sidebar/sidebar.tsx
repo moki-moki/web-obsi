@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { DndContext, DragEndEvent, DragStartEvent, UniqueIdentifier } from '@dnd-kit/core';
+import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 
 import { DraggingItemI } from '@/types/types';
+import { useMoveNoteToFolder } from '@/api-calls/notes';
 import { useContextMenu } from '@/app/context/context-menu';
+import { useRemoveNoteFromFolder } from '@/api-calls/folders';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 
 import Notes from './notes';
@@ -20,41 +22,11 @@ function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
+  const { moveNoteToFolder } = useMoveNoteToFolder();
+  const { removeNoteFromFolder } = useRemoveNoteFromFolder();
+
   const { notes, notesLoading, folders, foldersLoading } = useSidebarContext();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
-
-  const moveNoteToFolder = async (id: string, folderId: UniqueIdentifier) => {
-    try {
-      await fetch('/api/moveNote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id,
-          folderId,
-        }),
-      });
-    } catch (error) {
-      console.error('Error creating note:', error);
-    }
-  };
-
-  const moveNoteFromFolder = async (id: string) => {
-    try {
-      await fetch('/api/removeNoteFromFolder', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id,
-        }),
-      });
-    } catch (error) {
-      console.error('Error creating note:', error);
-    }
-  };
 
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -63,7 +35,7 @@ function Sidebar() {
     const location = over.data.current.type;
     const { id } = active.data.current;
     if (location === 'notes') {
-      moveNoteFromFolder(id);
+      removeNoteFromFolder(id);
     } else {
       moveNoteToFolder(id, overId);
     }
