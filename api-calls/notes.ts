@@ -51,7 +51,7 @@ export const useMoveNoteToFolder = () => {
 };
 
 export const useRenameNote = () => {
-  const { mutate } = useGetNotes();
+  const { mutate } = useGetFolders();
 
   const renameNoteTitle = async (id: string, title: string) => {
     await axios.put(URL, { id, title });

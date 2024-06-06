@@ -3,9 +3,8 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const { id } = await request.json();
-  console.log(id);
-  if (!id)
-    return NextResponse.json({ error: 'Note id is required' }, { status: 400 });
+
+  if (!id) return NextResponse.json({ error: 'Note id is required' }, { status: 400 });
 
   try {
     const updatedNote = await prisma.note.update({
@@ -14,9 +13,6 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(updatedNote);
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to remove note from folder' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to remove note from folder' }, { status: 500 });
   }
 }

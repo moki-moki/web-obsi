@@ -16,7 +16,7 @@ interface Props {
 
 const Notes = ({ note, getItemDataOnClick }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
-  const { id, title, type } = note;
+  const { id, title, type, folderId } = note;
   const [renameValue, setRenameValue] = useState<string>(title);
 
   const { renameNoteTitle } = useRenameNote();
@@ -35,6 +35,9 @@ const Notes = ({ note, getItemDataOnClick }: Props) => {
   const onKeyDownHandler = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       onClose();
+
+      // Get folder id and if there is folderId change name in note or outside note
+      // folderId ? :      renameNoteTitle(id, renameValue);
       renameNoteTitle(id, renameValue);
     }
   };

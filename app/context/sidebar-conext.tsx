@@ -24,8 +24,6 @@ export default function SidebarConextProvider({ children }: { children: React.Re
   const { data: notes, error: notesError, isLoading: notesLoading } = useGetNotes();
   const { data: folders, error: foldersError, isLoading: foldersLoading } = useGetFolders();
 
-  console.log(notes, folders);
-
   const getNoteId = (id: string) => setNoteId(id);
 
   return (

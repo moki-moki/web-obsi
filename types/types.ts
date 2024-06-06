@@ -1,11 +1,8 @@
 import React from 'react';
 
-export type InputChangeEventHandler =
-  React.ChangeEventHandler<HTMLInputElement>;
-export type TextareaChangeEventHandler =
-  React.ChangeEventHandler<HTMLTextAreaElement>;
-export type SelectChangeEventHandler =
-  React.ChangeEventHandler<HTMLSelectElement>;
+export type InputChangeEventHandler = React.ChangeEventHandler<HTMLInputElement>;
+export type TextareaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
+export type SelectChangeEventHandler = React.ChangeEventHandler<HTMLSelectElement>;
 
 export interface ContextMenuI {
   show: boolean;
@@ -29,6 +26,7 @@ export interface FileI {
   id: string;
   title: string;
   type: string;
+  folderId: string | null;
 }
 
 export interface DragOverlayI {
