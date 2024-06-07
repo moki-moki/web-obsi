@@ -4,14 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 
-import { DraggingItemI } from '@/types/types';
+import { DraggingItemI, FolderI } from '@/types/types';
 import { useMoveNoteToFolder } from '@/api-calls/notes';
 import { useContextMenu } from '@/app/context/context-menu';
 import { useRemoveNoteFromFolder } from '@/api-calls/folders';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 
 import Notes from './notes';
-import Folders from './folders';
+import Folder from './folder';
 import Droppable from '../draggable/droppable';
 import SidebarControlls from './sidebar-controlls';
 import ContextMenu from '../context-menu/context-menu';
@@ -73,7 +73,15 @@ function Sidebar() {
             <h1>Loading...</h1>
           ) : (
             <>
-              <Folders folders={folders} getItemDataOnClick={getItemDataOnClick} />
+              <ul className="px-1 flex flex-col gap-2">
+                {folders.map((folder: FolderI, idx: number) => (
+                  <li key={folder.id}>
+                    <Folder idx={idx} folder={folder} getItemDataOnClick={getItemDataOnClick} />
+                  </li>
+                ))}
+                ;
+              </ul>
+
               <ul className="h-full flex-auto p-1">
                 <Droppable id={uuidv4()} type="notes">
                   {notes.map((note) => (

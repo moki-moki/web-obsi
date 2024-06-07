@@ -8,7 +8,8 @@
   - [x] Connect Prisma with the front-end
   - [x] Make function for deleting folders and notes
   - [x] Make function for moving notes to different folders
-  - [] Make function for renaming notes
+  - [x] Make function for renaming notes
+  - [] Implement error checking when renaming notes/folders. So the empty string isn't accepted
 - [] Add optimistic updates and data revalidation
   - [] Add optimistc update when deleting a note inside a folder
 - [] Find better approach to deleting notes that are in folder

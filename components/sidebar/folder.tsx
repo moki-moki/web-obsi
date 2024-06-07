@@ -10,11 +10,12 @@ import { useRenameFolderTitle } from '@/api-calls/folders';
 import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 
 interface Props {
-  folders: FolderI[];
+  idx: number;
+  folder: FolderI;
   getItemDataOnClick: (e: React.SyntheticEvent, data: FolderI | FileI) => void;
 }
 
-const Folders = ({ folders, getItemDataOnClick }: Props) => {
+const Folder = ({ folder, idx, getItemDataOnClick }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
 
   const [renameValue, setRenameValue] = useState<string>('');
@@ -22,6 +23,8 @@ const Folders = ({ folders, getItemDataOnClick }: Props) => {
   const [rotatedIcons, setRotatedIcons] = useState(Array(FOLDER_STATE.length).fill(false));
 
   const { renameFolderTitle } = useRenameFolderTitle();
+
+  const { id, notes, title } = folder;
 
   const onClose = () => setShowInput(null);
 
@@ -55,50 +58,39 @@ const Folders = ({ folders, getItemDataOnClick }: Props) => {
   };
 
   return (
-    <ul className="px-1 flex flex-col gap-2">
-      {folders.map((folder: FolderI, idx: number) => (
-        <li key={folder.id}>
-          <FolderWrapper
-            idx={idx}
-            id={folder.id}
-            showInput={showInput}
-            rotateIcon={rotatedIcons}
-            iconHandler={iconHandler}
-          >
-            <div
-              onContextMenu={(e) => getItemDataOnClick(e, folder)}
-              className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent"
-            >
-              <FolderTitle
-                idx={idx}
-                id={folder.id}
-                name={folder.title}
-                inputRef={inputRef}
-                showInput={showInput}
-                renameValue={renameValue}
-                rotateIcon={rotatedIcons}
-                onChangeHandler={onChangeHandler}
-                onKeyDownHandler={onKeyDownHandler}
-              />
-              <FolderControlls
-                idx={idx}
-                id={folder.id}
-                name={folder.title}
-                changeNameHandler={changeNameHandler}
-              />
-            </div>
-            {folder?.notes.length && rotatedIcons[idx] ? (
-              <ul className="p-2">
-                {folder.notes.map((note) => (
-                  <File key={note.id} note={note} />
-                ))}
-              </ul>
-            ) : null}
-          </FolderWrapper>
-        </li>
-      ))}
-    </ul>
+    <FolderWrapper
+      id={id}
+      idx={idx}
+      showInput={showInput}
+      rotateIcon={rotatedIcons}
+      iconHandler={iconHandler}
+    >
+      <div
+        onContextMenu={(e) => getItemDataOnClick(e, folder)}
+        className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent"
+      >
+        <FolderTitle
+          idx={idx}
+          id={id}
+          name={title}
+          inputRef={inputRef}
+          showInput={showInput}
+          renameValue={renameValue}
+          rotateIcon={rotatedIcons}
+          onChangeHandler={onChangeHandler}
+          onKeyDownHandler={onKeyDownHandler}
+        />
+        <FolderControlls idx={idx} id={id} name={title} changeNameHandler={changeNameHandler} />
+      </div>
+      {notes.length && rotatedIcons[idx] ? (
+        <ul className="p-2">
+          {notes.map((note) => (
+            <File key={note.id} note={note} />
+          ))}
+        </ul>
+      ) : null}
+    </FolderWrapper>
   );
 };
 
-export default Folders;
+export default Folder;
