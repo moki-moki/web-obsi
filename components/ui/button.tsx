@@ -2,9 +2,7 @@ import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import { cn } from '@/utils/utils';
 import { VariantProps, cva } from 'class-variance-authority';
 
-interface Props
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof btnVarians> {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof btnVarians> {
   type: 'submit' | 'button';
   children?: React.ReactNode;
   className?: string;
@@ -16,7 +14,7 @@ export const btnVarians = cva(
   {
     variants: {
       variants: {
-        default: 'bg-dark-gray hover:bg-gray/20 hover:border-white',
+        default: 'bg-dark-gray hover:bg-gray/20 hover:border-white hover:text-white',
         outlined:
           'border border-border bg-dark-gray-accent bg-none hover:bg-white hover:text-black hover:border-white',
         'ghost-outlined':

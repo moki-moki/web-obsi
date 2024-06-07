@@ -10,10 +10,7 @@ export default function NotFound() {
           <span className="block mx-2">|</span>
           <h3 className="mr-2">Page Not found!</h3>
         </div>
-        <Link
-          href="/"
-          className="border border-gray rounded-full py-2 px-4 block my-2 w-fit"
-        >
+        <Link href="/" className="border border-gray rounded-full py-2 px-4 block my-2 w-fit">
           Go back
         </Link>
       </div>

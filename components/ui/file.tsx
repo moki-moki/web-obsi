@@ -14,7 +14,7 @@ interface Props {
 }
 
 const File = ({ note }: Props) => {
-  const { id, title, type } = note;
+  const { id, title, type, folderId } = note;
   const ref = useRef<HTMLInputElement>(null);
   const [renameValue, setRenameValue] = useState<string>(title);
 
@@ -30,9 +30,13 @@ const File = ({ note }: Props) => {
     setRenameValue(renameValue);
   };
 
-  const onKeyDownHandler = (id: string, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDownHandler = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    id: string,
+    folderId: string | null
+  ) => {
     if (e.key === 'Enter') {
-      renameNoteTitle(id, renameValue);
+      renameNoteTitle(id, renameValue, folderId);
       setNoteId(null);
     }
   };
@@ -50,7 +54,7 @@ const File = ({ note }: Props) => {
             ref={listRef}
             value={renameValue}
             onChange={onChangeHandler}
-            onKeyDown={(e) => onKeyDownHandler(id, e)}
+            onKeyDown={(e) => onKeyDownHandler(e, id, folderId)}
             className="px-2 py-0.5 text-sm focus:outline-none"
           />
         </li>

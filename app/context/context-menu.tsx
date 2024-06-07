@@ -9,9 +9,7 @@ type ContextMenuT = {
   onClose: () => void;
   setContextMenu: React.Dispatch<React.SetStateAction<ContextMenuI>>;
   getItemDataOnClick: (e: React.SyntheticEvent, data: FolderI | FileI) => void;
-  handleContextMenu: (
-    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
-  ) => void;
+  handleContextMenu: (e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
 };
 
 const DEFAULT_CONTEXT_VALUE = {
@@ -23,21 +21,13 @@ const DEFAULT_CONTEXT_VALUE = {
   ) => {},
 };
 
-const MenuContext = createContext<ContextMenuT>(
-  DEFAULT_CONTEXT_VALUE as ContextMenuT
-);
+const MenuContext = createContext<ContextMenuT>(DEFAULT_CONTEXT_VALUE as ContextMenuT);
 
-export default function ContextMenuProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ContextMenuProvider({ children }: { children: React.ReactNode }) {
   const [contextMenu, setContextMenu] = useState(INITIAL_CONTEXT_MENU);
   const [clickedItem, setClickedItem] = useState<FolderI | FileI | null>(null);
 
-  const handleContextMenu = (
-    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
-  ) => {
+  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     e.stopPropagation();
     e.preventDefault();
     const { pageX, pageY } = e;
@@ -49,10 +39,7 @@ export default function ContextMenuProvider({
     setClickedItem(null);
   };
 
-  const getItemDataOnClick = (
-    e: React.SyntheticEvent,
-    data: FolderI | FileI
-  ) => {
+  const getItemDataOnClick = (e: React.SyntheticEvent, data: FolderI | FileI) => {
     e.preventDefault();
     setClickedItem(data);
   };
@@ -77,9 +64,7 @@ export function useContextMenu() {
   const context = useContext(MenuContext);
 
   if (context === undefined) {
-    throw new Error(
-      'useContextMenu must be used within a SidebarContextProvider'
-    );
+    throw new Error('useContextMenu must be used within a SidebarContextProvider');
   }
 
   return context;

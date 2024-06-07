@@ -16,8 +16,8 @@ import Droppable from '../draggable/droppable';
 import SidebarControlls from './sidebar-controlls';
 import ContextMenu from '../context-menu/context-menu';
 import DragOverlayItem from '../draggable/drag-overlay-item';
-import ContextMenuControlls from '../context-menu/context-menu-controlls';
 import SidebarSkeleton from '../ui/skeletons/SidebarSkeleton';
+import ContextMenuControlls from '../context-menu/context-menu-controlls';
 
 function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -52,9 +52,7 @@ function Sidebar() {
       type,
     };
 
-    if (data) {
-      setDraggingItem(data);
-    }
+    if (data) setDraggingItem(data);
 
     setTimeout(() => {
       setIsDragging(true);
@@ -96,13 +94,13 @@ function Sidebar() {
             </>
           )}
         </DndContext>
-
-        {contextMenu.show && clickedItem ? (
-          <ContextMenu>
-            <ContextMenuControlls itemData={clickedItem} />
-          </ContextMenu>
-        ) : null}
       </div>
+
+      {contextMenu.show && clickedItem ? (
+        <ContextMenu>
+          <ContextMenuControlls itemData={clickedItem} />
+        </ContextMenu>
+      ) : null}
     </>
   );
 }

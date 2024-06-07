@@ -10,14 +10,7 @@ interface Props {
   iconHandler: (e: React.MouseEvent, idx: number) => void;
 }
 
-const FolderWrapper = ({
-  id,
-  idx,
-  children,
-  showInput,
-  rotateIcon,
-  iconHandler,
-}: Props) => {
+const FolderWrapper = ({ id, idx, children, showInput, rotateIcon, iconHandler }: Props) => {
   return (
     <>
       <Droppable id={id} key={id} type="folder">

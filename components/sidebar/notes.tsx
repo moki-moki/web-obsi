@@ -32,13 +32,11 @@ const Notes = ({ note, getItemDataOnClick }: Props) => {
 
   const listRef = useOutsideClick(ref, onClose);
 
-  const onKeyDownHandler = (e: React.KeyboardEvent) => {
+  const onKeyDownHandler = (e: React.KeyboardEvent, folderId: string | null) => {
     if (e.key === 'Enter') {
       onClose();
 
-      // Get folder id and if there is folderId change name in note or outside note
-      // folderId ? :      renameNoteTitle(id, renameValue);
-      renameNoteTitle(id, renameValue);
+      renameNoteTitle(id, renameValue, folderId);
     }
   };
 
@@ -53,7 +51,7 @@ const Notes = ({ note, getItemDataOnClick }: Props) => {
             ref={listRef}
             value={renameValue}
             onChange={onChangeHandler}
-            onKeyDown={onKeyDownHandler}
+            onKeyDown={(e) => onKeyDownHandler(e, folderId)}
             className="px-2 py-1 mr-2 text-sm focus:outline-none"
           />
         </li>
