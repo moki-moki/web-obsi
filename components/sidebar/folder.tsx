@@ -1,13 +1,14 @@
 import { useRef, useState } from 'react';
+
 import File from '../ui/file';
 import FolderTitle from '../folder/folder-title';
 import FolderWrapper from '../folder/folder-wrapper';
 import FolderControlls from '../folder/folder-controlls';
 
 import { FOLDER_STATE } from '@/app/data/initial-state';
-import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
 import { useRenameFolderTitle } from '@/api-calls/folders';
 import { useOutsideClick } from '@/app/hooks/useOutsideClick';
+import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
 
 interface Props {
   idx: number;

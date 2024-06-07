@@ -17,6 +17,7 @@ import SidebarControlls from './sidebar-controlls';
 import ContextMenu from '../context-menu/context-menu';
 import DragOverlayItem from '../draggable/drag-overlay-item';
 import ContextMenuControlls from '../context-menu/context-menu-controlls';
+import SidebarSkeleton from '../ui/skeletons/SidebarSkeleton';
 
 function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -68,9 +69,10 @@ function Sidebar() {
       >
         <SidebarControlls />
         <h2 className="px-4 mb-4 text-white uppercase font-bold">Your Notes</h2>
+
         <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
           {foldersLoading || notesLoading ? (
-            <h1>Loading...</h1>
+            <SidebarSkeleton />
           ) : (
             <>
               <ul className="px-1 flex flex-col gap-2">
@@ -79,7 +81,6 @@ function Sidebar() {
                     <Folder idx={idx} folder={folder} getItemDataOnClick={getItemDataOnClick} />
                   </li>
                 ))}
-                ;
               </ul>
 
               <ul className="h-full flex-auto p-1">

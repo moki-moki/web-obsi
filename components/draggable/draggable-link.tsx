@@ -16,13 +16,7 @@ export default function Draggable({ id, title, type, children }: DraggableI) {
     : undefined;
 
   return (
-    <Link
-      style={style}
-      {...listeners}
-      {...attributes}
-      ref={setNodeRef}
-      href={`/${id}`}
-    >
+    <Link style={style} {...listeners} {...attributes} ref={setNodeRef} href={`/${id}`}>
       {children}
     </Link>
   );

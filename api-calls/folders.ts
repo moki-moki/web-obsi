@@ -51,7 +51,7 @@ export const useRenameFolderTitle = () => {
 
   const renameFolderTitle = async (id: string, title: string) => {
     await axios.put(FOLDER_URL, { id, title });
-    mutate();
+    await mutate();
   };
 
   return { renameFolderTitle };
