@@ -71,8 +71,8 @@ const Folder = ({ folder, idx, getItemDataOnClick }: Props) => {
         className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent"
       >
         <FolderTitle
-          idx={idx}
           id={id}
+          idx={idx}
           name={title}
           inputRef={inputRef}
           showInput={showInput}

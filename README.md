@@ -16,3 +16,4 @@
 - [x] Implement loading skeleton on sidebar component
 - [] Make a note page
 - [] Make editing note functionality
+- [] Make tags, when you visit a note, display tags where that note is nested
