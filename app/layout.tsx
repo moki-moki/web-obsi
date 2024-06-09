@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
+
 import Sidebar from '../components/sidebar/sidebar';
-import SidebarConextProvider from './context/sidebar-conext';
 import ContextMenuProvider from './context/context-menu';
+import SidebarConextProvider from './context/sidebar-conext';
+
+import { SWRProvider } from '@/provider/swr-provider';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -19,16 +22,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
-        <main className="flex">
-          <ContextMenuProvider>
-            <SidebarConextProvider>
-              <Sidebar />
-            </SidebarConextProvider>
-          </ContextMenuProvider>
-          {children}
-        </main>
-      </body>
+      <SWRProvider>
+        <body className={montserrat.className}>
+          <main className="flex">
+            <ContextMenuProvider>
+              <SidebarConextProvider>
+                <Sidebar />
+              </SidebarConextProvider>
+            </ContextMenuProvider>
+            {children}
+          </main>
+        </body>
+      </SWRProvider>
     </html>
   );
 }

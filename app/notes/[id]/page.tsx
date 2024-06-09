@@ -1,15 +1,10 @@
-import axios from 'axios';
 import Link from 'next/link';
 import { FilePenLine, Trash2 } from 'lucide-react';
-
-const getData = async (id: string) => {
-  const res = await axios.get(`${process.env.DEFAULT_URL}/notes/${id}`);
-  return await res.data;
-};
+import { getNoteData } from '@/utils/server-api-calls';
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const data = await getData(id);
+  const data = await getNoteData(id);
 
   return (
     <div className="w-full max-h-14">
