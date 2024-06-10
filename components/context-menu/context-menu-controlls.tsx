@@ -1,8 +1,9 @@
 import { FileI, FolderI } from '@/types/types';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
-import { SquarePen, Trash2 } from 'lucide-react';
+import { FilePen, SquarePen, Trash2 } from 'lucide-react';
 import { useDeleteFolder } from '@/api-calls/folders';
 import { useDeleteNote } from '@/api-calls/notes';
+import Link from 'next/link';
 
 interface Props {
   itemData: FileI | FolderI | null;
@@ -40,6 +41,12 @@ const ContextMenuControlls = ({ itemData }: Props) => {
               <SquarePen size={15} />
             </span>
             Rename File
+          </li>
+          <li className="folder flex items-center cursor-pointer text-gray px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-gray/30">
+            <span className="mr-2 text-base">
+              <FilePen size={15} />
+            </span>
+            <Link href={`/notes/edit/${id}`}>Edit note</Link>
           </li>
           <li
             onClick={() => deleteNote(id, type)}

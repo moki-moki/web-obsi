@@ -26,7 +26,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
         </Link>
       </div>
       <div className="mt-20 mb-5">
-        <h2 className="text-4xl text-gray text-center font-bold">TItle here</h2>
+        <h2 className="text-4xl text-gray text-center font-bold">Title here</h2>
       </div>
     </div>
   );

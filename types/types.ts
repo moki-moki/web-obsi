@@ -26,6 +26,7 @@ export interface FileI {
   id: string;
   title: string;
   type: string;
+  markdown: string | null;
   folderId: string | null;
 }
 

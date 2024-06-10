@@ -66,7 +66,7 @@ function Sidebar() {
         className="w-1/4 border-r border-r-border h-screen flex flex-col max-w-72"
       >
         <SidebarControlls />
-        <h2 className="px-4 mb-4 text-white uppercase font-bold">Your Notes</h2>
+        <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
 
         <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
           {foldersLoading || notesLoading ? (

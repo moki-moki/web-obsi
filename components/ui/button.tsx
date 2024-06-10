@@ -41,14 +41,14 @@ export const btnVarians = cva(
 );
 
 const Button = forwardRef<HTMLButtonElement, Props>(
-  ({ type, children, className, size, variants, onClick, ...props }, ref) => {
+  ({ type, children, font, className, size, variants, onClick, ...props }, ref) => {
     return (
       <button
         ref={ref}
         {...props}
         type={type}
         onClick={onClick}
-        className={cn(btnVarians({ variants, size, className }))}
+        className={cn(btnVarians({ variants, size, className, font }))}
       >
         {children}
       </button>

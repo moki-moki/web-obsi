@@ -1,6 +1,7 @@
 import useSWR from 'swr';
-import axios from 'axios';
+import { FileI } from '@/types/types';
 import { useGetFolders } from './folders';
+import axiosInstance from '@/utils/axios';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { endponints, fetcher } from '@/utils/axios';
 
@@ -17,7 +18,7 @@ export const useCreateNote = () => {
   const { mutate } = useGetNotes();
 
   const createNote = async () => {
-    await axios.post(URL);
+    await axiosInstance.post(URL);
     mutate();
   };
 
@@ -29,8 +30,8 @@ export const useDeleteNote = () => {
   const { mutate: mutateFolders } = useGetFolders();
 
   const deleteNote = async (id: string, type: 'note' | 'folder') => {
-    await axios.delete(URL, { data: { id } });
-    mutateNote();
+    await axiosInstance.delete(URL, { data: { id } });
+    await mutateNote();
     mutateFolders();
   };
 
@@ -42,9 +43,9 @@ export const useMoveNoteToFolder = () => {
   const { mutate: mutateFolders } = useGetFolders();
 
   const moveNoteToFolder = async (id: string, folderId: UniqueIdentifier) => {
-    await axios.post(MOVE_NOTE_URL, { id, folderId });
+    await axiosInstance.post(MOVE_NOTE_URL, { id, folderId });
     await mutateNote();
-    await mutateFolders();
+    mutateFolders();
   };
 
   return { moveNoteToFolder };
@@ -55,10 +56,30 @@ export const useRenameNote = () => {
   const { mutate: noteMutate } = useGetNotes();
 
   const renameNoteTitle = async (id: string, title: string, folderId: string | null) => {
-    await axios.put(URL, { id, title });
+    await axiosInstance.put(URL, { id, title });
 
     folderId ? folderMutate() : noteMutate();
   };
 
   return { renameNoteTitle };
+};
+
+export const getNoteData = async (id: string): Promise<FileI> => {
+  const req = await axiosInstance.get(`${URL}/${id}`);
+  return await req.data;
+};
+
+export const useUpdateNote = () => {
+  const { mutate: folderMutate } = useGetFolders();
+  const { mutate: noteMutate } = useGetNotes();
+
+  const updateNote = async (id: string, title: string, markdown: string) => {
+    const req = await axiosInstance.put(`${URL}/${id}`, { title, markdown });
+
+    if (req.status === 200) {
+      noteMutate();
+      folderMutate();
+    }
+  };
+  return { updateNote };
 };
