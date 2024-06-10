@@ -22,5 +22,6 @@ model Note {
   title    String
   type     String
   folderId String?
+  markdown String?
   folder   Folder? @relation(fields: [folderId], references: [id])
 }

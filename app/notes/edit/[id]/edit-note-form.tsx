@@ -21,7 +21,7 @@ const EditNoteForm = async ({ id }: Props) => {
       <textarea
         rows={20}
         name="note"
-        className="w-full rounded-md bg-dark-gray-accent border border-border outline-none focus:ring-2 focus:ring-purple"
+        className="text-gray w-full rounded-md bg-dark-gray-accent border border-border outline-none focus:ring-2 focus:ring-purple"
       ></textarea>
     </form>
   );

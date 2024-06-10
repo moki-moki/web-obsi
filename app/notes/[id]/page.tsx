@@ -14,13 +14,13 @@ const Page = async ({ params }: { params: { id: string } }) => {
         </h1>
         <Link
           href={`/notes/edit/${id}`}
-          className="absolute right-12 rounded-full text-gray transition-colors duration-150 ease-in hover:text-white"
+          className="absolute right-20 rounded-lg text-gray transition-colors duration-150 ease-in bg-gray/20 p-2 hover:text-white"
         >
           <FilePenLine size={20} />
         </Link>
         <Link
           href={`/notes/edit/${id}`}
-          className="absolute right-4 rounded-full text-red/60 transition-colors duration-150 ease-in hover:text-red/100"
+          className="absolute right-8 rounded-lg text-red/60 transition-colors duration-150 ease-in bg-gray/20 p-2 hover:text-red/100"
         >
           <Trash2 size={20} />
         </Link>
