@@ -3,6 +3,7 @@ import { FormEvent, useState } from 'react';
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import { useUpdateNote } from '@/api-calls/notes';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   id: string;
@@ -12,7 +13,7 @@ interface Props {
 
 const EditNoteForm = ({ id, markdown, title }: Props) => {
   const [formData, setFormData] = useState({
-    title: '',
+    title,
     note: '',
   });
   const { updateNote } = useUpdateNote();
@@ -24,6 +25,8 @@ const EditNoteForm = ({ id, markdown, title }: Props) => {
 
   const onSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
+    const trimValue = formData.title.trim();
+    if (trimValue === '') return;
     updateNote(id, formData.title, formData.note);
   };
 
@@ -32,7 +35,13 @@ const EditNoteForm = ({ id, markdown, title }: Props) => {
       <label htmlFor="title" className="text-sm font-bold text-gray uppercase">
         Edit title
       </label>
-      <Input name="title" rounded="md" defaultValue={title} onChange={onChangeHandler} />
+      <Input
+        name="title"
+        rounded="md"
+        defaultValue={title}
+        onChange={onChangeHandler}
+        required={true}
+      />
 
       <label htmlFor="note" className="block mb-1 mt-5 text-sm font-bold text-gray uppercase">
         Note Info

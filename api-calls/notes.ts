@@ -29,7 +29,7 @@ export const useDeleteNote = () => {
   const { mutate: mutateNote } = useGetNotes();
   const { mutate: mutateFolders } = useGetFolders();
 
-  const deleteNote = async (id: string, type: 'note' | 'folder') => {
+  const deleteNote = async (id: string) => {
     await axiosInstance.delete(URL, { data: { id } });
     await mutateNote();
     mutateFolders();

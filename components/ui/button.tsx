@@ -19,7 +19,7 @@ export const btnVarians = cva(
           'border border-border bg-dark-gray-accent bg-none hover:bg-white hover:text-black hover:border-white',
         'ghost-outlined':
           'text-white border border-border bg-none hover:bg-border hover:text-white',
-        icon: 'text-white mx-1 border-none font-none bg-gray/50 hover:bg-gray',
+        icon: 'text-white mx-1 border-none font-none hover:bg-gray/20',
       },
       size: {
         default: 'py-2 px-4',

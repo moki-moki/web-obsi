@@ -36,6 +36,6 @@ const config: Config = {
       emerald: 'rgba(var(--emerald))',
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
 export default config;
