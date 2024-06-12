@@ -7,5 +7,5 @@ export const getNoteData = async (id: string): Promise<FileI> => {
 };
 
 export const deleteNote = async (id: string) => {
-  await axiosInstance.delete(`${process.env.DEFAULT_URL}/notes`, { data: { id } });
+  await axiosInstance.delete(`http://localhost:3000/api/notes`, { data: { id } });
 };

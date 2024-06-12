@@ -63,7 +63,7 @@ function Sidebar() {
     <>
       <div
         onContextMenu={handleContextMenu}
-        className="w-1/4 border-r border-r-border h-screen flex flex-col max-w-72"
+        className="w-1/4 border-r border-r-border h-screen flex flex-col max-w-72 overflow-y-scroll no-scrollbar"
       >
         <SidebarControlls />
         <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>

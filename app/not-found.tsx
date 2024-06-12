@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen text-white flex justify-center items-center flex-col">
+    <main className="min-h-screen text-white flex justify-center items-center flex-col w-full">
       <div>
         <div className="flex items-center">
           <h2>404</h2>

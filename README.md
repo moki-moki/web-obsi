@@ -18,3 +18,4 @@
 - [ ] Make editing note functionality
 - [ ] Make tags, when you visit a note, display tags where that note is nested
 - [ ] Implement Delete note functionality on form edit note page
+- [ ] Add error checking when the id on note page isn't found

@@ -7,6 +7,7 @@ import ContextMenuProvider from './context/context-menu';
 import SidebarConextProvider from './context/sidebar-conext';
 
 import { SWRProvider } from '@/provider/swr-provider';
+import Modal from '@/components/modal/modal';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 

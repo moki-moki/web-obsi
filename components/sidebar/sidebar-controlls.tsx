@@ -9,7 +9,6 @@ const SidebarControlls = () => {
   const { createFolder } = useCreateFolder();
 
   return (
-    // <div className="p-2 border-b border-border text-end flex items-center justify-between max-h-14 min-h-14">
     <div className="p-2 border-b border-border text-end flex items-center justify-between">
       <Link
         href="/"
