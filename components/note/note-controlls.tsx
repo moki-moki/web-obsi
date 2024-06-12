@@ -41,14 +41,6 @@ const NoteControlls = ({ id }: Props) => {
 
       {showModal ? (
         <Modal showModal={showModal} closeModal={closeModal}>
-          <Button
-            type="button"
-            variants="icon"
-            onClick={closeModal}
-            className="rounded-full p-1 absolute top-1 right-1"
-          >
-            <X size={20} />
-          </Button>
           <p className="font-bold text-center text-nowrap">
             Are you sure you want to <span className="text-red">delete</span> this note&#x3f;
           </p>
@@ -56,9 +48,9 @@ const NoteControlls = ({ id }: Props) => {
             size="sm"
             type="button"
             font="bolded"
-            variants="ghost-outlined"
+            variants="warning-outlined"
             onClick={() => deleteNoteHandler(id)}
-            className="w-full mt-8 border-red text-red rounded-md hover:bg-red"
+            className="w-full mt-8 rounded-md"
           >
             Yes
           </Button>

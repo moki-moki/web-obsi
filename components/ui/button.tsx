@@ -15,6 +15,7 @@ export const btnVarians = cva(
     variants: {
       variants: {
         default: 'bg-dark-gray hover:bg-gray/20 hover:border-white hover:text-white',
+        'warning-outlined': 'border bg-none border-red text-red hover:text-white hover:bg-red',
         outlined:
           'border border-border bg-dark-gray-accent bg-none hover:bg-white hover:text-black hover:border-white',
         'ghost-outlined':

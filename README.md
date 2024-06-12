@@ -14,8 +14,11 @@
   - [ ] Add optimistc update when deleting a note inside a folder
 - [ ] Find better approach to deleting notes that are in folder
 - [x] Implement loading skeleton on sidebar component
-- [ ] Make a note page
-- [ ] Make editing note functionality
+- [x] Make a note page
+- [x] Make editing note functionality
 - [ ] Make tags, when you visit a note, display tags where that note is nested
-- [ ] Implement Delete note functionality on form edit note page
+- [x] Delete note functionality on form edit note page
+  - [ ] When deleting note with Context-menu or with function make sure we redirect to homepage
+- [ ] Add toast notification for CRUD operations
+- [ ] Add fallback UI
 - [ ] Add error checking when the id on note page isn't found
