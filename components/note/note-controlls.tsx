@@ -2,24 +2,42 @@
 import React from 'react';
 import Link from 'next/link';
 import Button from '../ui/button';
-import Modal from '../modal/modal';
-import { useModal } from '@/app/hooks/useModal';
 import { useDeleteNote } from '@/api-calls/notes';
-import { FilePenLine, Trash2, X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { FilePenLine, Trash2 } from 'lucide-react';
+import { useModal } from '@/app/context/modal-context';
 
 interface Props {
   id: string;
 }
 
 const NoteControlls = ({ id }: Props) => {
-  const { showModal, openModal, closeModal } = useModal();
   const { deleteNote } = useDeleteNote();
-  const router = useRouter();
+  const { setModalContent, openModal, closeModal } = useModal();
 
-  const deleteNoteHandler = async (id: string) => {
-    await deleteNote(id);
-    router.push('/');
+  const deleteNoteHandler = () => {
+    deleteNote(id);
+    closeModal();
+  };
+
+  const showModal = () => {
+    setModalContent(
+      <>
+        <p className="font-bold text-center text-nowrap">
+          Are you sure you want to <span className="text-red">delete</span> this note&#x3f;
+        </p>
+        <Button
+          size="sm"
+          type="button"
+          font="bolded"
+          variants="warning-outlined"
+          onClick={deleteNoteHandler}
+          className="w-full mt-8 rounded-md"
+        >
+          Yes
+        </Button>
+      </>
+    );
+    openModal();
   };
 
   return (
@@ -33,29 +51,11 @@ const NoteControlls = ({ id }: Props) => {
       <Button
         type="button"
         variants="icon"
-        onClick={openModal}
+        onClick={showModal}
         className="absolute right-8 rounded-lg text-red/60 transition-colors duration-150 ease-in bg-gray/20 p-2 hover:text-red/100"
       >
         <Trash2 size={20} />
       </Button>
-
-      {showModal ? (
-        <Modal showModal={showModal} closeModal={closeModal}>
-          <p className="font-bold text-center text-nowrap">
-            Are you sure you want to <span className="text-red">delete</span> this note&#x3f;
-          </p>
-          <Button
-            size="sm"
-            type="button"
-            font="bolded"
-            variants="warning-outlined"
-            onClick={() => deleteNoteHandler(id)}
-            className="w-full mt-8 rounded-md"
-          >
-            Yes
-          </Button>
-        </Modal>
-      ) : null}
     </>
   );
 };

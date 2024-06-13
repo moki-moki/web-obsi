@@ -1,8 +1,8 @@
+import Link from 'next/link';
 import Button from '../ui/button';
 import { useCreateFolder } from '@/api-calls/folders';
 import { useCreateNote } from '@/api-calls/notes';
 import { FilePlus2, FolderPlus, Home } from 'lucide-react';
-import Link from 'next/link';
 
 const SidebarControlls = () => {
   const { createNote } = useCreateNote();

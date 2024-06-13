@@ -1,16 +1,16 @@
 'use client';
 import { createPortal } from 'react-dom';
-import Button from '../ui/button';
 import { X } from 'lucide-react';
+import Button from '../ui/button';
+import { useModal } from '@/app/context/modal-context';
+import { useContextMenu } from '@/app/context/context-menu';
 
-interface Props {
-  showModal: boolean;
-  children: React.ReactNode;
-  closeModal: () => void;
-}
+const Modal = () => {
+  const { isOpen, modalContent, closeModal } = useModal();
+  const { clickedItem } = useContextMenu();
 
-const Modal = ({ showModal, children, closeModal }: Props) => {
-  if (!showModal) return null;
+  if (!isOpen) return null;
+  console.log(isOpen, clickedItem);
 
   return createPortal(
     <div className="w-full h-full bg-dark-gray/90 fixed top-0 left-0 flex justify-center items-center">
@@ -23,7 +23,7 @@ const Modal = ({ showModal, children, closeModal }: Props) => {
         >
           <X size={20} />
         </Button>
-        {children}
+        {modalContent}
       </div>
     </div>,
     document.body

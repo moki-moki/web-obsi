@@ -83,3 +83,10 @@ export const useUpdateNote = () => {
   };
   return { updateNote };
 };
+
+export const findNoteBeingDeleted = async (id: string): Promise<string | null> => {
+  const req = await axiosInstance.get(`${URL}/${id}`);
+
+  if (req.status === 200) return req.data.id;
+  else return null;
+};

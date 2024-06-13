@@ -3,11 +3,12 @@ import { Montserrat } from 'next/font/google';
 import './globals.css';
 
 import Sidebar from '../components/sidebar/sidebar';
+import { ModalProvider } from './context/modal-context';
 import ContextMenuProvider from './context/context-menu';
 import SidebarConextProvider from './context/sidebar-conext';
 
-import { SWRProvider } from '@/provider/swr-provider';
 import Modal from '@/components/modal/modal';
+import { SWRProvider } from '@/provider/swr-provider';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -28,7 +29,10 @@ export default function RootLayout({
           <main className="flex">
             <ContextMenuProvider>
               <SidebarConextProvider>
-                <Sidebar />
+                <ModalProvider>
+                  <Sidebar />
+                  <Modal />
+                </ModalProvider>
               </SidebarConextProvider>
             </ContextMenuProvider>
             {children}
