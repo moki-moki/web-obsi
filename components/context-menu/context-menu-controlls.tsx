@@ -9,16 +9,21 @@ import { useDeleteNote } from '@/api-calls/notes';
 import { useDeleteFolder } from '@/api-calls/folders';
 import { useModal } from '@/app/context/modal-context';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
+import { useRouter } from 'next/navigation';
+import useCurrentPathId from '@/app/hooks/useCurrentPathId';
 
 interface Props {
   itemData: FileI | FolderI | null;
 }
 
 const ContextMenuControlls = ({ itemData }: Props) => {
+  const { push } = useRouter();
   const { deleteNote } = useDeleteNote();
   const { getNoteId } = useSidebarContext();
   const { deleteFolder } = useDeleteFolder();
   const { openModal, closeModal, setModalContent } = useModal();
+
+  const pathId = useCurrentPathId();
 
   if (!itemData) return;
 
@@ -32,6 +37,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
   const deleteNoteHandler = () => {
     deleteNote(id);
     closeModal();
+    if (pathId === id) push('/');
   };
 
   const showModal = () => {

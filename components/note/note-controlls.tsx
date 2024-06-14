@@ -2,21 +2,28 @@
 import React from 'react';
 import Link from 'next/link';
 import Button from '../ui/button';
+import { useRouter } from 'next/navigation';
 import { useDeleteNote } from '@/api-calls/notes';
 import { FilePenLine, Trash2 } from 'lucide-react';
 import { useModal } from '@/app/context/modal-context';
+import useCurrentPathId from '@/app/hooks/useCurrentPathId';
 
 interface Props {
   id: string;
 }
 
 const NoteControlls = ({ id }: Props) => {
+  const { push } = useRouter();
   const { deleteNote } = useDeleteNote();
   const { setModalContent, openModal, closeModal } = useModal();
 
-  const deleteNoteHandler = () => {
-    deleteNote(id);
+  const pathId = useCurrentPathId();
+
+  const deleteNoteHandler = async () => {
+    await deleteNote(id);
     closeModal();
+
+    if (pathId === id) push('/');
   };
 
   const showModal = () => {

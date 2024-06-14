@@ -26,17 +26,17 @@ export default function RootLayout({
     <html lang="en">
       <SWRProvider>
         <body className={montserrat.className}>
-          <main className="flex">
-            <ContextMenuProvider>
-              <SidebarConextProvider>
-                <ModalProvider>
+          <ModalProvider>
+            <main className="flex">
+              <ContextMenuProvider>
+                <SidebarConextProvider>
                   <Sidebar />
                   <Modal />
-                </ModalProvider>
-              </SidebarConextProvider>
-            </ContextMenuProvider>
-            {children}
-          </main>
+                </SidebarConextProvider>
+              </ContextMenuProvider>
+              {children}
+            </main>
+          </ModalProvider>
         </body>
       </SWRProvider>
     </html>

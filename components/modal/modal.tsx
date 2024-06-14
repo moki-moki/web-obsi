@@ -3,14 +3,11 @@ import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import Button from '../ui/button';
 import { useModal } from '@/app/context/modal-context';
-import { useContextMenu } from '@/app/context/context-menu';
 
 const Modal = () => {
   const { isOpen, modalContent, closeModal } = useModal();
-  const { clickedItem } = useContextMenu();
 
   if (!isOpen) return null;
-  console.log(isOpen, clickedItem);
 
   return createPortal(
     <div className="w-full h-full bg-dark-gray/90 fixed top-0 left-0 flex justify-center items-center">
