@@ -18,7 +18,7 @@
 - [x] Make editing note functionality
 - [ ] Make tags, when you visit a note, display tags where that note is nested
 - [x] Delete note functionality on form edit note page
-  - [ ] When deleting note with Context-menu or with function make sure we redirect to homepage
+  - [x] When deleting note with Context-menu or with function make sure we redirect to homepage
 - [ ] Add toast notification for CRUD operations
 - [ ] Add fallback UI
 - [ ] Add error checking when the id on note page isn't found
