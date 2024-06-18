@@ -1,17 +1,10 @@
 import ReactMarkdown from 'react-markdown';
-import { notFound } from 'next/navigation';
 import { getNoteData } from '@/utils/server-api-calls';
 import NoteControlls from '@/components/note/note-controlls';
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const data = await getNoteData(id);
-  console.log(data);
-
-  if (!data) {
-    // notFound();
-    return <h1>NOT FOUND</h1>;
-  }
 
   return (
     <div className="w-full max-h-14">

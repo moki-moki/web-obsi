@@ -9,8 +9,8 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<ty
   onClick?: () => void;
 }
 
-export const btnVarians = cva(
-  'inline-flex items-center justify-center text-white transition-colors ease-in ',
+const btnVarians = cva(
+  'inline-flex items-center justify-center text-white transition-colors ease-in',
   {
     variants: {
       variants: {

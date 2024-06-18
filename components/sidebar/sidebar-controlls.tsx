@@ -16,6 +16,7 @@ const SidebarControlls = () => {
       >
         <Home size={20} />
       </Link>
+
       <div>
         <Button type="button" className="rounded-full p-1.5 text-gray mx-2" onClick={createNote}>
           <FilePlus2 size={20} />
