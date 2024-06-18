@@ -1,49 +1,71 @@
-import { HTMLAttributes, forwardRef, useState } from 'react';
+import { HTMLAttributes, forwardRef, useRef, useState } from 'react';
 import { VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/utils/utils';
+import { createPortal } from 'react-dom';
 
 interface Props extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof popoverVarians> {
   text: string;
   children: React.ReactNode;
 }
 
-const popoverVarians = cva('rounded-lg flex items-center justify-center text-xs relative', {
-  variants: {
+const popoverVarians = cva(
+  'rounded-lg my-1 flex items-center justify-center text-xs text-nowrap py-2 px-4 absolute',
+  {
     variants: {
-      default: 'bg-gray text-white',
-      warning: 'bg-red text-white',
-      'ghost-outlined': 'text-white border border-border bg-none',
+      variants: {
+        default: 'bg-dark-gray-accent text-white',
+        warning: 'bg-red text-white',
+        'ghost-outlined': 'text-white border border-border bg-dark-gray-accent',
+      },
+      font: {
+        default: 'font-normal',
+        bolded: 'font-bold',
+      },
     },
-    size: {
-      default: 'py-2 px-4',
-      sm: 'py-1.5 px-2.5',
-      md: 'py-4 px-6',
-      lg: 'py-6 px-8',
+    defaultVariants: {
+      font: 'default',
+      variants: 'default',
     },
-    font: {
-      default: 'font-normal',
-      bolded: 'font-bold',
-    },
-  },
-  defaultVariants: {
-    font: 'default',
-    variants: 'default',
-  },
-});
+  }
+);
 
 const Popover = forwardRef<HTMLDivElement, Props>(
-  ({ variants, size, font, className, text, children }, ref) => {
+  ({ variants, font, className, text, children }, ref) => {
     const [visible, setVisible] = useState<boolean>(false);
+    const [position, setPosition] = useState({
+      top: 0,
+      left: 0,
+    });
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const showPopover = () => setVisible(true);
+    const showPopover = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
+      }
+      setVisible(true);
+    };
     const hidePopover = () => setVisible(false);
 
     return (
-      <div ref={ref} onMouseEnter={showPopover} onMouseLeave={hidePopover} className="relative">
+      <div
+        ref={containerRef}
+        onMouseEnter={showPopover}
+        onMouseLeave={hidePopover}
+        className="relative inline-flex"
+      >
         {children}
-        {visible ? (
-          <div className={cn(popoverVarians({ variants, size, font, className }))}>{text}</div>
-        ) : null}
+        {visible
+          ? createPortal(
+              <div
+                style={{ top: position.top, left: position.left }}
+                className={cn(popoverVarians({ variants, font, className }))}
+              >
+                {text}
+              </div>,
+              document.body
+            )
+          : null}
       </div>
     );
   }
