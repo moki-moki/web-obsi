@@ -8,10 +8,8 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="w-full max-h-14">
-      <div className="p-2 relative">
-        <h1 className="text-sm absolute left-1/2 transform -translate-x-1/2 text-gray uppercase mx-auto font-bold p-2">
-          {data.title}
-        </h1>
+      <div className="p-2 relative flex items-center justify-center">
+        <h1 className="text-sm text-gray uppercase mx-auto font-bold p-2">{data.title}</h1>
         <NoteControlls id={id} />
       </div>
       <div className="mt-20 mb-5 prose prose-lg mx-auto">
