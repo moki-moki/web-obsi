@@ -1,4 +1,4 @@
-import { HTMLAttributes, forwardRef, useRef, useState } from 'react';
+import { HTMLAttributes, forwardRef, useEffect, useRef, useState } from 'react';
 import { VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/utils/utils';
 import { createPortal } from 'react-dom';
@@ -9,7 +9,7 @@ interface Props extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof popo
 }
 
 const popoverVarians = cva(
-  'rounded-lg my-1 flex items-center justify-center text-xs text-nowrap py-2 px-4 absolute',
+  'rounded-lg my-1 flex items-center justify-center text-xs text-nowrap py-2 px-4 fixed -translate-x-2/4',
   {
     variants: {
       variants: {
@@ -37,15 +37,32 @@ const Popover = forwardRef<HTMLDivElement, Props>(
       left: 0,
     });
     const containerRef = useRef<HTMLDivElement>(null);
+    const popoverRef = useRef<HTMLDivElement>(null);
 
-    const showPopover = () => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
-      }
-      setVisible(true);
-    };
+    const showPopover = () => setVisible(true);
     const hidePopover = () => setVisible(false);
+
+    useEffect(() => {
+      if (visible && popoverRef.current && containerRef.current) {
+        const popoverRect = popoverRef.current.getBoundingClientRect();
+        const containerRect = containerRef.current.getBoundingClientRect();
+        let top = containerRect.bottom + window.scrollY;
+        let left = containerRect.left + window.scrollX + containerRect.width / 2;
+
+        // Adjust if overflow
+        if (left + popoverRect.width / 2 > window.innerWidth) {
+          left = window.innerWidth - popoverRect.width / 2 - 10; // 10px padding from edge
+        } else if (left - popoverRect.width / 2 < 0) {
+          left = popoverRect.width / 2 + 10; // 10px padding from edge
+        }
+
+        if (top + popoverRect.height > window.innerHeight) {
+          top = containerRect.top + window.scrollY - popoverRect.height; // Position above the element
+        }
+
+        setPosition({ top, left });
+      }
+    }, [visible]);
 
     return (
       <div
@@ -58,6 +75,7 @@ const Popover = forwardRef<HTMLDivElement, Props>(
         {visible
           ? createPortal(
               <div
+                ref={popoverRef}
                 style={{ top: position.top, left: position.left }}
                 className={cn(popoverVarians({ variants, font, className }))}
               >
