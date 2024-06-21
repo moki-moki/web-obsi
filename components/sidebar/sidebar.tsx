@@ -18,16 +18,20 @@ import ContextMenu from '../context-menu/context-menu';
 import DragOverlayItem from '../draggable/drag-overlay-item';
 import SidebarSkeleton from '../ui/skeletons/SidebarSkeleton';
 import ContextMenuControlls from '../context-menu/context-menu-controlls';
+import SidebarGeneralControlls from '../sidebar-controlls/sidebar-general-controlls';
 
 function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
   const { moveNoteToFolder } = useMoveNoteToFolder();
   const { removeNoteFromFolder } = useRemoveNoteFromFolder();
 
   const { notes, notesLoading, folders, foldersLoading } = useSidebarContext();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
+
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -61,9 +65,10 @@ function Sidebar() {
 
   return (
     <>
+      <SidebarGeneralControlls toggleSidebar={toggleSidebar} />
       <div
         onContextMenu={handleContextMenu}
-        className="w-1/4 border-r border-r-border h-screen flex flex-col max-w-72 overflow-y-scroll no-scrollbar"
+        className={`border-r border-r-border h-screen flex flex-col overflow-y-scroll no-scrollbar ease-in transition-all ${isSidebarOpen ? 'translate-x-0 w-1/4' : '-translate-x-full w-0'}`}
       >
         <SidebarControlls />
         <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>

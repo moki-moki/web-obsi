@@ -9,7 +9,7 @@ interface Props extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof popo
 }
 
 const popoverVarians = cva(
-  'rounded-lg my-1 flex items-center justify-center text-xs text-nowrap py-2 px-4 fixed -translate-x-2/4',
+  'rounded-lg my-1 flex items-center justify-center text-xs text-nowrap py-2 px-4 fixed -translate-x-2/4 z-50',
   {
     variants: {
       variants: {
