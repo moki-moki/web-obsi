@@ -7,7 +7,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
   const data = await getNoteData(id);
 
   return (
-    <div className="w-full max-h-14">
+    <div className="max-h-14">
       <div className="p-2 relative flex items-center justify-center">
         <h1 className="text-sm text-gray uppercase mx-auto font-bold p-2">{data.title}</h1>
         <NoteControlls id={id} />

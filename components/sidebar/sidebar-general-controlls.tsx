@@ -4,15 +4,21 @@ import Link from 'next/link';
 import Button from '../ui/button';
 import Popover from '../popover/popover';
 import { ArrowLeftToLine, Home } from 'lucide-react';
+import { useRef } from 'react';
 
 interface Props {
-  toggleSidebar: () => void;
+  toggleSidebar: (width: number) => void;
 }
 
 const SidebarGeneralControlls = ({ toggleSidebar }: Props) => {
+  const ref = useRef<HTMLUListElement>(null);
+
   return (
-    <ul className="text p-0.5 border-r border-border flex flex-col items-center bg-dark-gray z-10">
-      <li onClick={toggleSidebar}>
+    <ul
+      className="text p-0.5 border-r border-border flex flex-col items-center bg-dark-gray z-10"
+      ref={ref}
+    >
+      <li onClick={() => toggleSidebar(ref.current?.offsetWidth)}>
         <Popover text="Collapse Menu" font="bolded">
           <Button type="button" className="p-1.5" variants="icon">
             <ArrowLeftToLine size={20} />

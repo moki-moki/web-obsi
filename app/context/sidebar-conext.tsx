@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 
 import { FileI, FolderI } from '@/types/types';
 import { useGetFolders } from '@/api-calls/folders';
