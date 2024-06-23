@@ -7,7 +7,7 @@ import { ArrowLeftToLine, Home } from 'lucide-react';
 import { useRef } from 'react';
 
 interface Props {
-  toggleSidebar: (width: number) => void;
+  toggleSidebar: () => void;
 }
 
 const SidebarGeneralControlls = ({ toggleSidebar }: Props) => {
@@ -18,7 +18,7 @@ const SidebarGeneralControlls = ({ toggleSidebar }: Props) => {
       className="text p-0.5 border-r border-border flex flex-col items-center bg-dark-gray z-10"
       ref={ref}
     >
-      <li onClick={() => toggleSidebar(ref.current?.offsetWidth)}>
+      <li onClick={toggleSidebar}>
         <Popover text="Collapse Menu" font="bolded">
           <Button type="button" className="p-1.5" variants="icon">
             <ArrowLeftToLine size={20} />

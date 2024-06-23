@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
@@ -22,7 +22,7 @@ import SidebarGeneralControlls from './sidebar-general-controlls';
 
 interface Props {
   isSidebarOpen: boolean;
-  toggleSidebar: (width: number) => void;
+  toggleSidebar: () => void;
 }
 
 function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {

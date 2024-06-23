@@ -3,7 +3,6 @@ import { FormEvent, useState } from 'react';
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import { useUpdateNote } from '@/api-calls/notes';
-import { useRouter } from 'next/navigation';
 
 interface Props {
   id: string;
