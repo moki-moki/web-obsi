@@ -15,6 +15,7 @@ const EditNoteForm = ({ id, markdown, title }: Props) => {
     title,
     note: '',
   });
+
   const { updateNote } = useUpdateNote();
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

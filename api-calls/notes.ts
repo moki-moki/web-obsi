@@ -65,7 +65,9 @@ export const useRenameNote = () => {
 };
 
 export const getNoteData = async (id: string): Promise<FileI> => {
+  const { mutate: noteMutate } = useGetNotes();
   const req = await axiosInstance.get(`${URL}/${id}`);
+  noteMutate();
   return await req.data;
 };
 

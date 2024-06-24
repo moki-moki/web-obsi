@@ -10,7 +10,7 @@ const Error = ({ error }: { error: Error & { digest?: string }; reset: () => voi
   }, [error]);
 
   return (
-    <div className="flex justify-center flex-col items-center w-full">
+    <section className="flex justify-center flex-col items-center w-full h-screen">
       <h2 className="text-gray font-bold text-4xl">Looks like note wasn't found!</h2>
       <Link
         className="border border-gray rounded-full py-2 px-4 block my-2 w-fit text-gray transition-colors ease-in hover:text-white"
@@ -18,7 +18,7 @@ const Error = ({ error }: { error: Error & { digest?: string }; reset: () => voi
       >
         Home Page
       </Link>
-    </div>
+    </section>
   );
 };
 

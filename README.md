@@ -21,5 +21,6 @@
   - [x] When deleting note with Context-menu or with function make sure we redirect to homepage
 - [ ] Add toast notification for CRUD operations
 - [ ] Add fallback UI
+- [ ] Once the note is submitted, and we get back to that page the forms are filled with old values, find way to refetch the data.
 - [x] Add error checking when the id on note page isn't found
 - [ ] Add markup page that displays documentation.

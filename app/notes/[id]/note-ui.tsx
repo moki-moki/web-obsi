@@ -1,13 +1,14 @@
 'use client';
 
-import ReactMarkdown from 'react-markdown';
 import useSWR from 'swr';
 import { fetcher } from '@/utils/axios';
+import ReactMarkdown from 'react-markdown';
+import Loader from '@/components/loader/loader';
 
 const NoteUi = ({ id }: { id: string }) => {
   const { data, isLoading } = useSWR(`/api/notes/${id}`, fetcher);
 
-  if (isLoading) return;
+  if (isLoading) return <Loader />;
 
   return (
     <div className="mt-20 mb-5 prose prose-lg mx-auto">
