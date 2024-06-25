@@ -3,19 +3,19 @@ import { FormEvent, useState } from 'react';
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import { useUpdateNote } from '@/api-calls/notes';
+import { useGetNote } from '@/api-calls/note';
 
 interface Props {
   id: string;
-  title: string;
-  markdown: string | null;
 }
 
-const EditNoteForm = ({ id, markdown, title }: Props) => {
-  const [formData, setFormData] = useState({
-    title,
-    note: '',
-  });
+const EditNoteForm = ({ id }: Props) => {
+  const { data } = useGetNote(id);
 
+  const [formData, setFormData] = useState({
+    title: data.title,
+    note: data.markdown,
+  });
   const { updateNote } = useUpdateNote();
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -23,11 +23,11 @@ const EditNoteForm = ({ id, markdown, title }: Props) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onSubmitHandler = (e: FormEvent) => {
+  const onSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
     const trimValue = formData.title.trim();
     if (trimValue === '') return;
-    updateNote(id, formData.title, formData.note);
+    await updateNote(id, formData.title, formData.note);
   };
 
   return (
@@ -38,7 +38,7 @@ const EditNoteForm = ({ id, markdown, title }: Props) => {
       <Input
         name="title"
         rounded="md"
-        defaultValue={title}
+        defaultValue={data.title}
         onChange={onChangeHandler}
         required={true}
       />
@@ -50,7 +50,7 @@ const EditNoteForm = ({ id, markdown, title }: Props) => {
         rows={20}
         name="note"
         onChange={onChangeHandler}
-        defaultValue={markdown ? markdown : ''}
+        defaultValue={data.markdown ? data.markdown : ''}
         className="text-gray p-2 w-full rounded-md bg-dark-gray-accent border border-border outline-none focus:ring-2 focus:ring-purple"
       ></textarea>
       <Button

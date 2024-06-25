@@ -72,16 +72,8 @@ export const getNoteData = async (id: string): Promise<FileI> => {
 };
 
 export const useUpdateNote = () => {
-  const { mutate: folderMutate } = useGetFolders();
-  const { mutate: noteMutate } = useGetNotes();
-
   const updateNote = async (id: string, title: string, markdown: string) => {
-    const req = await axiosInstance.put(`${URL}/${id}`, { title, markdown });
-
-    if (req.status === 200) {
-      noteMutate();
-      folderMutate();
-    }
+    await axiosInstance.put(`${URL}/${id}`, { title, markdown });
   };
   return { updateNote };
 };
