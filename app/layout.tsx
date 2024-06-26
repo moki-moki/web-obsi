@@ -3,14 +3,15 @@
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 
+import { useEffect, useRef, useState } from 'react';
+
 import Sidebar from '../components/sidebar/sidebar';
 import { ModalProvider } from './context/modal-context';
 import ContextMenuProvider from './context/context-menu';
-import SidebarConextProvider from './context/sidebar-conext';
+import SidebarConextProvider, { useSidebarContext } from './context/sidebar-conext';
 
 import Modal from '@/components/modal/modal';
 import { SWRProvider } from '@/provider/swr-provider';
-import { useEffect, useRef, useState } from 'react';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -21,7 +22,8 @@ export default function RootLayout({
 }>) {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [sidebarWidth, setSidebarWidth] = useState<number>();
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 

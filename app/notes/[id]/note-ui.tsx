@@ -11,7 +11,7 @@ const NoteUi = ({ id }: { id: string }) => {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="mt-20 mb-5 prose prose-lg mx-auto">
+    <div className="mt-20 mb-5 prose prose-lg mx-auto break-all">
       <h2 className="text-4xl text-gray text-center font-bold">{data.title}</h2>
       <ReactMarkdown
         components={{
