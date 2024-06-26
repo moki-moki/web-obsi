@@ -9,7 +9,7 @@
   - [x] Make function for deleting folders and notes
   - [x] Make function for moving notes to different folders
   - [x] Make function for renaming notes
-  - [ ] Implement error checking when renaming notes/folders. So the empty string isn't accepted
+  - [ ] Implement error checking when renaming notes/folders. So the empty string is by default (No title)
 - [ ] Add optimistic updates and data revalidation
   - [ ] Add optimistc update when deleting a note inside a folder
 - [ ] Find better approach to deleting notes that are in folder
@@ -21,6 +21,5 @@
   - [x] When deleting note with Context-menu or with function make sure we redirect to homepage
 - [ ] Add toast notification for CRUD operations
 - [ ] Add fallback UI
-- [ ] Once the note is submitted, and we get back to that page the forms are filled with old values, find way to refetch the data.
 - [x] Add error checking when the id on note page isn't found
 - [ ] Add markup page that displays documentation.
