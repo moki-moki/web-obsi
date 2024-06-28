@@ -10,8 +10,6 @@
   - [x] Make function for moving notes to different folders
   - [x] Make function for renaming notes
   - [ ] Implement error checking when renaming notes/folders. So the empty string is by default (No title)
-- [ ] Add optimistic updates and data revalidation
-  - [ ] Add optimistc update when deleting a note inside a folder
 - [ ] Find better approach to deleting notes that are in folder
 - [x] Implement loading skeleton on sidebar component
 - [x] Make a note page
@@ -20,6 +18,6 @@
 - [x] Delete note functionality on form edit note page
   - [x] When deleting note with Context-menu or with function make sure we redirect to homepage
 - [ ] Add toast notification for CRUD operations
-- [ ] Add fallback UI
+- [ ] Add more complex error pages
 - [x] Add error checking when the id on note page isn't found
 - [ ] Add markup page that displays documentation.
