@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Button from '../ui/button';
 import Popover from '../popover/popover';
-import { ArrowLeftToLine, Home } from 'lucide-react';
+import { ArrowLeftToLine, CircleHelp, Home } from 'lucide-react';
 import { useRef } from 'react';
 
 interface Props {
@@ -32,6 +32,17 @@ const SidebarGeneralControlls = ({ toggleSidebar }: Props) => {
             className="text-gray bg-dark-gray rounded-full p-1.5 transition-colors ease-in hover:bg-gray/20 hover:text-white"
           >
             <Home size={20} />
+          </Link>
+        </Popover>
+      </li>
+
+      <li className="mt-auto">
+        <Popover text="Docs" font="bolded">
+          <Link
+            href="/"
+            className="text-gray bg-dark-gray rounded-full p-1.5 transition-colors ease-in hover:bg-gray/20 hover:text-white"
+          >
+            <CircleHelp />
           </Link>
         </Popover>
       </li>

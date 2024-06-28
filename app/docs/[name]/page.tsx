@@ -1,5 +1,6 @@
 import MarkdownRenderer from '@/components/markdown-renderer/markdown-renderer';
 import { getMarkdownContent } from '@/lib/markdown';
+import { notFound } from 'next/navigation';
 
 interface DocumentationPageProps {
   params: {
@@ -14,9 +15,12 @@ export const generateStaticParams = () => {
 const DocsPage = ({ params }: DocumentationPageProps) => {
   const content = getMarkdownContent(`${params!.name}.md`);
 
+  if (!content) {
+    notFound();
+  }
+
   return (
     <div>
-      {/* <ReactMarkdown>{content}</ReactMarkdown> */}
       <MarkdownRenderer content={content} />
     </div>
   );
