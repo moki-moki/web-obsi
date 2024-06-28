@@ -21,3 +21,4 @@
 - [ ] Add more complex error pages
 - [x] Add error checking when the id on note page isn't found
 - [ ] Add markup page that displays documentation.
+- [ ] Add better styling for markdowns

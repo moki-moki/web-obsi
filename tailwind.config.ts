@@ -12,6 +12,58 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(rgb(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, rgb(var(--tw-gradient-stops))',
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: '#333',
+            h1: { color: 'rgba(var(--gray))' },
+            h2: { color: 'rgba(var(--gray))' },
+            h3: { color: 'rgba(var(--gray))' },
+            h4: { color: 'rgba(var(--gray))' },
+            h5: { color: 'rgba(var(--gray))' },
+            h6: { color: 'rgba(var(--gray))' },
+            p: {
+              color: 'rgba(var(--gray))',
+            },
+            a: {
+              color: '#3498db',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            },
+            strong: {
+              color: '#000',
+            },
+            blockquote: {
+              borderLeftColor: '#ccc',
+              color: '#666',
+            },
+            code: {
+              backgroundColor: '#f4f4f4',
+              color: '#c7254e',
+              padding: '2px 4px',
+              borderRadius: '4px',
+            },
+            'pre code': {
+              backgroundColor: 'transparent',
+              padding: '0',
+              borderRadius: '0',
+            },
+            ul: {
+              listStyleType: 'disc',
+            },
+            ol: {
+              listStyleType: 'decimal',
+            },
+            'ul > li::before': {
+              backgroundColor: '#3498db',
+            },
+            'ol > li::before': {
+              color: '#3498db',
+            },
+          },
+        },
+      },
     },
     fontSize: {
       xs: '0.6rem',

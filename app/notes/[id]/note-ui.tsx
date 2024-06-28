@@ -2,8 +2,8 @@
 
 import useSWR from 'swr';
 import { fetcher } from '@/utils/axios';
-import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/loader/loader';
+import MarkdownRenderer from '@/components/markdown-renderer/markdown-renderer';
 
 const NoteUi = ({ id }: { id: string }) => {
   const { data, isLoading } = useSWR(`/api/notes/${id}`, fetcher);
@@ -13,19 +13,7 @@ const NoteUi = ({ id }: { id: string }) => {
   return (
     <div className="mt-20 mb-5 prose prose-lg mx-auto break-all">
       <h2 className="text-4xl text-gray text-center font-bold">{data.title}</h2>
-      <ReactMarkdown
-        components={{
-          h1: ({ node, ...props }) => <h1 className="text-gray" {...props} />,
-          h2: ({ node, ...props }) => <h2 className="text-gray" {...props} />,
-          h3: ({ node, ...props }) => <h3 className="text-gray" {...props} />,
-          h4: ({ node, ...props }) => <h4 className="text-gray" {...props} />,
-          h5: ({ node, ...props }) => <h5 className="text-gray" {...props} />,
-          h6: ({ node, ...props }) => <h6 className="text-gray" {...props} />,
-          p: ({ node, ...props }) => <p className="text-white" {...props} />,
-        }}
-      >
-        {data.markdown}
-      </ReactMarkdown>
+      <MarkdownRenderer content={data.markdown} />
     </div>
   );
 };
