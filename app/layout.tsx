@@ -47,10 +47,7 @@ export default function RootLayout({
                 <Modal />
               </SidebarConextProvider>
             </ContextMenuProvider>
-            <main
-              className="min-h-screen transition-all"
-              style={{ marginLeft: `${sidebarWidth}px` }}
-            >
+            <main className="min-h-screen" style={{ marginLeft: `${sidebarWidth}px` }}>
               {children}
             </main>
           </ModalProvider>

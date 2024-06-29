@@ -1,6 +1,5 @@
-// public/docs/introduction.md
 # Introduction
 
-## Introduction 2
+Basically, this has the same markdown functionality as GitHub.
 
-Welcome to the documentation! This is a static documentation page.
+You can find the documentation of GitHub Markdown on the GitHub docs page.

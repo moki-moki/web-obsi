@@ -39,7 +39,7 @@ const SidebarGeneralControlls = ({ toggleSidebar }: Props) => {
       <li className="mt-auto">
         <Popover text="Docs" font="bolded">
           <Link
-            href="/"
+            href="/docs/markdown"
             className="text-gray bg-dark-gray rounded-full p-1.5 transition-colors ease-in hover:bg-gray/20 hover:text-white"
           >
             <CircleHelp />
