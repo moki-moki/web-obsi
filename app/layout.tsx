@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import Sidebar from '../components/sidebar/sidebar';
 import { ModalProvider } from './context/modal-context';
 import ContextMenuProvider from './context/context-menu';
-import SidebarConextProvider, { useSidebarContext } from './context/sidebar-conext';
+import SidebarConextProvider from './context/sidebar-conext';
 
 import Modal from '@/components/modal/modal';
 import { SWRProvider } from '@/provider/swr-provider';
