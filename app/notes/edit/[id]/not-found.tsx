@@ -1,26 +1,13 @@
-'use client'; // Error components must be Client Components
-
 import Link from 'next/link';
-import { useEffect } from 'react';
+import React from 'react';
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
-
+export default function NotFound() {
   return (
     <main className="min-h-screen text-white flex justify-center items-center flex-col w-full">
       <div>
         <div className="flex items-center">
           <h3 className="mr-2">Uh oh! Not found!</h3>
-          <p>This edit page cound not be found</p>
+          <p>This edit page cound not be found. Please try again.</p>
         </div>
         <Link href="/" className="border border-gray rounded-full py-2 px-4 block my-2 w-fit">
           Go back

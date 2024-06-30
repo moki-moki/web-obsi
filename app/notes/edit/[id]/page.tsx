@@ -3,12 +3,16 @@ import { ChevronLeft } from 'lucide-react';
 import { getNoteData, submitNoteData } from '@/utils/server-api-calls';
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/button';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
   const data = await getNoteData(id);
+
+  console.log(data);
+
+  if (!data) notFound();
 
   const onSubmitHandler = async (formData: FormData) => {
     'use server';

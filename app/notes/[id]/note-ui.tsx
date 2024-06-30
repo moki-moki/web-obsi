@@ -4,13 +4,14 @@ import useSWR from 'swr';
 import { fetcher } from '@/utils/axios';
 import Loader from '@/components/loader/loader';
 import MarkdownRenderer from '@/components/markdown-renderer/markdown-renderer';
+import { notFound } from 'next/navigation';
 
 const NoteUi = ({ id }: { id: string }) => {
-  const { data, isLoading, error } = useSWR(`/api/notes/${id}`, fetcher);
+  const { data, isLoading } = useSWR(`/api/notes/${id}`, fetcher);
 
   if (isLoading) return <Loader />;
 
-  if (error) throw new Error('There was a server error.');
+  if (!data) notFound();
 
   return (
     <div className="mt-20 mb-5 prose prose-lg mx-auto break-all">
