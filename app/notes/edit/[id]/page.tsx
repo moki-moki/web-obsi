@@ -10,8 +10,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
   const data = await getNoteData(id);
 
-  console.log(data);
-
   if (!data) notFound();
 
   const onSubmitHandler = async (formData: FormData) => {
