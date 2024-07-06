@@ -11,6 +11,7 @@ import ContextMenuProvider from './context/context-menu';
 import SidebarConextProvider from './context/sidebar-conext';
 
 import Modal from '@/components/modal/modal';
+import Toaster from '@/components/ui/toaster';
 import { SWRProvider } from '@/provider/swr-provider';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
@@ -35,6 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <SWRProvider>
         <body className={montserrat.className}>
+          <Toaster />
           <ModalProvider>
             <ContextMenuProvider>
               <SidebarConextProvider>
@@ -47,7 +49,11 @@ export default function RootLayout({
                 <Modal />
               </SidebarConextProvider>
             </ContextMenuProvider>
-            <main className="min-h-screen" style={{ marginLeft: `${sidebarWidth}px` }}>
+            <main
+              className="min-h-screen"
+              id="main-container"
+              style={{ marginLeft: `${sidebarWidth}px` }}
+            >
               {children}
             </main>
           </ModalProvider>

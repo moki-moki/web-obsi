@@ -73,7 +73,8 @@ export const getNoteData = async (id: string): Promise<FileI> => {
 
 export const useUpdateNote = () => {
   const updateNote = async (id: string, title: string, markdown: string) => {
-    await axiosInstance.put(`${URL}/${id}`, { title, markdown });
+    const req = await axiosInstance.put(`${URL}/${id}`, { title, markdown });
+    return req.status;
   };
   return { updateNote };
 };

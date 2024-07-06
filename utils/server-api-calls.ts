@@ -1,5 +1,5 @@
+import { toast } from 'react-toastify';
 import axiosInstance from './axios';
-import { redirect } from 'next/navigation';
 
 export const getNoteData = async (id: string) => {
   const req = await axiosInstance.get(`${process.env.DEFAULT_URL}/notes/${id}`);
@@ -12,5 +12,4 @@ export const submitNoteData = async (formData: FormData, id: string) => {
     title: formData.get('title'),
     markdown: formData.get('note'),
   });
-  redirect(`/notes/${id}`);
 };
