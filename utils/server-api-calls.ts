@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import axiosInstance from './axios';
 
 export const getNoteData = async (id: string) => {
