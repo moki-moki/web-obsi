@@ -1,8 +1,8 @@
 import { ToastContainerProps } from 'react-toastify';
 
-const TOAST_LIMIT = 1;
+const TOAST_LIMIT = 2;
 const TOAST_REMOVE_DELAY = 5000;
-const POSITION = 'top-right';
+const POSITION = 'bottom-right';
 
 export const toastConfig: ToastContainerProps = {
   position: POSITION,
@@ -11,8 +11,9 @@ export const toastConfig: ToastContainerProps = {
   newestOnTop: false,
   closeOnClick: true,
   rtl: false,
-  pauseOnFocusLoss: true,
+  pauseOnFocusLoss: false,
   draggable: true,
-  pauseOnHover: true,
+  pauseOnHover: false,
   limit: TOAST_LIMIT,
+  theme: 'dark',
 };

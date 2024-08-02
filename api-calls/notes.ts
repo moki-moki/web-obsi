@@ -4,6 +4,7 @@ import { useGetFolders } from './folders';
 import axiosInstance from '@/utils/axios';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { endponints, fetcher } from '@/utils/axios';
+import { toast } from 'react-toastify';
 
 const URL = endponints.notes;
 const MOVE_NOTE_URL = endponints.moveNotetoFolder;
@@ -18,8 +19,11 @@ export const useCreateNote = () => {
   const { mutate } = useGetNotes();
 
   const createNote = async () => {
-    await axiosInstance.post(URL);
+    const req = await axiosInstance.post(URL);
     mutate();
+
+    console.log(req);
+    req.status === 200 && toast.success('Note was created!');
   };
 
   return { createNote };
@@ -30,9 +34,10 @@ export const useDeleteNote = () => {
   const { mutate: mutateFolders } = useGetFolders();
 
   const deleteNote = async (id: string) => {
-    await axiosInstance.delete(URL, { data: { id } });
+    const req = await axiosInstance.delete(URL, { data: { id } });
     await mutateNote();
     mutateFolders();
+    return req.status;
   };
 
   return { deleteNote };

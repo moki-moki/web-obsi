@@ -30,7 +30,8 @@ const NoteEditForm = ({ id }: { id: string }) => {
   const onSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
     const status = await updateNote(id, formData.title, formData.note);
-    if (status === 200) toast('success');
+    if (status === 200) toast.success('Note was updated!');
+    if (status === 500) toast.error('Something went wrong!');
   };
 
   if (isLoading) return null;
