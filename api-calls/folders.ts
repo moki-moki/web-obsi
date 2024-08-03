@@ -20,7 +20,7 @@ export const useCreateFolder = () => {
     const req = await axiosInstance.post(FOLDER_URL);
     mutate();
 
-    req.status === 200 && toast('Folder was created!');
+    req.status === 200 && toast.success('Folder was created!');
   };
 
   return { createFolder };
@@ -36,18 +36,6 @@ export const useDeleteFolder = () => {
   };
 
   return { deleteFolder };
-};
-
-export const useRemoveNoteFromFolder = () => {
-  const { mutate: folderMutate } = useGetFolders();
-  const { mutate: noteMutate } = useGetNotes();
-  const removeNoteFromFolder = async (id: string) => {
-    await axiosInstance.post(FOLDER_MOVE_URL, { id });
-    await folderMutate();
-    await noteMutate();
-  };
-
-  return { removeNoteFromFolder };
 };
 
 export const useRenameFolderTitle = () => {

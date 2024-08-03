@@ -30,13 +30,13 @@ const ContextMenuControlls = ({ itemData }: Props) => {
 
   const { type, id } = itemData;
 
-  const deleteFolderHandler = () => {
-    deleteFolder(id).then((res) => res === 200 && toast.error('Folder was Deleted!'));
+  const deleteFolderHandler = async () => {
+    await deleteFolder(id).then((res) => res === 200 && toast.error('Folder was Deleted!'));
     closeModal();
   };
 
-  const deleteNoteHandler = () => {
-    deleteNote(id).then((res) => res === 200 && toast.error('Note was Deleted!'));
+  const deleteNoteHandler = async () => {
+    await deleteNote(id).then((res) => res === 200 && toast.error('Note was Deleted!'));
     closeModal();
     if (pathId === id) push('/');
   };

@@ -5,9 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 
 import { DraggingItemI, FolderI } from '@/types/types';
-import { useMoveNoteToFolder } from '@/api-calls/notes';
+
+import { useMoveNote } from '@/api-calls/notes';
 import { useContextMenu } from '@/app/context/context-menu';
-import { useRemoveNoteFromFolder } from '@/api-calls/folders';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 
 import Notes from './notes';
@@ -29,8 +29,7 @@ function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
-  const { moveNoteToFolder } = useMoveNoteToFolder();
-  const { removeNoteFromFolder } = useRemoveNoteFromFolder();
+  const { moveNoteHandler } = useMoveNote();
 
   const { notes, notesLoading, folders, foldersLoading } = useSidebarContext();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
@@ -41,11 +40,9 @@ function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     const overId = over.id;
     const location = over.data.current.type;
     const { id } = active.data.current;
-    if (location === 'notes') {
-      removeNoteFromFolder(id);
-    } else {
-      moveNoteToFolder(id, overId);
-    }
+
+    if (location === 'notes') moveNoteHandler(id);
+    else moveNoteHandler(id, overId);
 
     setIsDragging(false);
   };

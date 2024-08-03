@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 
 const URL = endponints.notes;
 const MOVE_NOTE_URL = endponints.moveNotetoFolder;
+const FOLDER_MOVE_URL = endponints.moveNoteFromFolder;
 
 export const useGetNotes = () => {
   const { data, error, isLoading, mutate } = useSWR(URL, fetcher);
@@ -22,7 +23,6 @@ export const useCreateNote = () => {
     const req = await axiosInstance.post(URL);
     mutate();
 
-    console.log(req);
     req.status === 200 && toast.success('Note was created!');
   };
 
@@ -36,24 +36,30 @@ export const useDeleteNote = () => {
   const deleteNote = async (id: string) => {
     const req = await axiosInstance.delete(URL, { data: { id } });
     await mutateNote();
-    mutateFolders();
+    await mutateFolders();
     return req.status;
   };
 
   return { deleteNote };
 };
 
-export const useMoveNoteToFolder = () => {
+export const useMoveNote = () => {
   const { mutate: mutateNote } = useGetNotes();
   const { mutate: mutateFolders } = useGetFolders();
 
-  const moveNoteToFolder = async (id: string, folderId: UniqueIdentifier) => {
-    await axiosInstance.post(MOVE_NOTE_URL, { id, folderId });
-    await mutateNote();
-    mutateFolders();
+  const moveNoteHandler = async (id: string, folderId?: UniqueIdentifier) => {
+    if (!folderId) {
+      await axiosInstance.post(FOLDER_MOVE_URL, { id });
+      await mutateFolders();
+      await mutateNote();
+    } else {
+      await axiosInstance.post(MOVE_NOTE_URL, { id, folderId });
+      await mutateNote();
+      await mutateFolders();
+    }
   };
 
-  return { moveNoteToFolder };
+  return { moveNoteHandler };
 };
 
 export const useRenameNote = () => {
