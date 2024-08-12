@@ -15,10 +15,7 @@ type ContextMenuT = {
 const DEFAULT_CONTEXT_VALUE = {
   contextMenu: INITIAL_CONTEXT_MENU,
   onClose: () => {},
-  handleContextMenu: (
-    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
-    type: string
-  ) => {},
+  handleContextMenu: (_e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {},
 };
 
 const MenuContext = createContext<ContextMenuT>(DEFAULT_CONTEXT_VALUE as ContextMenuT);

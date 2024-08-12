@@ -1,11 +1,10 @@
 import useSWR from 'swr';
-import { useGetNotes } from './notes';
 import axiosInstance from '@/utils/axios';
 import { endponints, fetcher } from '@/utils/axios';
 import { toast } from 'react-toastify';
+import { UniqueIdentifier } from '@dnd-kit/core';
 
 const FOLDER_URL = endponints.folder;
-const FOLDER_MOVE_URL = endponints.moveNoteFromFolder;
 
 export const useGetFolders = () => {
   const { data, error, isLoading, mutate } = useSWR(FOLDER_URL, fetcher);
@@ -16,9 +15,9 @@ export const useGetFolders = () => {
 export const useCreateFolder = () => {
   const { mutate } = useGetFolders();
 
-  const createFolder = async () => {
-    const req = await axiosInstance.post(FOLDER_URL);
-    mutate();
+  const createFolder = async (id?: UniqueIdentifier) => {
+    const req = await axiosInstance.post(FOLDER_URL, { parentId: id });
+    await mutate();
 
     req.status === 200 && toast.success('Folder was created!');
   };

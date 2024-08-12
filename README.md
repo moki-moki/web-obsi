@@ -22,4 +22,5 @@
 - [x] Add error checking when the id on note page isn't found
 - [ ] Add markup page that displays documentation.
 - [ ] Add better styling for markdowns
-- [ ] Style better toast notification
+- [x] Style better toast notification
+- [ ] In the folder controlls, make name edit button turn to check on input show

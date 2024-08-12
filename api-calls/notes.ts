@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 const URL = endponints.notes;
 const MOVE_NOTE_URL = endponints.moveNotetoFolder;
-const FOLDER_MOVE_URL = endponints.moveNoteFromFolder;
+const MOVE_NOTE_FROM_FOLDER_URL = endponints.moveNoteFromFolder;
 
 export const useGetNotes = () => {
   const { data, error, isLoading, mutate } = useSWR(URL, fetcher);
@@ -49,7 +49,7 @@ export const useMoveNote = () => {
 
   const moveNoteHandler = async (id: string, folderId?: UniqueIdentifier) => {
     if (!folderId) {
-      await axiosInstance.post(FOLDER_MOVE_URL, { id });
+      await axiosInstance.post(MOVE_NOTE_FROM_FOLDER_URL, { id });
       await mutateFolders();
       await mutateNote();
     } else {

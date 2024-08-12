@@ -30,7 +30,7 @@ const popoverVarians = cva(
 );
 
 const Popover = forwardRef<HTMLDivElement, Props>(
-  ({ variants, font, className, text, children }, ref) => {
+  ({ variants, font, className, text, children }, _ref) => {
     const [visible, setVisible] = useState<boolean>(false);
     const [position, setPosition] = useState({
       top: 0,

@@ -30,9 +30,10 @@ function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
   const { moveNoteHandler } = useMoveNote();
-
   const { notes, notesLoading, folders, foldersLoading } = useSidebarContext();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
+
+  console.log(folders);
 
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -80,7 +81,12 @@ function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
               <ul className="px-1 flex flex-col gap-2">
                 {folders.map((folder: FolderI, idx: number) => (
                   <li key={folder.id}>
-                    <Folder idx={idx} folder={folder} getItemDataOnClick={getItemDataOnClick} />
+                    <Folder
+                      level={0}
+                      idx={idx}
+                      folder={folder}
+                      getItemDataOnClick={getItemDataOnClick}
+                    />
                   </li>
                 ))}
               </ul>

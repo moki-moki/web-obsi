@@ -2,11 +2,11 @@ import Link from 'next/link';
 
 import Button from '../ui/button';
 
-import { FilePen, SquarePen, Trash2 } from 'lucide-react';
+import { FilePen, FolderPlus, SquarePen, Trash2 } from 'lucide-react';
 
 import { FileI, FolderI } from '@/types/types';
 import { useDeleteNote } from '@/api-calls/notes';
-import { useDeleteFolder } from '@/api-calls/folders';
+import { useCreateFolder, useDeleteFolder } from '@/api-calls/folders';
 import { useModal } from '@/app/context/modal-context';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 import { useRouter } from 'next/navigation';
@@ -22,6 +22,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
   const { deleteNote } = useDeleteNote();
   const { getNoteId } = useSidebarContext();
   const { deleteFolder } = useDeleteFolder();
+  const { createFolder } = useCreateFolder();
   const { openModal, closeModal, setModalContent } = useModal();
 
   const pathId = useCurrentPathId();
@@ -66,15 +67,26 @@ const ContextMenuControlls = ({ itemData }: Props) => {
   return (
     <>
       {type === 'folder' && (
-        <li
-          onClick={showModal}
-          className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
-        >
-          <span className="mr-2 text-base">
-            <Trash2 size={15} />
-          </span>
-          Delete Folder
-        </li>
+        <>
+          <li
+            onClick={showModal}
+            className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
+          >
+            <span className="mr-2 text-base">
+              <Trash2 size={15} />
+            </span>
+            Delete Folder
+          </li>
+          <li
+            onClick={() => createFolder(id)}
+            className="folder flex items-center cursor-pointer text-gray px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-gray/30"
+          >
+            <span className="mr-2 text-base">
+              <FolderPlus size={15} />
+            </span>
+            Create Folder
+          </li>
+        </>
       )}
 
       {type === 'note' && (

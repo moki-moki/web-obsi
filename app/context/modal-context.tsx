@@ -1,6 +1,5 @@
 'use client';
 import { createContext, useContext, useState } from 'react';
-import { useContextMenu } from './context-menu';
 
 interface ModalContextProps {
   isOpen: boolean;

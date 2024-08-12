@@ -18,7 +18,9 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "react/no-unescaped-entities": "off", // Disable the rule
+    "react-hooks/exhaustive-deps": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
   },
   "settings": {

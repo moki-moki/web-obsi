@@ -16,7 +16,7 @@ const SidebarControlls = () => {
         </Button>
       </Popover>
       <Popover text="Add Folder" font="bolded">
-        <Button type="button" variants="icon" className="p-1.5 mx-0" onClick={createFolder}>
+        <Button type="button" variants="icon" className="p-1.5 mx-0" onClick={() => createFolder()}>
           <FolderPlus size={20} />
         </Button>
       </Popover>

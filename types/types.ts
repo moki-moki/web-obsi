@@ -20,6 +20,7 @@ export interface FolderI {
   title: string;
   notes: FileI[];
   type: string;
+  children: FolderI[];
 }
 
 export interface FileI {

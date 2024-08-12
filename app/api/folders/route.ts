@@ -1,28 +1,52 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/services/prisma-client';
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export async function GET() {
   try {
-    const folders = await prisma.folder.findMany({
-      include: {
-        notes: true,
-      },
-    });
+    const fetchFolders = async (folderId: string | null = null) => {
+      const folders = await prisma.folder.findMany({
+        where: {
+          parentId: folderId,
+        },
+        include: {
+          notes: true,
+          children: true,
+        },
+      });
+
+      for (let folder of folders) {
+        folder.children = await fetchFolders(folder.id);
+      }
+
+      return folders;
+    };
+    const folders = await fetchFolders(null);
     return NextResponse.json(folders);
   } catch (error) {
     return NextResponse.json({ error: 'Error fetching folders' }, { status: 500 });
   }
 }
 
-export async function POST() {
+export async function POST(req: Request) {
   try {
+    const { parentId } = await req.json();
     const newFolder = await prisma.folder.create({
       data: {
         title: '(No title)',
         type: 'folder',
+        parentId: parentId ? parentId : null,
         notes: {
           create: [],
         },
+      },
+      include: {
+        notes: true,
       },
     });
     return NextResponse.json(newFolder);
