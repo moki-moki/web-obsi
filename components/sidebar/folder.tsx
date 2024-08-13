@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 
 import File from '../ui/file';
+import Input from '../ui/input';
 import FolderTitle from '../folder/folder-title';
 import FolderWrapper from '../folder/folder-wrapper';
 import FolderControlls from '../folder/folder-controlls';
@@ -9,7 +10,6 @@ import { FOLDER_STATE } from '@/app/data/initial-state';
 import { useRenameFolderTitle } from '@/api-calls/folders';
 import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
-import Input from '../ui/input';
 
 interface Props {
   idx: number;
@@ -77,7 +77,13 @@ const Folder = ({ idx, folder, level = 0, getItemDataOnClick }: Props) => {
             className="px-2 py-1 mr-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple"
           />
         ) : (
-          <FolderTitle idx={idx} name={title} rotateIcon={rotatedIcons} iconHandler={iconHandler} />
+          <FolderTitle
+            idx={idx}
+            name={title}
+            rotateIcon={rotatedIcons}
+            iconHandler={iconHandler}
+            level={level}
+          />
         )}
         <FolderControlls idx={idx} id={id} name={title} changeNameHandler={changeNameHandler} />
       </div>

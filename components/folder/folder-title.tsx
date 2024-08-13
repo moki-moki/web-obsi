@@ -4,11 +4,12 @@ import React from 'react';
 interface Props {
   idx: number;
   name: string;
+  level: number;
   rotateIcon: boolean[];
   iconHandler: (e: React.MouseEvent, idx: number) => void;
 }
 
-const FolderTitle = ({ idx, name, rotateIcon, iconHandler }: Props) => {
+const FolderTitle = ({ idx, name, rotateIcon, level, iconHandler }: Props) => {
   return (
     <div className="flex items-center w-full" onClick={(e) => iconHandler(e, idx)}>
       <span className="mr-2 text-sm">
@@ -21,7 +22,7 @@ const FolderTitle = ({ idx, name, rotateIcon, iconHandler }: Props) => {
       </span>
 
       <span className="text-sm font-bold">
-        {name.length > 15 ? `${name.substring(0, 15)}...` : name}
+        {name.length > 15 ? `${name.substring(0, 12)}...` : name}
       </span>
     </div>
   );

@@ -1,10 +1,10 @@
 'use client';
 
+import { useRef } from 'react';
 import Link from 'next/link';
 import Button from '../ui/button';
 import Popover from '../popover/popover';
 import { ArrowLeftToLine, CircleHelp, Home } from 'lucide-react';
-import { useRef } from 'react';
 
 interface Props {
   toggleSidebar: () => void;
@@ -15,8 +15,8 @@ const SidebarGeneralControlls = ({ toggleSidebar }: Props) => {
 
   return (
     <ul
-      className="text p-0.5 border-r border-border flex flex-col items-center bg-dark-gray z-10"
       ref={ref}
+      className="text p-0.5 border-r border-border flex flex-col items-center bg-dark-gray z-10"
     >
       <li onClick={toggleSidebar}>
         <Popover text="Collapse Menu" font="bolded">

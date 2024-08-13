@@ -17,23 +17,17 @@ import SidebarControlls from './sidebar-controlls';
 import ContextMenu from '../context-menu/context-menu';
 import DragOverlayItem from '../draggable/drag-overlay-item';
 import SidebarSkeleton from '../ui/skeletons/SidebarSkeleton';
-import ContextMenuControlls from '../context-menu/context-menu-controlls';
 import SidebarGeneralControlls from './sidebar-general-controlls';
+import ContextMenuControlls from '../context-menu/context-menu-controlls';
 
-interface Props {
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-}
-
-function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
+function Sidebar() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
   const { moveNoteHandler } = useMoveNote();
-  const { notes, notesLoading, folders, foldersLoading } = useSidebarContext();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
-
-  console.log(folders);
+  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, toggleSidebar } =
+    useSidebarContext();
 
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;

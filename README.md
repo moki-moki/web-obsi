@@ -24,3 +24,4 @@
 - [ ] Add better styling for markdowns
 - [x] Style better toast notification
 - [ ] In the folder controlls, make name edit button turn to check on input show
+- [ ] make it mobile responsive
