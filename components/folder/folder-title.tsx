@@ -1,17 +1,18 @@
 import { ChevronRight } from 'lucide-react';
-import React from 'react';
 
 interface Props {
   idx: number;
   name: string;
-  level: number;
   rotateIcon: boolean[];
   iconHandler: (e: React.MouseEvent, idx: number) => void;
 }
 
-const FolderTitle = ({ idx, name, rotateIcon, level, iconHandler }: Props) => {
+const FolderTitle = ({ idx, name, rotateIcon, iconHandler }: Props) => {
   return (
-    <div className="flex items-center w-full" onClick={(e) => iconHandler(e, idx)}>
+    <div
+      className="flex items-center max-w-52 overflow-hidden"
+      onClick={(e) => iconHandler(e, idx)}
+    >
       <span className="mr-2 text-sm">
         <ChevronRight
           size={20}
@@ -21,9 +22,7 @@ const FolderTitle = ({ idx, name, rotateIcon, level, iconHandler }: Props) => {
         />
       </span>
 
-      <span className="text-sm font-bold">
-        {name.length > 15 ? `${name.substring(0, 12)}...` : name}
-      </span>
+      <span className="text-sm font-bold text-ellipsis overflow-hidden">{name}</span>
     </div>
   );
 };

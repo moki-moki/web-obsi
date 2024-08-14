@@ -77,13 +77,7 @@ const Folder = ({ idx, folder, level = 0, getItemDataOnClick }: Props) => {
             className="px-2 py-1 mr-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple"
           />
         ) : (
-          <FolderTitle
-            idx={idx}
-            name={title}
-            rotateIcon={rotatedIcons}
-            iconHandler={iconHandler}
-            level={level}
-          />
+          <FolderTitle idx={idx} name={title} rotateIcon={rotatedIcons} iconHandler={iconHandler} />
         )}
         <FolderControlls idx={idx} id={id} name={title} changeNameHandler={changeNameHandler} />
       </div>
@@ -97,14 +91,13 @@ const Folder = ({ idx, folder, level = 0, getItemDataOnClick }: Props) => {
 
       {children.length && rotatedIcons[idx]
         ? children.map((folder, index) => (
-            <li key={folder.id}>
-              <Folder
-                idx={index}
-                folder={folder}
-                getItemDataOnClick={getItemDataOnClick}
-                level={level + 1}
-              />
-            </li>
+            <Folder
+              idx={index}
+              key={folder.id}
+              folder={folder}
+              level={level + 1}
+              getItemDataOnClick={getItemDataOnClick}
+            />
           ))
         : null}
     </FolderWrapper>
