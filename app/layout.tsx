@@ -1,15 +1,15 @@
-'use client';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 
 import Sidebar from '../components/sidebar/sidebar';
 import { ModalProvider } from './context/modal-context';
 import ContextMenuProvider from './context/context-menu';
-import SidebarConextProvider, { useSidebarContext } from './context/sidebar-conext';
+import SidebarConextProvider from './context/sidebar-conext';
 
 import Modal from '@/components/modal/modal';
 import Toaster from '@/components/ui/toaster';
 import { SWRProvider } from '@/provider/swr-provider';
+import SectionWrapper from '@/components/ui/section-wrapper';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -18,8 +18,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { sidebarWidth } = useSidebarContext();
-
   return (
     <html lang="en">
       <SWRProvider>
@@ -30,15 +28,9 @@ export default function RootLayout({
               <SidebarConextProvider>
                 <Sidebar />
                 <Modal />
+                <SectionWrapper>{children}</SectionWrapper>
               </SidebarConextProvider>
             </ContextMenuProvider>
-            <main
-              className="min-h-screen"
-              id="main-container"
-              style={{ marginLeft: `${sidebarWidth}px` }}
-            >
-              {children}
-            </main>
           </ModalProvider>
         </body>
       </SWRProvider>

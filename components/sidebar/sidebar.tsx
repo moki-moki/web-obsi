@@ -26,7 +26,7 @@ function Sidebar() {
 
   const { moveNoteHandler } = useMoveNote();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
-  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, toggleSidebar } =
+  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, sidebarRef } =
     useSidebarContext();
 
   const onDragEnd = (e: DragEndEvent) => {
@@ -59,45 +59,50 @@ function Sidebar() {
 
   return (
     <>
-      <SidebarGeneralControlls toggleSidebar={toggleSidebar} />
       <div
-        onContextMenu={handleContextMenu}
-        className={`border-r border-r-border h-screen flex flex-col overflow-y-scroll no-scrollbar ease-in transition-all ${isSidebarOpen ? 'translate-x-0 w-full' : '-translate-x-full w-0'}`}
+        ref={sidebarRef}
+        className={`${isSidebarOpen ? 'w-1/5' : 'w-11'} flex fixed left-0 bg-dark-gray`}
       >
-        <SidebarControlls />
-        <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
+        <SidebarGeneralControlls />
+        <div
+          onContextMenu={handleContextMenu}
+          className={`border-r border-r-border h-screen flex flex-col overflow-y-scroll no-scrollbar ${isSidebarOpen ? 'translate-x-0 w-full' : '-translate-x-full w-0'}`}
+        >
+          <SidebarControlls />
+          <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
 
-        <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
-          {foldersLoading || notesLoading ? (
-            <SidebarSkeleton />
-          ) : (
-            <>
-              <ul className="px-1 flex flex-col gap-2">
-                {folders.map((folder: FolderI, idx: number) => (
-                  <li key={folder.id}>
-                    <Folder
-                      level={0}
-                      idx={idx}
-                      folder={folder}
-                      getItemDataOnClick={getItemDataOnClick}
-                    />
-                  </li>
-                ))}
-              </ul>
-
-              <ul className="h-full flex-auto p-1">
-                <Droppable id={uuidv4()} type="notes">
-                  {notes.map((note) => (
-                    <Notes note={note} key={note.id} getItemDataOnClick={getItemDataOnClick} />
+          <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
+            {foldersLoading || notesLoading ? (
+              <SidebarSkeleton />
+            ) : (
+              <>
+                <ul className="px-1 flex flex-col gap-2">
+                  {folders.map((folder: FolderI, idx: number) => (
+                    <li key={folder.id}>
+                      <Folder
+                        level={0}
+                        idx={idx}
+                        folder={folder}
+                        getItemDataOnClick={getItemDataOnClick}
+                      />
+                    </li>
                   ))}
-                </Droppable>
-              </ul>
-              {isDragging && draggingItem ? (
-                <DragOverlayItem title={draggingItem.title} type={draggingItem.type} />
-              ) : null}
-            </>
-          )}
-        </DndContext>
+                </ul>
+
+                <ul className="h-full flex-auto p-1">
+                  <Droppable id={uuidv4()} type="notes">
+                    {notes.map((note) => (
+                      <Notes note={note} key={note.id} getItemDataOnClick={getItemDataOnClick} />
+                    ))}
+                  </Droppable>
+                </ul>
+                {isDragging && draggingItem ? (
+                  <DragOverlayItem title={draggingItem.title} type={draggingItem.type} />
+                ) : null}
+              </>
+            )}
+          </DndContext>
+        </div>
       </div>
 
       {contextMenu.show && clickedItem ? (
