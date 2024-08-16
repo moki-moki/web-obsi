@@ -61,26 +61,27 @@ const Folder = ({ idx, folder, level = 0, getItemDataOnClick }: Props) => {
 
   return (
     <FolderWrapper id={id}>
-      <div
-        style={{ marginLeft: level * 20 }}
-        onContextMenu={(e) => getItemDataOnClick(e, folder)}
-        className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent overflow-hidden text-ellipsis whitespace-nowrap"
-      >
-        {showInput === idx ? (
-          <Input
-            type="text"
-            rounded="md"
-            ref={inputRef}
-            value={renameValue}
-            onChange={onChangeHandler}
-            onKeyDown={(e) => onKeyDownHandler(id, e)}
-            className="px-2 py-1 mr-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple"
-          />
-        ) : (
+      {showInput === idx ? (
+        <Input
+          type="text"
+          rounded="md"
+          ref={inputRef}
+          value={renameValue}
+          onChange={onChangeHandler}
+          onKeyDown={(e) => onKeyDownHandler(id, e)}
+          className="px-2 py-1 mr-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple"
+        />
+      ) : (
+        <div
+          style={{ marginLeft: level * 20 }}
+          onContextMenu={(e) => getItemDataOnClick(e, folder)}
+          className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent overflow-hidden text-ellipsis whitespace-nowrap"
+        >
           <FolderTitle idx={idx} name={title} rotateIcon={rotatedIcons} iconHandler={iconHandler} />
-        )}
-        <FolderControlls idx={idx} id={id} name={title} changeNameHandler={changeNameHandler} />
-      </div>
+
+          <FolderControlls idx={idx} id={id} name={title} changeNameHandler={changeNameHandler} />
+        </div>
+      )}
       {notes.length && rotatedIcons[idx] ? (
         <ul className="p-2">
           {notes.map((note) => (

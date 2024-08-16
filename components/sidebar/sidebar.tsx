@@ -61,7 +61,7 @@ function Sidebar() {
     <>
       <div
         ref={sidebarRef}
-        className={`${isSidebarOpen ? 'w-1/5' : 'w-11'} flex fixed left-0 bg-dark-gray`}
+        className={`${isSidebarOpen ? 'xl:w-1/3 2xl:w-1/5' : 'w-11'} flex fixed left-0 bg-dark-gray`}
       >
         <SidebarGeneralControlls />
         <div

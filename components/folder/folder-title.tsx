@@ -9,10 +9,7 @@ interface Props {
 
 const FolderTitle = ({ idx, name, rotateIcon, iconHandler }: Props) => {
   return (
-    <div
-      className="flex items-center max-w-52 overflow-hidden"
-      onClick={(e) => iconHandler(e, idx)}
-    >
+    <div className="flex items-center overflow-hidden" onClick={(e) => iconHandler(e, idx)}>
       <span className="mr-2 text-sm">
         <ChevronRight
           size={20}
