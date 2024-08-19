@@ -25,4 +25,6 @@
 - [x] Style better toast notification
 - [ ] In the folder controlls, make name edit button turn to check on input show
 - [ ] make it mobile responsive
-- [ ] save sidebar settings somewhere
+- [x] save sidebar settings somewhere
+- [ ] Make colorschemes
+- [ ] Add dynamic imports

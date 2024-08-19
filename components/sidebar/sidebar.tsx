@@ -52,6 +52,8 @@ function Sidebar() {
 
     if (data) setDraggingItem(data);
 
+    console.log(isSidebarOpen, 'SIDEBAR');
+
     setTimeout(() => {
       setIsDragging(true);
     }, 150);

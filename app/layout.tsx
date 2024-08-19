@@ -1,7 +1,6 @@
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 
-import Sidebar from '../components/sidebar/sidebar';
 import { ModalProvider } from './context/modal-context';
 import ContextMenuProvider from './context/context-menu';
 import SidebarConextProvider from './context/sidebar-conext';
@@ -10,6 +9,9 @@ import Modal from '@/components/modal/modal';
 import Toaster from '@/components/ui/toaster';
 import { SWRProvider } from '@/provider/swr-provider';
 import SectionWrapper from '@/components/ui/section-wrapper';
+import dynamic from 'next/dynamic';
+
+const Sidebar = dynamic(() => import('@/components/sidebar/sidebar'), { ssr: false });
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 

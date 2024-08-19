@@ -4,6 +4,7 @@ import React, { createContext, RefObject, useContext, useEffect, useRef, useStat
 import { FileI, FolderI } from '@/types/types';
 import { useGetNotes } from '@/api-calls/notes';
 import { useGetFolders } from '@/api-calls/folders';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 type SidebarContextI = {
   notes: FileI[];
@@ -27,7 +28,9 @@ export default function SidebarConextProvider({ children }: { children: React.Re
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [noteId, setNoteId] = useState<string | null>(null);
   const [sidebarWidth, setSidebarWidth] = useState<number>();
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage('isSidebarOpen', true);
+
+  console.log(isSidebarOpen);
   const { data: notes, error: notesError, isLoading: notesLoading } = useGetNotes();
   const { data: folders, error: foldersError, isLoading: foldersLoading } = useGetFolders();
 

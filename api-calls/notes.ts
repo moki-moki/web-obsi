@@ -83,6 +83,7 @@ export const getNoteData = async (id: string): Promise<FileI> => {
 };
 
 export const useUpdateNote = () => {
+  // PUT MUTATE HERE
   const updateNote = async (id: string, title: string, markdown: string) => {
     const req = await axiosInstance.put(`${URL}/${id}`, { title, markdown });
     return req.status;
