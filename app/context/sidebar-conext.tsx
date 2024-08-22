@@ -14,9 +14,7 @@ type SidebarContextI = {
   isSidebarOpen: boolean;
   foldersLoading: boolean;
   notesError: undefined | boolean;
-  sidebarWidth: number | undefined;
   foldersError: undefined | boolean;
-  sidebarRef: RefObject<HTMLDivElement>;
   toggleSidebar: () => void;
   getNoteId: (id: string) => void;
   setNoteId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -25,12 +23,9 @@ type SidebarContextI = {
 const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
 
 export default function SidebarConextProvider({ children }: { children: React.ReactNode }) {
-  const sidebarRef = useRef<HTMLDivElement>(null);
   const [noteId, setNoteId] = useState<string | null>(null);
-  const [sidebarWidth, setSidebarWidth] = useState<number>();
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage('isSidebarOpen', true);
 
-  console.log(isSidebarOpen);
   const { data: notes, error: notesError, isLoading: notesLoading } = useGetNotes();
   const { data: folders, error: foldersError, isLoading: foldersLoading } = useGetFolders();
 
@@ -38,21 +33,15 @@ export default function SidebarConextProvider({ children }: { children: React.Re
 
   const getNoteId = (id: string) => setNoteId(id);
 
-  useEffect(() => {
-    if (sidebarRef.current) setSidebarWidth(sidebarRef.current.offsetWidth);
-  }, [isSidebarOpen]);
-
   return (
     <SidebarContext.Provider
       value={{
         notes,
         noteId,
         folders,
-        sidebarRef,
         notesError,
         notesLoading,
         foldersError,
-        sidebarWidth,
         isSidebarOpen,
         foldersLoading,
         setNoteId,

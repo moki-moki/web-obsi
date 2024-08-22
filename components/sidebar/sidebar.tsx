@@ -26,8 +26,7 @@ function Sidebar() {
 
   const { moveNoteHandler } = useMoveNote();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
-  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, sidebarRef } =
-    useSidebarContext();
+  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen } = useSidebarContext();
 
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -61,10 +60,7 @@ function Sidebar() {
 
   return (
     <>
-      <div
-        ref={sidebarRef}
-        className={`${isSidebarOpen ? 'xl:w-1/3 2xl:w-1/5' : 'w-11'} flex fixed left-0 bg-dark-gray`}
-      >
+      <div className={`${isSidebarOpen ? 'xl:w-1/3 2xl:w-1/5' : 'w-11'} flex bg-dark-gray`}>
         <SidebarGeneralControlls />
         <div
           onContextMenu={handleContextMenu}

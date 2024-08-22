@@ -28,9 +28,11 @@ export default function RootLayout({
           <ModalProvider>
             <ContextMenuProvider>
               <SidebarConextProvider>
-                <Sidebar />
-                <Modal />
-                <SectionWrapper>{children}</SectionWrapper>
+                <main className="flex">
+                  <Sidebar />
+                  <Modal />
+                  <SectionWrapper>{children}</SectionWrapper>
+                </main>
               </SidebarConextProvider>
             </ContextMenuProvider>
           </ModalProvider>
