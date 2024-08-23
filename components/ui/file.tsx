@@ -11,9 +11,10 @@ import { useRenameNote } from '@/api-calls/notes';
 
 interface Props {
   note: FileI;
+  level: number;
 }
 
-const File = ({ note }: Props) => {
+const File = ({ note, level = 0 }: Props) => {
   const { id, title, type, folderId } = note;
   const ref = useRef<HTMLInputElement>(null);
   const [renameValue, setRenameValue] = useState<string>(title);
@@ -59,7 +60,7 @@ const File = ({ note }: Props) => {
           />
         </li>
       ) : (
-        <li onContextMenu={(e) => getItemDataOnClick(e, note)}>
+        <li onContextMenu={(e) => getItemDataOnClick(e, note)} style={{ marginLeft: level * 15 }}>
           <FileWrapper id={id} type={type} title={title}>
             <div className="p-1.5 text-xs rounded-full hover:bg-dark-gray">
               {title.length > 20 ? `${title.substring(0, 30)}...` : title}

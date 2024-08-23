@@ -1,20 +1,18 @@
 import { ChevronRight } from 'lucide-react';
 
 interface Props {
-  idx: number;
   name: string;
-  rotateIcon: boolean[];
-  iconHandler: (e: React.MouseEvent, idx: number) => void;
+  isOpen: boolean;
 }
 
-const FolderTitle = ({ idx, name, rotateIcon, iconHandler }: Props) => {
+const FolderTitle = ({ name, isOpen }: Props) => {
   return (
-    <div className="flex items-center overflow-hidden" onClick={(e) => iconHandler(e, idx)}>
+    <div className="flex items-center overflow-hidden">
       <span className="mr-2 text-sm">
         <ChevronRight
           size={20}
           style={{
-            transform: rotateIcon[idx] ? 'rotate(90deg)' : 'none',
+            transform: isOpen ? 'rotate(90deg)' : 'none',
           }}
         />
       </span>

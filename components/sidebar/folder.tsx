@@ -6,7 +6,6 @@ import FolderTitle from '../folder/folder-title';
 import FolderWrapper from '../folder/folder-wrapper';
 import FolderControlls from '../folder/folder-controlls';
 
-import { FOLDER_STATE } from '@/app/data/initial-state';
 import { useRenameFolderTitle } from '@/api-calls/folders';
 import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
@@ -15,19 +14,28 @@ interface Props {
   idx: number;
   level: number;
   folder: FolderI;
+  openFolders: Map<string, boolean>;
+  toggleFolderHandler: (id: string) => void;
   getItemDataOnClick: (e: React.SyntheticEvent, data: FolderI | FileI) => void;
 }
 
-const Folder = ({ idx, folder, level = 0, getItemDataOnClick }: Props) => {
+const Folder = ({
+  idx,
+  folder,
+  openFolders,
+  level = 0,
+  getItemDataOnClick,
+  toggleFolderHandler,
+}: Props) => {
   const ref = useRef<HTMLInputElement>(null);
+  const { id, notes, title, children } = folder;
 
   const [renameValue, setRenameValue] = useState<string>('');
   const [showInput, setShowInput] = useState<null | number>(null);
-  const [rotatedIcons, setRotatedIcons] = useState(Array(FOLDER_STATE.length).fill(false));
 
   const { renameFolderTitle } = useRenameFolderTitle();
 
-  const { id, notes, title, children } = folder;
+  const isOpen = openFolders.get(id) || false;
 
   const onClose = () => setShowInput(null);
   const inputRef = useOutsideClick(ref, onClose);
@@ -50,15 +58,6 @@ const Folder = ({ idx, folder, level = 0, getItemDataOnClick }: Props) => {
     }
   };
 
-  const iconHandler = (e: React.MouseEvent, idx: number) => {
-    if ((e.target as HTMLElement).tagName === 'INPUT') return;
-    setRotatedIcons((prevState) => {
-      const newState = [...prevState];
-      newState[idx] = !newState[idx];
-      return newState;
-    });
-  };
-
   return (
     <FolderWrapper id={id}>
       {showInput === idx ? (
@@ -73,24 +72,25 @@ const Folder = ({ idx, folder, level = 0, getItemDataOnClick }: Props) => {
         />
       ) : (
         <div
-          style={{ marginLeft: level * 20 }}
+          style={{ marginLeft: level * 10 }}
           onContextMenu={(e) => getItemDataOnClick(e, folder)}
           className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent overflow-hidden text-ellipsis whitespace-nowrap"
+          onClick={() => toggleFolderHandler(id)}
         >
-          <FolderTitle idx={idx} name={title} rotateIcon={rotatedIcons} iconHandler={iconHandler} />
+          <FolderTitle isOpen={isOpen} name={title} />
 
           <FolderControlls idx={idx} id={id} name={title} changeNameHandler={changeNameHandler} />
         </div>
       )}
-      {notes.length && rotatedIcons[idx] ? (
+      {notes.length && isOpen ? (
         <ul className="p-2">
           {notes.map((note) => (
-            <File key={note.id} note={note} />
+            <File key={note.id} note={note} level={level + 1} />
           ))}
         </ul>
       ) : null}
 
-      {children.length && rotatedIcons[idx]
+      {children && isOpen
         ? children.map((folder, index) => (
             <Folder
               idx={index}
@@ -98,6 +98,8 @@ const Folder = ({ idx, folder, level = 0, getItemDataOnClick }: Props) => {
               folder={folder}
               level={level + 1}
               getItemDataOnClick={getItemDataOnClick}
+              toggleFolderHandler={toggleFolderHandler}
+              openFolders={openFolders}
             />
           ))
         : null}

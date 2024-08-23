@@ -21,6 +21,7 @@ import SidebarGeneralControlls from './sidebar-general-controlls';
 import ContextMenuControlls from '../context-menu/context-menu-controlls';
 
 function Sidebar() {
+  const [openFolders, setOpenFolders] = useState(new Map());
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
@@ -51,16 +52,23 @@ function Sidebar() {
 
     if (data) setDraggingItem(data);
 
-    console.log(isSidebarOpen, 'SIDEBAR');
-
     setTimeout(() => {
       setIsDragging(true);
     }, 150);
   };
 
+  const toggleFolderHandler = (id: string) => {
+    setOpenFolders((prev) => {
+      const newState = new Map(prev);
+      if (newState.get(id)) newState.delete(id);
+      else newState.set(id, true);
+      return newState;
+    });
+  };
+
   return (
     <>
-      <div className={`${isSidebarOpen ? 'xl:w-1/3 2xl:w-1/5' : 'w-11'} flex bg-dark-gray`}>
+      <div className={`${isSidebarOpen ? 'sm:w-full lg:w-1/5' : 'w-11'} flex bg-dark-gray`}>
         <SidebarGeneralControlls />
         <div
           onContextMenu={handleContextMenu}
@@ -81,7 +89,9 @@ function Sidebar() {
                         level={0}
                         idx={idx}
                         folder={folder}
+                        openFolders={openFolders}
                         getItemDataOnClick={getItemDataOnClick}
+                        toggleFolderHandler={toggleFolderHandler}
                       />
                     </li>
                   ))}
