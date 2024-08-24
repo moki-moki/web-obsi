@@ -10,6 +10,7 @@ import Toaster from '@/components/ui/toaster';
 import { SWRProvider } from '@/provider/swr-provider';
 import SectionWrapper from '@/components/ui/section-wrapper';
 import dynamic from 'next/dynamic';
+import MainSectionWrapper from '@/components/ui/main-section-wrapper';
 
 const Sidebar = dynamic(() => import('@/components/sidebar/sidebar'), { ssr: false });
 
@@ -28,11 +29,13 @@ export default function RootLayout({
           <ModalProvider>
             <ContextMenuProvider>
               <SidebarConextProvider>
-                <main className="flex">
+                {/* <main className="flex" onMouseUp={stopResize} onMouseMove={resizeFrame}> */}
+                <MainSectionWrapper>
                   <Sidebar />
                   <Modal />
                   <SectionWrapper>{children}</SectionWrapper>
-                </main>
+                </MainSectionWrapper>
+                {/* </main> */}
               </SidebarConextProvider>
             </ContextMenuProvider>
           </ModalProvider>

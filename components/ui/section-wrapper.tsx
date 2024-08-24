@@ -2,9 +2,9 @@
 
 const SectionWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="min-h-screen w-full" id="main-container">
+    <section className="min-h-screen w-full" id="main-container">
       {children}
-    </main>
+    </section>
   );
 };
 

@@ -27,7 +27,8 @@ function Sidebar() {
 
   const { moveNoteHandler } = useMoveNote();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
-  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen } = useSidebarContext();
+  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, startResize, dimension } =
+    useSidebarContext();
 
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
@@ -68,12 +69,17 @@ function Sidebar() {
 
   return (
     <>
-      <div className={`${isSidebarOpen ? 'sm:w-full lg:w-1/5' : 'w-11'} flex bg-dark-gray`}>
+      <div className={`flex bg-dark-gray max-w-screen-2xl`}>
         <SidebarGeneralControlls />
         <div
+          className={`${isSidebarOpen ? 'sm:w-full lg:w-1/5' : 'w-11'} border-r border-r-border h-screen flex flex-col overflow-y-scroll no-scrollbar relative ${isSidebarOpen ? 'translate-x-0 w-full' : '-translate-x-full w-0'}`}
           onContextMenu={handleContextMenu}
-          className={`border-r border-r-border h-screen flex flex-col overflow-y-scroll no-scrollbar ${isSidebarOpen ? 'translate-x-0 w-full' : '-translate-x-full w-0'}`}
+          style={{ width: `${dimension.w}px` }}
         >
+          <div
+            className="absolute right-0 top-0 bg-border/80 h-full w-1 z-10 cursor-ew-resize"
+            onMouseDown={startResize}
+          ></div>
           <SidebarControlls />
           <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
 
