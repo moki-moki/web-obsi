@@ -20,10 +20,14 @@ export const useCreateNote = () => {
   const { mutate } = useGetNotes();
 
   const createNote = async () => {
-    const req = await axiosInstance.post(URL);
-    mutate();
+    try {
+      const req = await axiosInstance.post(URL);
+      mutate();
 
-    req.status === 200 && toast.success('Note was created!');
+      req.status === 200 && toast.success('Note was created!');
+    } catch (error) {
+      toast.error('Error creating a note');
+    }
   };
 
   return { createNote };
@@ -34,10 +38,14 @@ export const useDeleteNote = () => {
   const { mutate: mutateFolders } = useGetFolders();
 
   const deleteNote = async (id: string) => {
-    const req = await axiosInstance.delete(URL, { data: { id } });
-    await mutateNote();
-    await mutateFolders();
-    return req.status;
+    try {
+      await axiosInstance.delete(URL, { data: { id } });
+      await mutateNote();
+      await mutateFolders();
+      toast.success('Note was Deleted!');
+    } catch (error) {
+      toast.error('Error deleting note!');
+    }
   };
 
   return { deleteNote };
@@ -84,11 +92,11 @@ export const getNoteData = async (id: string): Promise<FileI> => {
 
 export const useUpdateNote = () => {
   // PUT MUTATE HERE
-  const updateNote = async (id: string, title: string, markdown: string) => {
-    const req = await axiosInstance.put(`${URL}/${id}`, { title, markdown });
-    return req.status;
-  };
-  return { updateNote };
+  try {
+    async (id: string, title: string, markdown: string) => {
+      await axiosInstance.put(`${URL}/${id}`, { title, markdown });
+    };
+  } catch (error) {}
 };
 
 export const findNoteBeingDeleted = async (id: string): Promise<string | null> => {

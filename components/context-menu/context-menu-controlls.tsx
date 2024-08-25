@@ -11,7 +11,6 @@ import { useModal } from '@/app/context/modal-context';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 import { useRouter } from 'next/navigation';
 import useCurrentPathId from '@/app/hooks/useCurrentPathId';
-import { toast } from 'react-toastify';
 
 interface Props {
   itemData: FileI | FolderI | null;
@@ -32,12 +31,12 @@ const ContextMenuControlls = ({ itemData }: Props) => {
   const { type, id } = itemData;
 
   const deleteFolderHandler = async () => {
-    await deleteFolder(id).then((res) => res === 200 && toast.error('Folder was Deleted!'));
+    await deleteFolder(id);
     closeModal();
   };
 
   const deleteNoteHandler = async () => {
-    await deleteNote(id).then((res) => res === 200 && toast.error('Note was Deleted!'));
+    await deleteNote(id);
     closeModal();
     if (pathId === id) push('/');
   };

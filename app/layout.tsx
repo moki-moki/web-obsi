@@ -29,13 +29,11 @@ export default function RootLayout({
           <ModalProvider>
             <ContextMenuProvider>
               <SidebarConextProvider>
-                {/* <main className="flex" onMouseUp={stopResize} onMouseMove={resizeFrame}> */}
                 <MainSectionWrapper>
                   <Sidebar />
                   <Modal />
                   <SectionWrapper>{children}</SectionWrapper>
                 </MainSectionWrapper>
-                {/* </main> */}
               </SidebarConextProvider>
             </ContextMenuProvider>
           </ModalProvider>

@@ -9,10 +9,9 @@ import Input from '../ui/input';
 import Button from '../ui/button';
 
 import { useGetNote } from '@/api-calls/note';
-import { useUpdateNote } from '@/api-calls/notes';
+import axiosInstance from '@/utils/axios';
 
 const NoteEditForm = ({ id }: { id: string }) => {
-  const { updateNote } = useUpdateNote();
   const { data, error, isLoading } = useGetNote(id);
   const [formData, setFormData] = useState({ title: '', note: '' });
 
@@ -28,10 +27,14 @@ const NoteEditForm = ({ id }: { id: string }) => {
   };
 
   const onSubmitHandler = async (e: FormEvent) => {
-    e.preventDefault();
-    const status = await updateNote(id, formData.title, formData.note);
-    if (status === 200) toast.success('Note was updated!');
-    if (status === 500) toast.error('Something went wrong!');
+    try {
+      e.preventDefault();
+      const { note, title } = formData;
+      await axiosInstance.put(`${URL}/${id}`, { title, note });
+      toast.success('Note was updated!');
+    } catch (error) {
+      toast.error('Something went wrong!');
+    }
   };
 
   if (isLoading) return null;

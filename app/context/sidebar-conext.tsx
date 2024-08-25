@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, MouseEventHandler, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import { FileI, FolderI } from '@/types/types';
 import { useGetNotes } from '@/api-calls/notes';

@@ -16,10 +16,14 @@ export const useCreateFolder = () => {
   const { mutate } = useGetFolders();
 
   const createFolder = async (id?: UniqueIdentifier) => {
-    const req = await axiosInstance.post(FOLDER_URL, { parentId: id });
-    await mutate();
-
-    req.status === 200 && toast.success('Folder was created!');
+    try {
+      const req = await axiosInstance.post(FOLDER_URL, { parentId: id });
+      await mutate();
+      req.status === 200 && toast.success('Folder was created!');
+    } catch (error) {
+      console.log(error);
+      toast.error('Error creating folder');
+    }
   };
 
   return { createFolder };
@@ -29,9 +33,13 @@ export const useDeleteFolder = () => {
   const { mutate } = useGetFolders();
 
   const deleteFolder = async (id: string) => {
-    const req = await axiosInstance.delete(FOLDER_URL, { data: { id } });
-    mutate();
-    return req.status;
+    try {
+      await axiosInstance.delete(FOLDER_URL, { data: { id } });
+      await mutate();
+      toast.success('Folder was Deleted!');
+    } catch (error) {
+      toast.error('Error deleting a folder!');
+    }
   };
 
   return { deleteFolder };

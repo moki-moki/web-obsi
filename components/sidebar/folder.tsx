@@ -9,7 +9,6 @@ import FolderControlls from '../folder/folder-controlls';
 import { useRenameFolderTitle } from '@/api-calls/folders';
 import { useOutsideClick } from '@/app/hooks/useOutsideClick';
 import { FileI, FolderI, InputChangeEventHandler } from '@/types/types';
-import { useSidebarContext } from '@/app/context/sidebar-conext';
 
 interface Props {
   idx: number;

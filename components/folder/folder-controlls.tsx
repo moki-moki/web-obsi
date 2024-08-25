@@ -2,7 +2,6 @@ import { useDeleteFolder } from '@/api-calls/folders';
 import { useModal } from '@/app/context/modal-context';
 import { SquarePen, Trash2 } from 'lucide-react';
 import Button from '../ui/button';
-import { toast } from 'react-toastify';
 
 interface Props {
   id: string;
@@ -16,7 +15,7 @@ const FolderControlls = ({ id, idx, name, changeNameHandler }: Props) => {
   const { setModalContent, openModal, closeModal } = useModal();
 
   const deleteFolderHandler = async () => {
-    await deleteFolder(id).then((res) => res === 200 && toast.error('Folder was Deleted!'));
+    await deleteFolder(id);
     closeModal();
   };
 
