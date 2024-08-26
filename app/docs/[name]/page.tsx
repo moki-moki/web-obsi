@@ -21,7 +21,7 @@ const DocsPage = ({ params }: DocumentationPageProps) => {
 
   return (
     <section className="flex justify-center py-5">
-      <MarkdownRenderer content={content} />
+      <MarkdownRenderer>{content}</MarkdownRenderer>
     </section>
   );
 };

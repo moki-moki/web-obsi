@@ -30,7 +30,7 @@ const NoteEditForm = ({ id }: { id: string }) => {
     try {
       e.preventDefault();
       const { note, title } = formData;
-      await axiosInstance.put(`${URL}/${id}`, { title, note });
+      await axiosInstance.put(`/api/notes/${id}`, { title, markdown: note });
       toast.success('Note was updated!');
     } catch (error) {
       toast.error('Something went wrong!');

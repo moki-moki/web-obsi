@@ -27,7 +27,7 @@ type SidebarContextI = {
 const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
 
 export default function SidebarConextProvider({ children }: { children: React.ReactNode }) {
-  const [dimension, setDimension] = useState({ w: 500 });
+  const [dimension, setDimension] = useState({ w: 300 });
   const [noteId, setNoteId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage('isSidebarOpen', true);
   const [drag, setDrag] = useState({
