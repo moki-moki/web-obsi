@@ -15,10 +15,12 @@ import Folder from './folder';
 import Droppable from '../draggable/droppable';
 import SidebarControlls from './sidebar-controlls';
 import ContextMenu from '../context-menu/context-menu';
-import DragOverlayItem from '../draggable/drag-overlay-item';
 import SidebarSkeleton from '../ui/skeletons/SidebarSkeleton';
 import SidebarGeneralControlls from './sidebar-general-controlls';
 import ContextMenuControlls from '../context-menu/context-menu-controlls';
+import dynamic from 'next/dynamic';
+
+const DragOverlayItem = dynamic(() => import('../draggable/drag-overlay-item'), { ssr: false });
 
 function Sidebar() {
   const [openFolders, setOpenFolders] = useState(new Map());
@@ -27,7 +29,7 @@ function Sidebar() {
 
   const { moveNoteHandler } = useMoveNote();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
-  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, startResize, dimension } =
+  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, dimension, startResize } =
     useSidebarContext();
 
   const onDragEnd = (e: DragEndEvent) => {

@@ -3,9 +3,11 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import Button from '../ui/button';
-import Popover from '../popover/popover';
+import dynamic from 'next/dynamic';
 import { ArrowLeftToLine, CircleHelp, Home } from 'lucide-react';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
+
+const Popover = dynamic(() => import('../popover/popover'), { ssr: true });
 
 const SidebarGeneralControlls = () => {
   const ref = useRef<HTMLUListElement>(null);

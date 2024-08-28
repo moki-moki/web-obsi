@@ -6,7 +6,9 @@ import { useDeleteNote } from '@/api-calls/notes';
 import { FilePenLine, Trash2 } from 'lucide-react';
 import { useModal } from '@/app/context/modal-context';
 import useCurrentPathId from '@/app/hooks/useCurrentPathId';
-import Popover from '../popover/popover';
+import dynamic from 'next/dynamic';
+
+const Popover = dynamic(() => import('../popover/popover'), { ssr: true });
 
 interface Props {
   id: string;

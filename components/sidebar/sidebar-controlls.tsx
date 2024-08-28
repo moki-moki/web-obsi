@@ -1,8 +1,10 @@
+import dynamic from 'next/dynamic';
 import Button from '../ui/button';
-import Popover from '../popover/popover';
 import { useCreateNote } from '@/api-calls/notes';
 import { useCreateFolder } from '@/api-calls/folders';
 import { FilePlus2, FolderPlus } from 'lucide-react';
+
+const Popover = dynamic(() => import('../popover/popover'), { ssr: true });
 
 const SidebarControlls = () => {
   const { createNote } = useCreateNote();
