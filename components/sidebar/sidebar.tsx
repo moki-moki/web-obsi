@@ -91,7 +91,7 @@ function Sidebar() {
             ) : (
               <>
                 <ul className="px-1 flex flex-col gap-2">
-                  {folders.map((folder: FolderI, idx: number) => (
+                  {folders?.map((folder: FolderI, idx: number) => (
                     <li key={folder.id}>
                       <Folder
                         level={0}
