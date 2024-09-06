@@ -21,6 +21,7 @@
     "react/no-unescaped-entities": "off", // Disable the rule
     "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": ["off"],
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
   },
   "settings": {

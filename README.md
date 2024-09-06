@@ -3,7 +3,7 @@
 - [x] Add adding of folders functionality (To button on sidebar, and context menu)
 - [x] Add adding of notes functionality
 - [x] Mockup code move to another file
-- [ ] Refactor localstorage custom hook
+- [x] Refactor localstorage custom hook
 - [ ] Create backend for project
   - [x] Connect Prisma with the front-end
   - [x] Make function for deleting folders and notes
@@ -17,7 +17,7 @@
 - [ ] Make tags, when you visit a note, display tags where that note is nested
 - [x] Delete note functionality on form edit note page
   - [x] When deleting note with Context-menu or with function make sure we redirect to homepage
-- [ ] Add toast notification for CRUD operations
+- [x] Add toast notification for CRUD operations
 - [ ] Add more complex error pages
 - [x] Add error checking when the id on note page isn't found
 - [ ] Add markup page that displays documentation.

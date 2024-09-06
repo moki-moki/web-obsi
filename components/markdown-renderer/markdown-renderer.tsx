@@ -10,16 +10,12 @@ const MarkdownRenderer = ({ children: content }: { children: string }) => {
       remarkPlugins={[remarkGfm]}
       components={{
         code(props: any) {
-          const { inline, children, className, node, ...rest } = props;
+          const { inline, children, className, ...rest } = props;
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
-            <SyntaxHighlighter
-              {...rest}
-              PreTag="div"
-              children={String(children).replace(/\n$/, '')}
-              language={match[1]}
-              style={dracula}
-            />
+            <SyntaxHighlighter {...rest} PreTag="div" language={match[1]} style={dracula}>
+              {String(children).replace(/\n$/, '')}
+            </SyntaxHighlighter>
           ) : (
             <code {...rest} className={className}>
               {children}

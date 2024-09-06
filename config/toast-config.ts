@@ -10,10 +10,9 @@ export const toastConfig: ToastContainerProps = {
   hideProgressBar: false,
   newestOnTop: false,
   closeOnClick: true,
-  rtl: false,
   pauseOnFocusLoss: false,
   draggable: true,
-  pauseOnHover: false,
+  pauseOnHover: true,
   limit: TOAST_LIMIT,
   theme: 'dark',
 };

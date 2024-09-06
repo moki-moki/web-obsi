@@ -1,12 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/services/prisma-client';
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function GET() {
   try {
     const fetchFolders = async (folderId: string | null = null) => {
@@ -20,7 +14,7 @@ export async function GET() {
         },
       });
 
-      for (let folder of folders) {
+      for (const folder of folders) {
         folder.children = await fetchFolders(folder.id);
       }
 

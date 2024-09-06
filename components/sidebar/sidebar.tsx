@@ -74,12 +74,12 @@ function Sidebar() {
       <div className={`flex bg-dark-gray max-w-screen-2xl`}>
         <SidebarGeneralControlls />
         <div
-          className={`${isSidebarOpen ? 'sm:w-full lg:w-1/5' : 'w-11'} border-r border-r-border h-screen flex flex-col overflow-y-scroll no-scrollbar relative ${isSidebarOpen ? 'translate-x-0 w-full' : '-translate-x-full w-0'}`}
+          className={`${isSidebarOpen ? 'sm:w-full lg:w-1/5' : 'w-11'} h-screen flex flex-col overflow-y-scroll no-scrollbar relative ${isSidebarOpen ? 'translate-x-0 w-full' : '-translate-x-full w-0'}`}
           onContextMenu={handleContextMenu}
           style={{ width: `${dimension.w}px` }}
         >
           <div
-            className="absolute right-0 top-0 bg-border/80 h-full w-1 z-10 cursor-ew-resize"
+            className="absolute right-0 top-0 bg-border h-full w-0.5 z-10 cursor-ew-resize transition-all duration-200 ease-in hover:w-1"
             onMouseDown={startResize}
           ></div>
           <SidebarControlls />
