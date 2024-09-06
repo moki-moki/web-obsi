@@ -1,3 +1,19 @@
+# How to run:
+
+You have to have docker installed.
+
+Once installed run commands below.
+
+```console
+  docker build -t [name-of-choice] .
+```
+
+Once finished run:
+
+```console
+  docker run -p 3000:3000 [name]
+```
+
 ## TODO:
 
 - [x] Add adding of folders functionality (To button on sidebar, and context menu)
