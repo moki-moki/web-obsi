@@ -37,8 +37,11 @@ yarn-error.log*
 next-env.d.ts
 
 /prisma/dev.db
+/prisma/dev.db
 /prisma/dev.db-journal
-/prisma/migrations
+./prisma/migrations
+./prisma/dev.db-journal
+./prisma/migrations
 
 
 Dockerfile

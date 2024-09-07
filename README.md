@@ -5,13 +5,7 @@ You have to have docker installed.
 Once installed run commands below.
 
 ```console
-  docker build -t [name-of-choice] .
-```
-
-Once finished run:
-
-```console
-  docker run -p 3000:3000 [name]
+  docker-compose up --build
 ```
 
 ## TODO:
