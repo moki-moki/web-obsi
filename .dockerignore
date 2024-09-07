@@ -1,3 +1,7 @@
 node_modules
 .next
-*.md
+*.log
+*.lock
+Dockerfile
+docker-compose.yml
+.env
