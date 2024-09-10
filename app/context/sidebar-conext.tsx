@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { FileI, FolderI } from '@/types/types';
 import { useGetNotes } from '@/api-calls/notes';
@@ -38,7 +38,11 @@ export default function SidebarConextProvider({ children }: { children: React.Re
   const { data: notes, error: notesError, isLoading: notesLoading } = useGetNotes();
   const { data: folders, error: foldersError, isLoading: foldersLoading } = useGetFolders();
 
-  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+    if (isSidebarOpen) setDimension({ w: 0 });
+    else setDimension({ w: 300 });
+  };
 
   const getNoteId = (id: string) => setNoteId(id);
 

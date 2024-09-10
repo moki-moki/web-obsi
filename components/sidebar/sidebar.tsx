@@ -71,7 +71,8 @@ function Sidebar() {
 
   return (
     <>
-      <div className={`flex bg-dark-gray max-w-screen-2xl`}>
+      {/* <div className={`flex bg-dark-gray max-w-screen-2xl`}> */}
+      <div className={`flex bg-dark-gray`}>
         <SidebarGeneralControlls />
         <div
           className={`${isSidebarOpen ? 'sm:w-full lg:w-1/5' : 'w-11'} h-screen flex flex-col overflow-y-scroll no-scrollbar relative ${isSidebarOpen ? 'translate-x-0 w-full' : '-translate-x-full w-0'}`}

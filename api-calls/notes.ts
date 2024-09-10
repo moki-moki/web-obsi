@@ -90,13 +90,16 @@ export const getNoteData = async (id: string): Promise<FileI> => {
   return await req.data;
 };
 
-export const useUpdateNote = () => {
-  // PUT MUTATE HERE
+export const updateNote = async (id: string, data: FormData) => {
+  const title = data.get('title');
+  const markdown = data.get('note');
   try {
-    async (id: string, title: string, markdown: string) => {
-      await axiosInstance.put(`${URL}/${id}`, { title, markdown });
-    };
-  } catch (error) {}
+    const req = await axiosInstance.put(`${URL}/${id}`, { title, markdown });
+
+    req.status === 200 && toast.success('Note was updated!');
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const findNoteBeingDeleted = async (id: string): Promise<string | null> => {

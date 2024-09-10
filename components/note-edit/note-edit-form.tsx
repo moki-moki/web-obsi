@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent } from 'react';
 
 import { toast } from 'react-toastify';
 import { notFound } from 'next/navigation';
@@ -9,31 +9,20 @@ import Input from '../ui/input';
 import Button from '../ui/button';
 
 import { useGetNote } from '@/api-calls/note';
-import axiosInstance from '@/utils/axios';
+import { updateNote, useGetNotes } from '@/api-calls/notes';
 
 const NoteEditForm = ({ id }: { id: string }) => {
   const { data, error, isLoading } = useGetNote(id);
-  const [formData, setFormData] = useState({ title: '', note: '' });
+  const { mutate } = useGetNotes();
 
-  useEffect(() => {
-    if (data) {
-      setFormData({ title: data.title, note: data.markdown });
-    }
-  }, [data]);
-
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const onSubmitHandler = async (e: FormEvent) => {
+  const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      const { note, title } = formData;
-      await axiosInstance.put(`/api/notes/${id}`, { title, markdown: note });
-      toast.success('Note was updated!');
+      const data = new FormData(e.currentTarget);
+      await updateNote(id, data);
+      await mutate();
     } catch (error) {
-      toast.error('Something went wrong!');
+      toast.error('Something went wrong submitting a note!');
     }
   };
 
@@ -45,13 +34,7 @@ const NoteEditForm = ({ id }: { id: string }) => {
       <label htmlFor="title" className="text-sm font-bold text-gray uppercase">
         Edit title
       </label>
-      <Input
-        name="title"
-        rounded="md"
-        defaultValue={data.title}
-        required={true}
-        onChange={onChangeHandler}
-      />
+      <Input name="title" rounded="md" defaultValue={data.title} required={true} />
 
       <label htmlFor="note" className="block mb-1 mt-5 text-sm font-bold text-gray uppercase">
         Note Info
@@ -59,7 +42,6 @@ const NoteEditForm = ({ id }: { id: string }) => {
       <textarea
         rows={20}
         name="note"
-        onChange={onChangeHandler}
         defaultValue={data.markdown ? data.markdown : ''}
         className="text-gray p-2 w-full rounded-md bg-dark-gray-accent border border-border outline-none focus:ring-2 focus:ring-purple"
       ></textarea>
