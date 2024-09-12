@@ -32,6 +32,8 @@ function Sidebar() {
   const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, dimension, startResize } =
     useSidebarContext();
 
+  const { open } = isSidebarOpen;
+
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
     if (!active || !over || !over.data.current || !active.data.current) return;
@@ -71,13 +73,15 @@ function Sidebar() {
 
   return (
     <>
-      {/* <div className={`flex bg-dark-gray max-w-screen-2xl`}> */}
       <div className={`flex bg-dark-gray`}>
         <SidebarGeneralControlls />
         <div
-          className={`${isSidebarOpen ? 'sm:w-full lg:w-1/5' : 'w-11'} h-screen flex flex-col overflow-y-scroll no-scrollbar relative ${isSidebarOpen ? 'translate-x-0 w-full' : '-translate-x-full w-0'}`}
+          className={`${open ? 'sm:w-full lg:w-1/5' : 'w-11'} h-screen flex flex-col overflow-y-scroll no-scrollbar relative`}
           onContextMenu={handleContextMenu}
-          style={{ width: `${dimension.w}px` }}
+          style={{
+            width: `${dimension.w}px`,
+            transform: `${open ? 'translateX(0)' : 'translateX(-100%)'}`,
+          }}
         >
           <div
             className="absolute right-0 top-0 bg-border h-full w-0.5 z-10 cursor-ew-resize transition-all duration-200 ease-in hover:w-1"

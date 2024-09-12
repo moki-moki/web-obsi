@@ -12,7 +12,7 @@ type SidebarContextI = {
   noteId: string | null;
   dimension: { w: number };
   notesLoading: boolean;
-  isSidebarOpen: boolean;
+  isSidebarOpen: { width: number; open: boolean };
   foldersLoading: boolean;
   notesError: undefined | boolean;
   foldersError: undefined | boolean;
@@ -23,25 +23,30 @@ type SidebarContextI = {
   startResize: (e: React.MouseEvent) => void;
   setNoteId: React.Dispatch<React.SetStateAction<string | null>>;
 };
-
+const sidebarData = {
+  width: 300,
+  open: true,
+};
 const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
 
 export default function SidebarConextProvider({ children }: { children: React.ReactNode }) {
-  const [dimension, setDimension] = useState({ w: 300 });
   const [noteId, setNoteId] = useState<string | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage('isSidebarOpen', true);
+  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage('isSidebarOpen', sidebarData);
   const [drag, setDrag] = useState({
     active: false,
     x: '',
   });
+  const [dimension, setDimension] = useState({ w: isSidebarOpen.width });
 
   const { data: notes, error: notesError, isLoading: notesLoading } = useGetNotes();
   const { data: folders, error: foldersError, isLoading: foldersLoading } = useGetFolders();
 
   const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-    if (isSidebarOpen) setDimension({ w: 0 });
-    else setDimension({ w: 300 });
+    setIsSidebarOpen((prev) => {
+      const newState = { ...prev };
+      newState.open = !newState.open;
+      return newState;
+    });
   };
 
   const getNoteId = (id: string) => setNoteId(id);
@@ -58,7 +63,15 @@ export default function SidebarConextProvider({ children }: { children: React.Re
       const newW = toNum > e.clientX ? dimension.w - xDiff : dimension.w + xDiff;
 
       setDrag({ ...drag, x: e.clientX.toString() });
+
+      // It takes localstorage time to update, it can't be done real time, that is why we have double variable with width.
       setDimension({ w: newW });
+      setIsSidebarOpen((prev) => {
+        const newState = { ...prev };
+
+        newState.width = newW;
+        return newState;
+      });
     }
   };
 

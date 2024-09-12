@@ -42,4 +42,3 @@ Once installed run commands below.
 - [x] save sidebar settings somewhere
 - [ ] Make colorschemes
 - [ ] Add dynamic imports
-- [ ] fix note edit form to be server component
