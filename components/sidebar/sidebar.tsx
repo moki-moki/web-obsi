@@ -83,13 +83,10 @@ function Sidebar() {
 
   return (
     <>
-      <div
-        className="flex bg-dark-gray overflow-hidden"
-        onMouseUp={stopResize}
-        onMouseMove={resizeFrame}
-      >
+      <div className="flex bg-dark-gray" onMouseUp={stopResize} onMouseMove={resizeFrame}>
         <SidebarGeneralControlls />
         <div
+          className="overflow-hidden"
           onContextMenu={handleContextMenu}
           style={{
             width: `${dimension.w}px`,

@@ -27,6 +27,9 @@ const sidebarData = {
   width: 300,
   open: true,
 };
+
+const maxWidthGuard = window.innerWidth / 2;
+const minWidthGuard = 100;
 const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
 
 export default function SidebarConextProvider({ children }: { children: React.ReactNode }) {
@@ -59,6 +62,7 @@ export default function SidebarConextProvider({ children }: { children: React.Re
     if (active) {
       const xDiff = Math.abs(toNum - e.clientX);
       const newW = toNum > e.clientX ? dimension.w - xDiff : dimension.w + xDiff;
+      if (newW >= maxWidthGuard || newW <= minWidthGuard) return;
 
       setIsSidebarDragging({ ...isSidebarDragging, x: e.clientX });
 
