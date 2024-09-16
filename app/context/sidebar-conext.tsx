@@ -1,9 +1,9 @@
 'use client';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-import { FileI, FolderI } from '@/types/types';
-import { useGetNotes } from '@/api-calls/notes';
 import { useGetFolders } from '@/api-calls/folders';
+import { useGetNotes } from '@/api-calls/notes';
+import { FileI, FolderI } from '@/types/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 type SidebarContextI = {
@@ -32,11 +32,11 @@ const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
 export default function SidebarConextProvider({ children }: { children: React.ReactNode }) {
   const [noteId, setNoteId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage('isSidebarOpen', sidebarData);
-  const [drag, setDrag] = useState({
-    active: false,
-    x: '',
-  });
   const [dimension, setDimension] = useState({ w: isSidebarOpen.width });
+  const [isSidebarDragging, setIsSidebarDragging] = useState({
+    active: false,
+    x: 0,
+  });
 
   const { data: notes, error: notesError, isLoading: notesLoading } = useGetNotes();
   const { data: folders, error: foldersError, isLoading: foldersLoading } = useGetFolders();
@@ -51,18 +51,16 @@ export default function SidebarConextProvider({ children }: { children: React.Re
 
   const getNoteId = (id: string) => setNoteId(id);
 
-  const startResize = (e: React.MouseEvent) => {
-    setDrag({ active: true, x: e.clientX.toString() });
-  };
+  const startResize = (e: React.MouseEvent) => setIsSidebarDragging({ active: true, x: e.clientX });
 
   const resizeFrame = (e: React.MouseEvent) => {
-    const { active, x } = drag;
+    const { active, x } = isSidebarDragging;
     const toNum = Number(x);
     if (active) {
       const xDiff = Math.abs(toNum - e.clientX);
       const newW = toNum > e.clientX ? dimension.w - xDiff : dimension.w + xDiff;
 
-      setDrag({ ...drag, x: e.clientX.toString() });
+      setIsSidebarDragging({ ...isSidebarDragging, x: e.clientX });
 
       // It takes localstorage time to update, it can't be done real time, that is why we have double variable with width.
       setDimension({ w: newW });
@@ -75,9 +73,7 @@ export default function SidebarConextProvider({ children }: { children: React.Re
     }
   };
 
-  const stopResize = () => {
-    setDrag({ ...drag, active: false });
-  };
+  const stopResize = () => setIsSidebarDragging({ ...isSidebarDragging, active: false });
 
   return (
     <SidebarContext.Provider

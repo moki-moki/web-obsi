@@ -42,3 +42,4 @@ Once installed run commands below.
 - [x] save sidebar settings somewhere
 - [ ] Make colorschemes
 - [ ] Add dynamic imports
+- [ ] refactor sidebar resize drag functionality

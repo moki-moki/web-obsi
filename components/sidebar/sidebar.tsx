@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import dynamic from 'next/dynamic';
+
 import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 
 import { DraggingItemI, FolderI } from '@/types/types';
@@ -18,7 +20,6 @@ import ContextMenu from '../context-menu/context-menu';
 import SidebarSkeleton from '../ui/skeletons/SidebarSkeleton';
 import SidebarGeneralControlls from './sidebar-general-controlls';
 import ContextMenuControlls from '../context-menu/context-menu-controlls';
-import dynamic from 'next/dynamic';
 
 const DragOverlayItem = dynamic(() => import('../draggable/drag-overlay-item'), { ssr: false });
 
@@ -29,8 +30,17 @@ function Sidebar() {
 
   const { moveNoteHandler } = useMoveNote();
   const { clickedItem, contextMenu, getItemDataOnClick, handleContextMenu } = useContextMenu();
-  const { notes, notesLoading, folders, foldersLoading, isSidebarOpen, dimension, startResize } =
-    useSidebarContext();
+  const {
+    notes,
+    notesLoading,
+    folders,
+    foldersLoading,
+    isSidebarOpen,
+    dimension,
+    startResize,
+    stopResize,
+    resizeFrame,
+  } = useSidebarContext();
 
   const { open } = isSidebarOpen;
 
@@ -73,10 +83,13 @@ function Sidebar() {
 
   return (
     <>
-      <div className={`flex bg-dark-gray`}>
+      <div
+        className="flex bg-dark-gray overflow-hidden"
+        onMouseUp={stopResize}
+        onMouseMove={resizeFrame}
+      >
         <SidebarGeneralControlls />
         <div
-          className={`${open ? 'sm:w-full lg:w-1/5' : 'w-11'} h-screen flex flex-col overflow-y-scroll no-scrollbar relative`}
           onContextMenu={handleContextMenu}
           style={{
             width: `${dimension.w}px`,
