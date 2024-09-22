@@ -4,10 +4,18 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import Button from '../ui/button';
 import dynamic from 'next/dynamic';
-import { ArrowLeftToLine, CircleHelp, Home } from 'lucide-react';
+import { ArrowLeftToLine, CircleHelp, Home, Settings } from 'lucide-react';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
+import SidebarItem from './sidebar-item';
+import SidebarSubMenu from './sidebar-sub-menu';
 
 const Popover = dynamic(() => import('../popover/popover'), { ssr: true });
+
+const menuItem = [
+  { label: 'Solarized' },
+  { label: 'Dracula' },
+  { label: 'More', subMenu: [{ label: 'Custom' }] },
+];
 
 const SidebarGeneralControlls = () => {
   const ref = useRef<HTMLUListElement>(null);
@@ -35,8 +43,12 @@ const SidebarGeneralControlls = () => {
           </Link>
         </Popover>
       </li>
-
-      <li className="mt-auto">
+      <SidebarItem label={<Settings className="text-gray" />}>
+        {menuItem.map((el) => (
+          <SidebarSubMenu label={el.label} subMenu={el.subMenu} />
+        ))}
+      </SidebarItem>
+      <li>
         <Popover text="Docs" font="bolded">
           <Link
             href="/docs/markdown"
