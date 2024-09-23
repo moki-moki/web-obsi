@@ -9,7 +9,9 @@ interface Props {
 const FolderWrapper = ({ id, children }: Props) => {
   return (
     <Droppable id={id} key={id} type="folder">
-      <div className={`cursor-pointer text-gray uppercase font-bold tracking-wide rounded-xl`}>
+      <div
+        className={`cursor-pointer text-text-color uppercase font-bold tracking-wide rounded-xl`}
+      >
         {children}
       </div>
     </Droppable>

@@ -31,26 +31,26 @@ const NoteEditForm = ({ id }: { id: string }) => {
 
   return (
     <form className="w-10/12 flex-auto" onSubmit={onSubmitHandler}>
-      <label htmlFor="title" className="text-sm font-bold text-gray uppercase">
+      <label htmlFor="title" className="text-sm font-bold text-text-color uppercase">
         Edit title
       </label>
       <Input name="title" rounded="md" defaultValue={data.title} required={true} />
 
-      <label htmlFor="note" className="block mb-1 mt-5 text-sm font-bold text-gray uppercase">
+      <label htmlFor="note" className="block mb-1 mt-5 text-sm font-bold text-text-color uppercase">
         Note Info
       </label>
       <textarea
         rows={20}
         name="note"
         defaultValue={data.markdown ? data.markdown : ''}
-        className="text-gray p-2 w-full rounded-md bg-dark-gray-accent border border-border outline-none focus:ring-2 focus:ring-purple"
+        className="text-text-color p-2 w-full rounded-md bg-primary-color border border-border-color outline-none focus:ring-2 focus:ring-color-info"
       ></textarea>
       <Button
         size="md"
         type="submit"
         font="bolded"
         variants="outlined"
-        className="mt-5 w-full text-gray rounded-md uppercase hover:text-white hover:bg-gray/20 hover:border-purple"
+        className="mt-5 w-full text-text-color rounded-md uppercase hover:border-color-info hover:bg-secondary-color/40"
       >
         Submit
       </Button>

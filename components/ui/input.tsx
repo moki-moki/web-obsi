@@ -7,11 +7,11 @@ interface InputProps
     VariantProps<typeof inputVariants> {}
 
 export const inputVariants = cva(
-  'bg-dark-gray-accent outline-none text-gray w-full p-2 border border-border focus:ring-2 focus:ring-purple',
+  'bg-primary-color outline-none text-text-color w-full p-2 border border-border-color focus:ring-2 focus:ring-color-info',
   {
     variants: {
       variants: {
-        default: 'bg-dark-gray-accent',
+        default: 'bg-primary-color',
       },
       rounded: {
         sm: 'rounded',

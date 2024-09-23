@@ -24,7 +24,7 @@ const SidebarGeneralControlls = () => {
   return (
     <ul
       ref={ref}
-      className="text p-0.5 border-r border-border flex flex-col items-center bg-dark-gray z-10"
+      className="text p-0.5 border-r border-border-color flex flex-col items-center bg-primary-color z-10"
     >
       <li onClick={toggleSidebar}>
         <Popover text="Collapse Menu" font="bolded">
@@ -37,13 +37,13 @@ const SidebarGeneralControlls = () => {
         <Popover text="Home page" font="bolded">
           <Link
             href="/"
-            className="text-gray bg-dark-gray rounded-full p-1.5 transition-colors ease-in hover:bg-gray/20 hover:text-white"
+            className="text-text-color bg-primary-color rounded-full p-1.5 transition-colors ease-in hover:bg-primary-color/20 hover:text-accent-color"
           >
             <Home size={20} />
           </Link>
         </Popover>
       </li>
-      <SidebarItem label={<Settings className="text-gray" />}>
+      <SidebarItem label={<Settings className="text-text-color" />}>
         {menuItem.map((el) => (
           <SidebarSubMenu label={el.label} subMenu={el.subMenu} />
         ))}
@@ -52,7 +52,7 @@ const SidebarGeneralControlls = () => {
         <Popover text="Docs" font="bolded">
           <Link
             href="/docs/markdown"
-            className="text-gray bg-dark-gray rounded-full p-1.5 transition-colors ease-in hover:bg-gray/20 hover:text-white"
+            className="text-text-color bg-primary-color rounded-full p-1.5 transition-colors ease-in hover:bg-primary-color/20 hover:text-accent-color"
           >
             <CircleHelp />
           </Link>

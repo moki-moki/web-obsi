@@ -4,7 +4,9 @@ interface Props {
 
 const Note = ({ title }: Props) => {
   return (
-    <div className="text-white">{title.length > 20 ? `${title.substring(0, 20)}...` : title}</div>
+    <div className="text-accent-color">
+      {title.length > 20 ? `${title.substring(0, 20)}...` : title}
+    </div>
   );
 };
 

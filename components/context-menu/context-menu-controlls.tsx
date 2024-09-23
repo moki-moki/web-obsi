@@ -44,8 +44,8 @@ const ContextMenuControlls = ({ itemData }: Props) => {
   const showModal = () => {
     setModalContent(
       <>
-        <p className="font-bold text-center text-nowrap">
-          Are you sure you want to <span className="text-red">delete</span> this{' '}
+        <p className="font-bold text-center text-nowrap text-text-color">
+          Are you sure you want to <span className="text-color-error">delete</span> this{' '}
           {type === 'folder' ? 'folder' : 'note'}&#x3f;
         </p>
         <Button
@@ -69,7 +69,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
         <>
           <li
             onClick={showModal}
-            className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
+            className="folder flex items-center cursor-pointer text-color-error bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
           >
             <span className="mr-2 text-base">
               <Trash2 size={15} />
@@ -78,7 +78,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
           </li>
           <li
             onClick={() => createFolder(id)}
-            className="folder flex items-center cursor-pointer text-gray px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-gray/30"
+            className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-primary-color/30"
           >
             <span className="mr-2 text-base">
               <FolderPlus size={15} />
@@ -92,14 +92,14 @@ const ContextMenuControlls = ({ itemData }: Props) => {
         <>
           <li
             onClick={() => getNoteId(id)}
-            className="folder flex items-center cursor-pointer text-gray px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-gray/30"
+            className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-primary-color/30"
           >
             <span className="mr-2 text-base">
               <SquarePen size={15} />
             </span>
             Rename File
           </li>
-          <li className="folder flex items-center cursor-pointer text-gray px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-gray/30">
+          <li className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-primary-color/30">
             <span className="mr-2 text-base">
               <FilePen size={15} />
             </span>

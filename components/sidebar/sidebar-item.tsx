@@ -12,12 +12,16 @@ const SidebarItem = ({ label, children, ...props }: MenuItemProps) => {
   const openMenuHandler = () => setIsOpen((prev) => !prev);
   return (
     <li className="mt-auto relative flex items-center justify-between" {...props}>
-      <div onClick={openMenuHandler}>{label}</div>
-      <div
-        className={`flex flex-col absolute right-0 top-0 -translate-y-full translate-x-full border border-border rounded-lg text-gray bg-dark-gray`}
-      >
-        {isOpen && children}
+      <div onClick={openMenuHandler} className="cursor-pointer">
+        {label}
       </div>
+      {isOpen && (
+        <div
+          className={`flex flex-col gap-1 absolute right-0 top-0 px-1 py-2 -translate-y-full translate-x-full border border-border-color rounded-lg text-text-color bg-primary-color`}
+        >
+          {children}
+        </div>
+      )}
     </li>
   );
 };

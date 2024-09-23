@@ -10,17 +10,19 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<ty
 }
 
 const btnVarians = cva(
-  'inline-flex items-center justify-center text-white transition-colors ease-in',
+  'inline-flex items-center justify-center text-accent-color transition-colors ease-in',
   {
     variants: {
       variants: {
-        default: 'bg-dark-gray hover:bg-gray/20 hover:border-white hover:text-white',
-        'warning-outlined': 'border bg-none border-red text-red hover:text-white hover:bg-red',
+        default:
+          'bg-primary-color hover:bg-primary-color/20 hover:border-white hover:text-accent-color',
+        'warning-outlined':
+          'border bg-none border-color-error text-color-error hover:text-accent-color hover:bg-color-error',
         outlined:
-          'border border-border bg-dark-gray-accent bg-none hover:bg-white hover:text-black hover:border-white',
+          'border border-border-color bg-primary-color bg-none hover:bg-accent-color hover:text-secondary-color hover:border-accent-color',
         'ghost-outlined':
-          'text-white border border-border bg-none hover:bg-border hover:text-white',
-        icon: 'text-gray mx-1 border-none rounded-full font-none hover:text-white hover:bg-gray/20',
+          'text-accent-color border border-border-color bg-none hover:bg-border-color hover:text-accent-color',
+        icon: 'text-text-color mx-1 border-none rounded-full font-none hover:text-accent-color hover:bg-primary-color/20',
       },
       size: {
         default: 'py-2 px-4',

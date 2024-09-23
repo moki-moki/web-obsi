@@ -3,16 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --black: 8, 8, 8;
-  --gray: 102, 102, 102;
-  --white: 255, 252, 250;
-  --border: 48, 48, 48;
-  --dark-gray: 20, 20, 20;
-  --dark-gray-accent: 33, 33, 33;
-  --purple: 96, 61, 225;
-  --emerald: 12, 207, 106;
-  --light-gray: 235, 235, 235;
-  --red: 236, 65, 65;
+  --primary-color: 20, 20, 20;
+  --secondary-color: 8, 8, 8;
+  --text-color: 102, 102, 102;
+  --accent-color: 255, 252, 250;
+  --border-color: 48, 48, 48;
+  --color-info: 96, 61, 225;
+  --color-success: 12, 207, 106;
+  --color-warning: 232, 139, 17;
+  --color-error: 236, 65, 65;
+}
+
+.dracula {
+  --primary-color: 40, 42, 54;
+  ---secondary-color: 248, 248, 242;
+  --accent-color: 189, 147, 249;
+  --border-color: 98, 114, 164;
+  --text-color: 68, 71, 90;
+  --color-success: 80, 250, 123;
+  --color-error: 255, 85, 85;
+  --color-info: 139, 233, 253;
+  --color-warning: 255, 184, 108;
 }
 
 @layer utilities {
@@ -27,17 +38,19 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: rgba(var(--accent-color));
+}
+p {
+  color: rgb(var(--secondary-color));
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--dark-gray));
+  background-color: rgb(var(--primary-color));
 }
 
 @layer utilities {

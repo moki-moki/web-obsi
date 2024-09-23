@@ -83,7 +83,7 @@ function Sidebar() {
 
   return (
     <>
-      <div className="flex bg-dark-gray" onMouseUp={stopResize} onMouseMove={resizeFrame}>
+      <div className="flex bg-primary-color" onMouseUp={stopResize} onMouseMove={resizeFrame}>
         <SidebarGeneralControlls />
         <div
           className="overflow-hidden"
@@ -94,11 +94,11 @@ function Sidebar() {
           }}
         >
           <div
-            className="absolute right-0 top-0 bg-border h-full w-0.5 z-10 cursor-ew-resize transition-all duration-200 ease-in hover:w-1"
+            className="absolute right-0 top-0 bg-border-color h-full w-0.5 z-10 cursor-ew-resize transition-all duration-200 ease-in hover:w-1"
             onMouseDown={startResize}
           ></div>
           <SidebarControlls />
-          <h2 className="px-4 my-4 text-white uppercase font-bold">Your Notes</h2>
+          <h2 className="px-4 my-4 text-text-color uppercase font-bold">Your Notes</h2>
 
           <DndContext onDragStart={handleDragStart} onDragEnd={onDragEnd}>
             {foldersLoading || notesLoading ? (

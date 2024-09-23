@@ -11,7 +11,7 @@ const SidebarControlls = () => {
   const { createFolder } = useCreateFolder();
 
   return (
-    <div className="p-0.5 border-b border-border text-end flex items-center justify-end">
+    <div className="p-0.5 border-b border-border-color text-end flex items-center justify-end">
       <Popover text="Add Note" font="bolded">
         <Button type="button" variants="icon" className="p-1.5 mx-0" onClick={createNote}>
           <FilePlus2 size={20} />

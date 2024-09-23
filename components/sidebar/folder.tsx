@@ -69,13 +69,13 @@ const Folder = ({
           value={renameValue}
           onChange={onChangeHandler}
           onKeyDown={(e) => onKeyDownHandler(id, e)}
-          className="px-2 py-1 mr-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple"
+          className="px-2 py-1 mr-2 text-sm focus:outline-none focus:ring-2 focus:ring-color-info"
         />
       ) : (
         <div
           style={{ marginLeft: level * 10 }}
           onContextMenu={(e) => getItemDataOnClick(e, folder)}
-          className="flex items-center justify-between p-2 rounded-full hover:bg-dark-gray-accent overflow-hidden text-ellipsis whitespace-nowrap"
+          className="flex items-center justify-between p-2 rounded-full hover:bg-primary-color-accent overflow-hidden text-ellipsis whitespace-nowrap"
           onClick={() => toggleFolderHandler(id)}
         >
           <FolderTitle isOpen={isOpen} name={title} />

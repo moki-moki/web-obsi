@@ -31,8 +31,8 @@ const NoteControlls = ({ id }: Props) => {
   const showModal = () => {
     setModalContent(
       <>
-        <p className="font-bold text-center text-nowrap">
-          Are you sure you want to <span className="text-red">delete</span> this note&#x3f;
+        <p className="font-bold text-center text-nowrap text-text-color">
+          Are you sure you want to <span className="text-color-error">delete</span> this note&#x3f;
         </p>
         <Button
           size="sm"
@@ -54,7 +54,7 @@ const NoteControlls = ({ id }: Props) => {
       <Popover text="Edit note" font="bolded">
         <Link
           href={`/notes/edit/${id}`}
-          className="block rounded-lg text-gray transition-colors duration-150 ease-in bg-gray/20 p-2 hover:text-white"
+          className="block rounded-lg text-text-color transition-colors duration-150 ease-in bg-primary-color/20 p-2 hover:text-accent-color"
         >
           <FilePenLine size={20} />
         </Link>
@@ -64,7 +64,7 @@ const NoteControlls = ({ id }: Props) => {
           type="button"
           variants="icon"
           onClick={showModal}
-          className="rounded-lg text-red/60 transition-colors duration-150 ease-in bg-gray/20 p-2 hover:text-red/100"
+          className="rounded-lg text-color-error/60 transition-colors duration-150 ease-in bg-primary-color/20 p-2 hover:text-color-error"
         >
           <Trash2 size={20} />
         </Button>

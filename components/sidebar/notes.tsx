@@ -57,7 +57,7 @@ const Notes = ({ note, getItemDataOnClick }: Props) => {
         </li>
       ) : (
         <li
-          className="rounded-full p-1 my-0.5 hover:bg-dark-gray-accent"
+          className="rounded-full p-1 my-0.5 hover:bg-secondary-color/30"
           onContextMenu={(e) => getItemDataOnClick(e, note)}
         >
           <Draggable id={id} type={type} title={title}>

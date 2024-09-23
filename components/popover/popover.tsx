@@ -13,9 +13,9 @@ const popoverVarians = cva(
   {
     variants: {
       variants: {
-        default: 'bg-dark-gray-accent text-white',
-        warning: 'bg-red text-white',
-        'ghost-outlined': 'text-white border border-border bg-dark-gray-accent',
+        default: 'bg-secondary-color text-accent-color',
+        warning: 'bg-red text-accent-color',
+        'ghost-outlined': 'text-accent-color border border-border-color bg-accent-color',
       },
       font: {
         default: 'font-normal',

@@ -16,7 +16,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
         <NoteControlls id={id} />
       </div>
       <div className="mt-20 mb-5 prose prose-lg mx-auto break-all">
-        <h2 className="text-4xl text-gray text-center font-bold">{data.title}</h2>
+        <h2 className="text-4xl text-text-color text-center font-bold">{data.title}</h2>
         <MarkdownRenderer>{data.markdown}</MarkdownRenderer>
       </div>
     </section>

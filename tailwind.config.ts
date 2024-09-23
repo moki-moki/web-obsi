@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,42 +9,38 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(rgb(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, rgb(var(--tw-gradient-stops))',
-      },
       typography: {
         DEFAULT: {
           css: {
             color: '#333',
-            h1: { color: 'rgba(var(--gray))' },
-            h2: { color: 'rgba(var(--gray))' },
-            h3: { color: 'rgba(var(--gray))' },
-            h4: { color: 'rgba(var(--gray))' },
-            h5: { color: 'rgba(var(--gray))' },
-            h6: { color: 'rgba(var(--gray))' },
+            h1: { color: 'rgba(var(--text-color))' },
+            h2: { color: 'rgba(var(--text-color))' },
+            h3: { color: 'rgba(var(--text-color))' },
+            h4: { color: 'rgba(var(--text-color))' },
+            h5: { color: 'rgba(var(--text-color))' },
+            h6: { color: 'rgba(var(--text-color))' },
             p: {
-              color: 'rgba(var(--gray))',
+              color: 'rgba(var(--text-color))',
             },
             a: {
-              color: '#3498db',
+              color: 'rgba(var(--color-info))',
               '&:hover': {
                 textDecoration: 'underline',
               },
             },
             strong: {
-              color: '#000',
+              color: 'rgba(var(--text-text-color))',
             },
-            blockquote: {
-              borderLeftColor: '#ccc',
-              color: '#666',
-            },
-            code: {
-              backgroundColor: '#f4f4f4',
-              color: '#c7254e',
-              padding: '2px 4px',
-              borderRadius: '4px',
-            },
+            // blockquote: {
+            //   borderLeftColor: '#ccc',
+            //   color: '#666',
+            // },
+            // code: {
+            //   backgroundColor: '#f4f4f4',
+            //   color: '#c7254e',
+            //   padding: '2px 4px',
+            //   borderRadius: '4px',
+            // },
             'pre code': {
               backgroundColor: 'transparent',
               padding: '0',
@@ -56,10 +53,10 @@ const config: Config = {
               listStyleType: 'decimal',
             },
             'ul > li::before': {
-              backgroundColor: '#3498db',
+              backgroundColor: 'rgba(var(--accent-color))',
             },
             'ol > li::before': {
-              color: '#3498db',
+              color: 'rgba(var(--accent-color))',
             },
           },
         },
@@ -76,16 +73,16 @@ const config: Config = {
       '5xl': '3.052rem',
     },
     colors: {
-      white: 'rgba(var(--white))',
-      black: 'rgba(var(--black))',
-      border: 'rgba(var(--border))',
-      red: 'rgba(var(--red))',
-      gray: 'rgba(var(--gray))',
-      'light-gray': 'rgba(var(--light-gray))',
-      'dark-gray': 'rgba(var(--dark-gray))',
-      'dark-gray-accent': 'rgb(var(--dark-gray-accent))',
-      purple: 'rgba(var(--purple))',
-      emerald: 'rgba(var(--emerald))',
+      'primary-color': 'rgba(var(--primary-color))',
+      'secondary-color': 'rgba(var(--secondary-color))',
+      'accent-color': 'rgba(var(--accent-color))',
+      'border-color': 'rgba(var(--border-color))',
+      'text-color': 'rgba(var(--text-color))',
+      // Feedback color
+      'color-success': 'rgba(var(--color-success))',
+      'color-error': 'rgba(var(--color-error))',
+      'color-info': 'rgba(var(--color-info))',
+      'color-warning': 'rgba(var(--color-warning))',
     },
   },
   plugins: [require('@tailwindcss/typography')],

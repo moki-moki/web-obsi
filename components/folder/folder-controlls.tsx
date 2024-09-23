@@ -22,8 +22,9 @@ const FolderControlls = ({ id, idx, name, changeNameHandler }: Props) => {
   const showModal = () => {
     setModalContent(
       <>
-        <p className="font-bold text-center text-nowrap">
-          Are you sure you want to <span className="text-red">delete</span> this folder&#x3f;
+        <p className="font-bold text-center text-nowrap text-text-color">
+          Are you sure you want to <span className="text-color-error">delete</span> this
+          folder&#x3f;
         </p>
         <Button
           size="sm"
@@ -44,11 +45,14 @@ const FolderControlls = ({ id, idx, name, changeNameHandler }: Props) => {
     <div className="flex items-center gap-2">
       <span
         onClick={(e) => changeNameHandler(e, idx, name)}
-        className="text-sm transition-colors duration-200 hover:text-white"
+        className="text-sm transition-colors duration-200 hover:text-accent-color"
       >
         <SquarePen size={20} />
       </span>
-      <span onClick={showModal} className="text-sm transition-colors duration-200 hover:text-white">
+      <span
+        onClick={showModal}
+        className="text-sm transition-colors duration-200 hover:text-accent-color"
+      >
         <Trash2 size={20} />
       </span>
     </div>
