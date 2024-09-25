@@ -17,7 +17,7 @@ const SidebarMenu = ({ label, children, ...props }: MenuItemProps) => {
       </div>
       {isOpen && (
         <div
-          className={`flex flex-col gap-1 absolute right-0 top-0 px-1 py-2 -translate-y-full translate-x-full border border-border-color rounded-lg text-text-color bg-primary-color`}
+          className={`flex flex-col gap-1 absolute right-0 top-0 px-1 py-2 -translate-y-full translate-x-full border border-border-color rounded-lg text-text-color bg-primary-color `}
         >
           {children}
         </div>

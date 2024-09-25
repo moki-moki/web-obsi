@@ -23,6 +23,7 @@ type SidebarContextI = {
   startResize: (e: React.MouseEvent) => void;
   setNoteId: React.Dispatch<React.SetStateAction<string | null>>;
 };
+
 const sidebarData = {
   width: 300,
   open: true,

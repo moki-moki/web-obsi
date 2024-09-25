@@ -20,7 +20,14 @@ const SidebarSubMenu = ({ label, children }: MenuItemProps) => {
         <div>{label}</div>
         {children ? <ChevronRight size={14} /> : null}
       </div>
-      {openMenu && children ? children : null}
+
+      {openMenu && children ? (
+        <div
+          className={`flex flex-col gap-1 absolute right-0 top-0 p-1 -translate-y-full translate-x-full border border-border-color rounded-lg text-text-color bg-primary-color`}
+        >
+          {children}
+        </div>
+      ) : null}
     </div>
   );
 };

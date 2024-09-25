@@ -42,14 +42,16 @@ const SidebarGeneralControlls = () => {
       <SidebarMenu label={<Settings className="text-text-color" />}>
         <SidebarSubMenu label={'Themes'}>
           <div
-            className={`flex flex-col gap-1 absolute right-0 top-0 px-1 py-2 -translate-y-full translate-x-full border border-border-color rounded-lg text-text-color bg-primary-color`}
+            onClick={() => switchTheme('')}
+            className="uppercase px-1.5 py-0.5 rounded-full font-bold text-xs cursor-pointer hover:bg-secondary-color/50"
           >
-            <div
-              onClick={() => switchTheme('dracula')}
-              className="uppercase font-bold text-xs cursor-pointer"
-            >
-              Dracula
-            </div>
+            Default
+          </div>
+          <div
+            onClick={() => switchTheme('dracula')}
+            className="uppercase px-1.5 py-0.5 rounded-full font-bold text-xs cursor-pointer hover:bg-secondary-color/50"
+          >
+            Dracula
           </div>
         </SidebarSubMenu>
       </SidebarMenu>
