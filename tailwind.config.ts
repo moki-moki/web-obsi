@@ -31,16 +31,6 @@ const config: Config = {
             strong: {
               color: 'rgba(var(--text-text-color))',
             },
-            // blockquote: {
-            //   borderLeftColor: '#ccc',
-            //   color: '#666',
-            // },
-            // code: {
-            //   backgroundColor: '#f4f4f4',
-            //   color: '#c7254e',
-            //   padding: '2px 4px',
-            //   borderRadius: '4px',
-            // },
             'pre code': {
               backgroundColor: 'transparent',
               padding: '0',
@@ -51,6 +41,9 @@ const config: Config = {
             },
             ol: {
               listStyleType: 'decimal',
+            },
+            li: {
+              color: 'rgba(var(--text-color))',
             },
             'ul > li::before': {
               backgroundColor: 'rgba(var(--accent-color))',

@@ -6,7 +6,7 @@ interface MenuItemProps extends LiHTMLAttributes<HTMLLIElement> {
   children: React.ReactNode;
 }
 
-const SidebarItem = ({ label, children, ...props }: MenuItemProps) => {
+const SidebarMenu = ({ label, children, ...props }: MenuItemProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const openMenuHandler = () => setIsOpen((prev) => !prev);
@@ -26,4 +26,4 @@ const SidebarItem = ({ label, children, ...props }: MenuItemProps) => {
   );
 };
 
-export default SidebarItem;
+export default SidebarMenu;

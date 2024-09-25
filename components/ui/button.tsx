@@ -22,7 +22,7 @@ const btnVarians = cva(
           'border border-border-color bg-primary-color bg-none hover:bg-accent-color hover:text-secondary-color hover:border-accent-color',
         'ghost-outlined':
           'text-accent-color border border-border-color bg-none hover:bg-border-color hover:text-accent-color',
-        icon: 'text-text-color mx-1 border-none rounded-full font-none hover:text-accent-color hover:bg-primary-color/20',
+        icon: 'text-text-color mx-1 border-none rounded-full font-none hover:text-accent-color hover:bg-accent-color/20',
       },
       size: {
         default: 'py-2 px-4',

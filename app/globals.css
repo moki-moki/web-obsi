@@ -14,12 +14,24 @@
   --color-error: 236, 65, 65;
 }
 
+.default {
+  --primary-color: 20, 20, 20;
+  --secondary-color: 8, 8, 8;
+  --text-color: 102, 102, 102;
+  --accent-color: 255, 252, 250;
+  --border-color: 48, 48, 48;
+  --color-info: 96, 61, 225;
+  --color-success: 12, 207, 106;
+  --color-warning: 232, 139, 17;
+  --color-error: 236, 65, 65;
+}
+
 .dracula {
   --primary-color: 40, 42, 54;
   ---secondary-color: 248, 248, 242;
   --accent-color: 189, 147, 249;
-  --border-color: 98, 114, 164;
-  --text-color: 68, 71, 90;
+  --border-color: 68, 71, 90;
+  --text-color: 98, 114, 164;
   --color-success: 80, 250, 123;
   --color-error: 255, 85, 85;
   --color-info: 139, 233, 253;
@@ -46,7 +58,7 @@ h5 {
   color: rgba(var(--accent-color));
 }
 p {
-  color: rgb(var(--secondary-color));
+  color: rgb(var(--text-color));
 }
 
 body {

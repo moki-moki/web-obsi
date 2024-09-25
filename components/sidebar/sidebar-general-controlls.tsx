@@ -6,20 +6,16 @@ import Button from '../ui/button';
 import dynamic from 'next/dynamic';
 import { ArrowLeftToLine, CircleHelp, Home, Settings } from 'lucide-react';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
-import SidebarItem from './sidebar-item';
+import SidebarMenu from './sidebar-menu';
 import SidebarSubMenu from './sidebar-sub-menu';
+import { useThemeContext } from '@/app/context/theme-context';
 
 const Popover = dynamic(() => import('../popover/popover'), { ssr: true });
-
-const menuItem = [
-  { label: 'Solarized' },
-  { label: 'Dracula' },
-  { label: 'More', subMenu: [{ label: 'Custom' }] },
-];
 
 const SidebarGeneralControlls = () => {
   const ref = useRef<HTMLUListElement>(null);
   const { toggleSidebar } = useSidebarContext();
+  const { switchTheme } = useThemeContext();
 
   return (
     <ul
@@ -43,11 +39,20 @@ const SidebarGeneralControlls = () => {
           </Link>
         </Popover>
       </li>
-      <SidebarItem label={<Settings className="text-text-color" />}>
-        {menuItem.map((el) => (
-          <SidebarSubMenu label={el.label} subMenu={el.subMenu} />
-        ))}
-      </SidebarItem>
+      <SidebarMenu label={<Settings className="text-text-color" />}>
+        <SidebarSubMenu label={'Themes'}>
+          <div
+            className={`flex flex-col gap-1 absolute right-0 top-0 px-1 py-2 -translate-y-full translate-x-full border border-border-color rounded-lg text-text-color bg-primary-color`}
+          >
+            <div
+              onClick={() => switchTheme('dracula')}
+              className="uppercase font-bold text-xs cursor-pointer"
+            >
+              Dracula
+            </div>
+          </div>
+        </SidebarSubMenu>
+      </SidebarMenu>
       <li>
         <Popover text="Docs" font="bolded">
           <Link
