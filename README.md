@@ -43,3 +43,4 @@ Once installed run commands below.
 - [ ] Make colorschemes
 - [ ] Add dynamic imports
 - [ ] refactor sidebar resize drag functionality
+- [ ] Put everything in ENV, checkout docker what is missing for ENV.

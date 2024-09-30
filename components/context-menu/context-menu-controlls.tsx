@@ -78,7 +78,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
           </li>
           <li
             onClick={() => createFolder(id)}
-            className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-primary-color/30"
+            className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-secondary-color/50"
           >
             <span className="mr-2 text-base">
               <FolderPlus size={15} />
@@ -92,14 +92,14 @@ const ContextMenuControlls = ({ itemData }: Props) => {
         <>
           <li
             onClick={() => getNoteId(id)}
-            className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-primary-color/30"
+            className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-secondary-color/50"
           >
             <span className="mr-2 text-base">
               <SquarePen size={15} />
             </span>
             Rename File
           </li>
-          <li className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-primary-color/30">
+          <li className="folder flex items-center cursor-pointer text-text-color px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-secondary-color/50">
             <span className="mr-2 text-base">
               <FilePen size={15} />
             </span>
@@ -107,7 +107,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
           </li>
           <li
             onClick={showModal}
-            className="folder flex items-center cursor-pointer text-red bg-red/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-red/30"
+            className="folder flex items-center cursor-pointer text-color-error bg-color-error/20 px-2 py-1 rounded-lg text-xs font-bold uppercase hover:bg-color-error/50"
           >
             <span className="mr-2 text-base">
               <Trash2 size={15} />

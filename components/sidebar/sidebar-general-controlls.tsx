@@ -42,7 +42,7 @@ const SidebarGeneralControlls = () => {
       <SidebarMenu label={<Settings className="text-text-color" />}>
         <SidebarSubMenu label={'Themes'}>
           <div
-            onClick={() => switchTheme('')}
+            onClick={() => switchTheme('default')}
             className="uppercase px-1.5 py-0.5 rounded-full font-bold text-xs cursor-pointer hover:bg-secondary-color/50"
           >
             Default

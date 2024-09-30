@@ -36,14 +36,16 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/prisma/dev.db
-/prisma/dev.db
-/prisma/dev.db-journal
+*.db
+
+prisma/.env
+prisma/migrations/
+prisma/dev.db
+prisma/dev.db-journal
 ./prisma/dev.db
 ./prisma/migrations
 ./prisma/dev.db-journal
 ./prisma/migrations
-
 
 Dockerfile
 docker-compose.yaml
