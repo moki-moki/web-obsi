@@ -4,7 +4,7 @@ const TOAST_LIMIT = 2;
 const TOAST_REMOVE_DELAY = 5000;
 const POSITION = 'bottom-right';
 
-const themes = {
+const theme = {
   background: 'rgba(var(--secondary-color), 0.5)',
   text: 'rgba(var(--text-text-color))',
   progress: 'rgba(var(--color-success))',
@@ -22,10 +22,10 @@ export const toastConfig: ToastContainerProps = {
   pauseOnHover: true,
   limit: TOAST_LIMIT,
   toastStyle: {
-    backgroundColor: themes.background,
-    color: themes.text,
+    backgroundColor: theme.background,
+    color: theme.text,
   },
   progressStyle: {
-    backgroundColor: themes.progress,
+    backgroundColor: theme.progress,
   },
 };

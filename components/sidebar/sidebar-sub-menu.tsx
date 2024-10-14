@@ -11,6 +11,7 @@ const SidebarSubMenu = ({ label, children }: MenuItemProps) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const openMenuHandler = () => setOpenMenu((prev) => !prev);
+
   return (
     <div className="uppercase font-bold text-xs cursor-pointer">
       <div

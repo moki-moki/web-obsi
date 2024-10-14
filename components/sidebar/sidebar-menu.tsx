@@ -10,6 +10,7 @@ const SidebarMenu = ({ label, children, ...props }: MenuItemProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const openMenuHandler = () => setIsOpen((prev) => !prev);
+
   return (
     <li className="mt-auto relative flex items-center justify-between" {...props}>
       <div onClick={openMenuHandler} className="cursor-pointer">

@@ -50,7 +50,7 @@ const NoteControlls = ({ id }: Props) => {
   };
 
   return (
-    <div className="absolute right-8 top-2 flex items-center">
+    <div className="flex items-center">
       <Popover text="Edit note" font="bolded">
         <Link
           href={`/notes/edit/${id}`}

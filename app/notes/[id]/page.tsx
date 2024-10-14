@@ -11,15 +11,15 @@ const Page = async ({ params }: { params: { id: string } }) => {
   if (!data) notFound();
 
   return (
-    <section className="max-h-14">
-      <div className="p-2 relative flex items-center justify-center">
+    <div>
+      <div className="p-2 flex items-center justify-end">
         <NoteControlls id={id} />
       </div>
       <div className="mt-20 mb-5 prose prose-lg mx-auto break-all">
         <h2 className="text-4xl text-text-color text-center font-bold">{data.title}</h2>
         <MarkdownRenderer>{data.markdown}</MarkdownRenderer>
       </div>
-    </section>
+    </div>
   );
 };
 

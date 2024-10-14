@@ -89,7 +89,7 @@ function Sidebar() {
           className="overflow-hidden"
           onContextMenu={handleContextMenu}
           style={{
-            width: `${dimension.w}px`,
+            width: `${open ? `${dimension.w}px` : '0px'}`,
             transform: `${open ? 'translateX(0)' : 'translateX(-100%)'}`,
           }}
         >
