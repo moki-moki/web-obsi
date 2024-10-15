@@ -31,6 +31,9 @@ const config: Config = {
             strong: {
               color: 'rgba(var(--text-text-color))',
             },
+            pre: {
+              backgroundColor: 'transparent',
+            },
             'pre code': {
               backgroundColor: 'transparent',
               padding: '0',

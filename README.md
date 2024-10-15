@@ -34,13 +34,14 @@ Once installed run commands below.
 - [x] Add toast notification for CRUD operations
 - [ ] Add more complex error pages
 - [x] Add error checking when the id on note page isn't found
-- [ ] Add markup page that displays documentation.
-- [ ] Add better styling for markdowns
+- [x] Add markup page that displays documentation.
+- [x] Add better styling for markdowns
 - [x] Style better toast notification
-- [ ] In the folder controlls, make name edit button turn to check on input show
+- [x] In the folder controlls, make name edit button turn to check on input show
 - [ ] make it mobile responsive
 - [x] save sidebar settings somewhere
-- [ ] Make colorschemes
+- [x] Make colorschemes
 - [ ] Add dynamic imports
 - [ ] refactor sidebar resize drag functionality
 - [ ] Put everything in ENV, checkout docker what is missing for ENV.
+- [ ] Make dynamic theme changing fucntion when implement multiple themes
