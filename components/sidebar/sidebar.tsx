@@ -83,13 +83,18 @@ function Sidebar() {
 
   return (
     <>
-      <div className="flex bg-primary-color" onMouseUp={stopResize} onMouseMove={resizeFrame}>
+      <div
+        className="flex bg-primary-color fixed left-0 top-0 h-full"
+        style={{ width: `${open ? 'auto' : `41px`}` }}
+        onMouseUp={stopResize}
+        onMouseMove={resizeFrame}
+      >
         <SidebarGeneralControlls />
         <div
           className="overflow-hidden"
           onContextMenu={handleContextMenu}
           style={{
-            width: `${open ? `${dimension.w}px` : '0px'}`,
+            width: `${`${dimension.w}px`}`,
             transform: `${open ? 'translateX(0)' : 'translateX(-100%)'}`,
           }}
         >

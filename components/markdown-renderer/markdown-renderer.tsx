@@ -7,6 +7,7 @@ import { useThemeContext } from '@/app/context/theme-context';
 
 const MarkdownRenderer = ({ children: content }: { children: string }) => {
   const { theme } = useThemeContext();
+
   const themeStyle = theme === 'default' ? atelierCaveDark : dracula;
 
   return (

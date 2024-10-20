@@ -8,10 +8,10 @@ interface ThemeContextI {
 }
 
 const DEFAULT_CONTEXT_VALUE = {
-  theme: '',
+  theme: 'default',
 };
 
-const usersTheme = '';
+const usersTheme = 'default';
 
 const ThemeContext = createContext<ThemeContextI>(DEFAULT_CONTEXT_VALUE as ThemeContextI);
 

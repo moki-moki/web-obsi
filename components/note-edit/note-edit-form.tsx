@@ -15,6 +15,8 @@ const NoteEditForm = ({ id }: { id: string }) => {
   const { data, error, isLoading } = useGetNote(id);
   const { mutate } = useGetNotes();
 
+  console.log(data);
+
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
