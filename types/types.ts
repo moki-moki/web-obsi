@@ -48,3 +48,11 @@ export interface DraggingItemI {
   title: string;
   type: string;
 }
+
+export interface SplitDataI {
+  folderId: null;
+  id: string;
+  markdown: string;
+  title: string;
+  type: string;
+}
