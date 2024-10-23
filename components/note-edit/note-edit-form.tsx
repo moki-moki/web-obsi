@@ -2,7 +2,6 @@
 
 import { FormEvent } from 'react';
 
-import { toast } from 'react-toastify';
 import { notFound } from 'next/navigation';
 
 import Input from '../ui/input';
@@ -15,17 +14,11 @@ const NoteEditForm = ({ id }: { id: string }) => {
   const { data, error, isLoading } = useGetNote(id);
   const { mutate } = useGetNotes();
 
-  console.log(data);
-
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const data = new FormData(e.currentTarget);
-      await updateNote(id, data);
-      await mutate();
-    } catch (error) {
-      toast.error('Something went wrong submitting a note!');
-    }
+    const data = new FormData(e.currentTarget);
+    await updateNote(id, data);
+    await mutate();
   };
 
   if (isLoading) return null;

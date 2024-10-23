@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { FileI } from '@/types/types';
+import { FileI, SplitDataI } from '@/types/types';
 import { useGetFolders } from './folders';
 import axiosInstance from '@/utils/axios';
 import { UniqueIdentifier } from '@dnd-kit/core';
@@ -98,6 +98,7 @@ export const updateNote = async (id: string, data: FormData) => {
 
     req.status === 200 && toast.success('Note was updated!');
   } catch (error) {
+    toast.error('Something went wrong submitting a note!');
     console.log(error);
   }
 };
