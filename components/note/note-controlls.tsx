@@ -52,7 +52,7 @@ const NoteControlls = ({ id, toggleSplitWindow }: Props) => {
 
   return (
     <div className="flex items-center">
-      <Popover text="split-screen" font="bolded">
+      <Popover text="split-screen - CTRL + E" font="bolded">
         <Button
           type="button"
           variants="icon"

@@ -8,6 +8,7 @@ import NoteLoader from '@/components/loader/note-loader';
 import { SplitDataI } from '@/types/types';
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/button';
+import { useKeyBind } from '@/app/hooks/useKeyBind';
 
 const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -22,11 +23,15 @@ const Page = () => {
     type: '',
   });
 
+  const toggleSplitWindow = () => setIsSplit((prev) => !prev);
+
   useEffect(() => {
     if (data) {
       setSplitData(data);
     }
   }, [data]);
+
+  useKeyBind('e', toggleSplitWindow);
 
   if (isLoading) return <NoteLoader />;
 
@@ -34,8 +39,6 @@ const Page = () => {
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setSplitData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-
-  const toggleSplitWindow = () => setIsSplit((prev) => !prev);
 
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,10 +69,10 @@ const Page = () => {
             />
             <textarea
               name="markdown"
-              rows={20}
+              rows={30}
               defaultValue={splitData.markdown}
               onChange={onChangeHandler}
-              className="h-full bg-primary-color text-text-color border border-border-color p-2 rounded-md outline-none resize-none"
+              className="bg-primary-color text-text-color border border-border-color p-2 rounded-md outline-none resize-none"
             ></textarea>
             <Button type="submit" variants="ghost-outlined" font="bolded">
               SUBMIT

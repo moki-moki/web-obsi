@@ -5,7 +5,7 @@ const TOAST_REMOVE_DELAY = 5000;
 const POSITION = 'bottom-right';
 
 const theme = {
-  background: 'rgba(var(--secondary-color), 0.5)',
+  background: 'rgba(var(--secondary-color), 0.7)',
   text: 'rgba(var(--text-text-color))',
   progress: 'rgba(var(--color-success))',
 };

@@ -17,7 +17,6 @@ const MarkdownRenderer = ({ children: content }: { children: string }) => {
       components={{
         code(props: any) {
           const { inline, children, className, ...rest } = props;
-          console.log(className);
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
             <SyntaxHighlighter {...rest} PreTag="div" language={match[1]} style={themeStyle}>
