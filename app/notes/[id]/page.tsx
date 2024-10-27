@@ -69,10 +69,9 @@ const Page = () => {
             />
             <textarea
               name="markdown"
-              rows={30}
               defaultValue={splitData.markdown}
               onChange={onChangeHandler}
-              className="bg-primary-color text-text-color border border-border-color p-2 rounded-md outline-none resize-none"
+              className="h-full bg-primary-color text-text-color border border-border-color p-2 rounded-md outline-none resize-none"
             ></textarea>
             <Button type="submit" variants="ghost-outlined" font="bolded">
               SUBMIT
