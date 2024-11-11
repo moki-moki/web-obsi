@@ -1,0 +1,27 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+model Folder {
+    id       String   @id @default(uuid())
+    title    String
+    type     String
+    notes    Note[]
+    parentId String?
+    parent   Folder?  @relation("FolderParent", fields: [parentId], references: [id])
+    children Folder[] @relation("FolderParent")
+}
+
+model Note {
+    id       String  @id @default(uuid())
+    title    String
+    type     String
+    folderId String?
+    markdown String?
+    folder   Folder? @relation(fields: [folderId], references: [id])
+}
