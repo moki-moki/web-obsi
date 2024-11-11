@@ -4,11 +4,12 @@ import { notFound, useParams } from 'next/navigation';
 import MarkdownRenderer from '@/components/markdown-renderer/markdown-renderer';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useGetNote, useUpdateNote } from '@/api-calls/note';
-import NoteLoader from '@/components/loader/note-loader';
+import NoteLoader from '@/components/ui/skeletons/note-loader';
 import { SplitDataI } from '@/types/types';
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import { useKeyBind } from '@/app/hooks/useKeyBind';
+import Breadcrumbs from '@/components/breadcrumbs/breadcrumbs';
 
 const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -50,6 +51,9 @@ const Page = () => {
     <div className="h-full">
       <div className="p-2 flex items-center justify-end">
         <NoteControlls id={id} toggleSplitWindow={toggleSplitWindow} />
+      </div>
+      <div className="text-center w-full">
+        <Breadcrumbs id={id} />
       </div>
       {isSplit ? (
         <div className="flex justify-center gap-2 m-3 h-full">

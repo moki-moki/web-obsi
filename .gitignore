@@ -37,12 +37,7 @@ yarn-error.log*
 next-env.d.ts
 
 # prisma
-prisma/*.db
-prisma/dev.db
-/prisma/*.db
-./prisma/dev.db
-../prisma/dev.db
-../../prisma/dev.db
+*.db
 
 Dockerfile
 docker-compose.yaml

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const NoteLoader = () => {
   return (
     <div className="bg-secondary-color/20 mt-20 mb-5 mx-10 h-full">

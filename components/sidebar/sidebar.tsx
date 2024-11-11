@@ -24,7 +24,6 @@ import ContextMenuControlls from '../context-menu/context-menu-controlls';
 const DragOverlayItem = dynamic(() => import('../draggable/drag-overlay-item'), { ssr: false });
 
 function Sidebar() {
-  const [openFolders, setOpenFolders] = useState(new Map());
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [draggingItem, setDraggingItem] = useState<DraggingItemI | null>(null);
 
@@ -37,9 +36,11 @@ function Sidebar() {
     foldersLoading,
     isSidebarOpen,
     dimension,
+    openFolders,
     startResize,
     stopResize,
     resizeFrame,
+    setOpenFolders,
   } = useSidebarContext();
 
   const { open } = isSidebarOpen;

@@ -49,6 +49,11 @@ export interface DraggingItemI {
   type: string;
 }
 
+export interface BreadcrumbsI {
+  id: string;
+  title: string;
+}
+
 export interface SplitDataI {
   folderId: null;
   id: string;

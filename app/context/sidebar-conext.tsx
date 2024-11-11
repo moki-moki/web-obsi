@@ -16,12 +16,14 @@ type SidebarContextI = {
   foldersLoading: boolean;
   notesError: undefined | boolean;
   foldersError: undefined | boolean;
+  openFolders: Map<string, boolean>;
   stopResize: () => void;
   toggleSidebar: () => void;
   getNoteId: (id: string) => void;
   resizeFrame: (e: React.MouseEvent) => void;
   startResize: (e: React.MouseEvent) => void;
   setNoteId: React.Dispatch<React.SetStateAction<string | null>>;
+  setOpenFolders: React.Dispatch<React.SetStateAction<Map<string, boolean>>>;
 };
 
 const sidebarData = {
@@ -29,12 +31,13 @@ const sidebarData = {
   open: true,
 };
 
-const maxWidthGuard = window.innerWidth / 2;
+const maxWidthGuard = 1920 / 2;
 const minWidthGuard = 100;
 const SidebarContext = createContext<SidebarContextI>({} as SidebarContextI);
 
 export default function SidebarConextProvider({ children }: { children: React.ReactNode }) {
   const [noteId, setNoteId] = useState<string | null>(null);
+  const [openFolders, setOpenFolders] = useState<Map<string, boolean>>(new Map());
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage('isSidebarOpen', sidebarData);
   const [dimension, setDimension] = useState({ w: isSidebarOpen.width });
   const [isSidebarDragging, setIsSidebarDragging] = useState({
@@ -92,6 +95,8 @@ export default function SidebarConextProvider({ children }: { children: React.Re
         foldersError,
         isSidebarOpen,
         foldersLoading,
+        openFolders,
+        setOpenFolders,
         setNoteId,
         getNoteId,
         stopResize,
