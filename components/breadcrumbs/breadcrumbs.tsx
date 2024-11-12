@@ -13,7 +13,7 @@ const Breadcrumbs = ({ id }: { id: string }) => {
     if (!data && data === undefined) return;
     let openFolderCopyArr = data.slice(0, idx + 1);
 
-    const mapCopy = new Map<string, boolean>(data.map((item) => [item.id, true]));
+    const mapCopy = new Map<string, boolean>(data);
 
     openFolderCopyArr.forEach((obj) => {
       if (mapCopy.get(obj.id)) mapCopy.delete(obj.id);

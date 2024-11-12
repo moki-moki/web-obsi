@@ -38,6 +38,7 @@ next-env.d.ts
 
 # prisma
 *.db
+prisma/migrations
 
 Dockerfile
 docker-compose.yaml

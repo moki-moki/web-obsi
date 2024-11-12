@@ -46,6 +46,7 @@ const Popover = forwardRef<HTMLDivElement, Props>(
       if (visible && popoverRef.current && containerRef.current) {
         const popoverRect = popoverRef.current.getBoundingClientRect();
         const containerRect = containerRef.current.getBoundingClientRect();
+
         let top = containerRect.bottom + window.scrollY;
         let left = containerRect.left + window.scrollX + containerRect.width / 2;
 
