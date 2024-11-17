@@ -62,7 +62,7 @@ const File = ({ note, level = 0 }: Props) => {
       ) : (
         <li onContextMenu={(e) => getItemDataOnClick(e, note)} style={{ marginLeft: level * 15 }}>
           <FileWrapper id={id} type={type} title={title}>
-            <div className="p-1.5 text-xs rounded-full hover:bg-primary-color">
+            <div className="p-1.5 text-xs">
               {title.length > 20 ? `${title.substring(0, 30)}...` : title}
             </div>
           </FileWrapper>

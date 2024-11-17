@@ -60,7 +60,7 @@ const Folder = ({
   };
 
   return (
-    <FolderWrapper id={id}>
+    <FolderWrapper id={id} level={level}>
       {showInput === idx ? (
         <Input
           type="text"
@@ -73,9 +73,8 @@ const Folder = ({
         />
       ) : (
         <div
-          style={{ marginLeft: level * 10 }}
           onContextMenu={(e) => getItemDataOnClick(e, folder)}
-          className="flex items-center justify-between p-2 rounded-full hover:bg-primary-color-accent overflow-hidden text-ellipsis whitespace-nowrap"
+          className="flex items-center justify-between p-2 overflow-hidden text-ellipsis whitespace-nowrap relative"
           onClick={() => toggleFolderHandler(id)}
         >
           <FolderTitle isOpen={isOpen} name={title} />
@@ -83,13 +82,6 @@ const Folder = ({
           <FolderControlls idx={idx} id={id} name={title} changeNameHandler={changeNameHandler} />
         </div>
       )}
-      {notes.length && isOpen ? (
-        <ul className="p-2">
-          {notes.map((note) => (
-            <File key={note.id} note={note} level={level + 1} />
-          ))}
-        </ul>
-      ) : null}
 
       {children && isOpen
         ? children.map((folder, index) => (
@@ -104,6 +96,14 @@ const Folder = ({
             />
           ))
         : null}
+
+      {notes.length && isOpen ? (
+        <ul className="p-2">
+          {notes.map((note) => (
+            <File key={note.id} note={note} level={level + 1} />
+          ))}
+        </ul>
+      ) : null}
     </FolderWrapper>
   );
 };

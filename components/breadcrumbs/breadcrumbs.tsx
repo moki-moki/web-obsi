@@ -26,18 +26,17 @@ const Breadcrumbs = ({ id }: { id: string }) => {
   return (
     <div className="flex items-center justify-center gap-1">
       {data?.map((breadcrumb: { id: string; title: string }, idx: number) => (
-        <>
+        <div key={breadcrumb.id}>
           <span
-            key={breadcrumb.id}
             onClick={() => toggleFolderHandler(idx)}
             className="p-1 font-bold uppercase text-xs text-text-color rounded-full cursor-pointer hover:bg-secondary-color"
           >
             {breadcrumb.title}
           </span>
-          <span key={idx} className="text-text-color font-bold text-xs">
+          <span className="text-text-color font-bold text-xs">
             {idx < data.length - 1 && ' > '}
           </span>
-        </>
+        </div>
       ))}
     </div>
   );
