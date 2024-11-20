@@ -10,7 +10,6 @@ import { useCreateFolder, useDeleteFolder } from '@/api-calls/folders';
 import { useModal } from '@/app/context/modal-context';
 import { useSidebarContext } from '@/app/context/sidebar-conext';
 import { useRouter } from 'next/navigation';
-import useCurrentPathId from '@/app/hooks/useCurrentPathId';
 
 interface Props {
   itemData: FileI | FolderI | null;
@@ -24,8 +23,6 @@ const ContextMenuControlls = ({ itemData }: Props) => {
   const { createFolder } = useCreateFolder();
   const { openModal, closeModal, setModalContent } = useModal();
 
-  const pathId = useCurrentPathId();
-
   if (!itemData) return;
 
   const { type, id } = itemData;
@@ -38,7 +35,7 @@ const ContextMenuControlls = ({ itemData }: Props) => {
   const deleteNoteHandler = async () => {
     await deleteNote(id);
     closeModal();
-    if (pathId === id) push('/');
+    push('/');
   };
 
   const showModal = () => {

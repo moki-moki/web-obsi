@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useDeleteNote } from '@/api-calls/notes';
 import { FilePenLine, Trash2, SquareSplitHorizontal } from 'lucide-react';
 import { useModal } from '@/app/context/modal-context';
-import useCurrentPathId from '@/app/hooks/useCurrentPathId';
 import dynamic from 'next/dynamic';
 
 const Popover = dynamic(() => import('../popover/popover'), { ssr: true });
@@ -20,13 +19,10 @@ const NoteControlls = ({ id, toggleSplitWindow }: Props) => {
   const { deleteNote } = useDeleteNote();
   const { setModalContent, openModal, closeModal } = useModal();
 
-  const pathId = useCurrentPathId();
-
   const deleteNoteHandler = async () => {
     await deleteNote(id);
     closeModal();
-
-    if (pathId === id) push('/');
+    push('/');
   };
 
   const showModal = () => {

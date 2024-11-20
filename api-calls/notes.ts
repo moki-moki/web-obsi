@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { FileI, SplitDataI } from '@/types/types';
+import { FileI } from '@/types/types';
 import { useGetFolders } from './folders';
 import axiosInstance from '@/utils/axios';
 import { UniqueIdentifier } from '@dnd-kit/core';

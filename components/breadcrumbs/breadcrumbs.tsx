@@ -11,8 +11,9 @@ const Breadcrumbs = ({ id }: { id: string }) => {
 
   const toggleFolderHandler = (idx: number) => {
     if (!data && data === undefined) return;
-    let openFolderCopyArr = data.slice(0, idx + 1);
+    const openFolderCopyArr = data.slice(0, idx + 1);
 
+    // @ts-expect-error we need strings, but getting an object map constructor expects an iterable. This works, but will refactor in future
     const mapCopy = new Map<string, boolean>(data);
 
     openFolderCopyArr.forEach((obj) => {
